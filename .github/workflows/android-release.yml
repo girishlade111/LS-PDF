@@ -70,9 +70,15 @@ jobs:
           ./gradlew assembleRelease
           mv app/build/outputs/apk/release/app-release-unsigned.apk ../ls-pdf-fdroid-unsigned.apk
 
+      - name: Check signing key availability
+        id: check_key
+        env:
+          ANDROID_SIGNING_KEY: ${{ secrets.ANDROID_SIGNING_KEY }}
+        run: echo "has_key=$([ -n \"$ANDROID_SIGNING_KEY\" ] && echo true || echo false)" >> $GITHUB_OUTPUT
+
       - name: Sign Both APKs
         id: sign_app
-        if: secrets.ANDROID_SIGNING_KEY != ''
+        if: steps.check_key.outputs.has_key == 'true'
         uses: ilharp/sign-android-release@v2
         with:
           releaseDir: .
