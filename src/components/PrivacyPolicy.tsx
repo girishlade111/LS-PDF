@@ -99,7 +99,7 @@ const PrivacyWeb = () => {
         </div>
 
         <div className="pt-12 text-center opacity-30">
-            <LsPdfLogo size={32} iconColor="#10B981" partColor="currentColor" className="mx-auto mb-4" />
+            <LsPdfLogo size={32} iconColor="#10B981" className="mx-auto mb-4" />
            <p className="text-[10px] font-black uppercase tracking-[0.5em] text-gray-400">Privacy Protocol v1.0.9 Stable</p>
         </div>
       </div>

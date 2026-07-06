@@ -211,7 +211,7 @@ export default function Layout({ children, theme, toggleTheme, tools, onFileDrop
               {/* Brand Column (Span 6) */}
               <div className="col-span-2 md:col-span-6 space-y-4">
                 <Link to="/" className="flex items-center gap-2.5 text-gray-900 dark:text-white group w-fit">
-                  <LsPdfLogo size={22} iconColor="#F43F5E" partColor="currentColor" />
+                  <LsPdfLogo size={22} iconColor="#F43F5E" />
                   <span className="font-bold tracking-tight text-lg group-hover:text-rose-500 transition-colors">LS PDF</span>
                 </Link>
                 <p className="text-gray-500 dark:text-zinc-500 text-xs leading-relaxed max-w-sm">

@@ -160,7 +160,7 @@ const AboutWeb = () => {
         </div>
         
         <div className="opacity-20 hover:opacity-50 transition-opacity duration-700">
-          <LsPdfLogo size={32} iconColor="#F43F5E" partColor="currentColor" className="mx-auto mb-4" />
+          <LsPdfLogo size={32} iconColor="#F43F5E" className="mx-auto mb-4" />
           <p className="text-[9px] font-black uppercase tracking-[0.6em] text-gray-400">potatameister</p>
         </div>
       </section>
@@ -180,7 +180,7 @@ const AboutAPK = () => {
         {/* 1. App Identity */}
         <div className="bg-white dark:bg-zinc-900 rounded-[2rem] p-6 border border-gray-100 dark:border-white/5 shadow-sm flex flex-col items-center text-center">
           <div className="w-20 h-20 bg-gray-50 dark:bg-black rounded-[1.5rem] flex items-center justify-center shadow-inner mb-4">
-            <LsPdfLogo size={40} iconColor="#F43F5E" partColor="currentColor" />
+            <LsPdfLogo size={40} iconColor="#F43F5E" />
           </div>
           <h2 className="text-2xl font-black tracking-tighter dark:text-white leading-none mb-1">LS PDF</h2>
           <p className="text-[9px] font-black uppercase tracking-widest text-rose-500">v1.0.9 Stable • Absolute Privacy</p>
