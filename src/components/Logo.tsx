@@ -7,7 +7,7 @@ export const LsPdfLogo = ({ size = 24, className = "", iconColor }: { size?: num
     xmlns="http://www.w3.org/2000/svg"
     className={className}
   >
-    <path d="M5 3H19V23H5V3Z" fill={iconColor || "#F43F5E"} />
-    <path d="M12 7v10M7 12h10" stroke="white" strokeWidth="2.2" strokeLinecap="round" />
+    <path d="M6 4H20V24H6V4Z" fill="#BE123C" />
+    <path d="M4 2H18V22H4V2Z" fill={iconColor || "#F43F5E"} />
   </svg>
 )
