@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">LS PDF</string>
     <string name="title_activity_main">LS PDF</string>
-    <string name="package_name">com.paperknife.app</string>
-    <string name="custom_url_scheme">com.paperknife.app</string>
+    <string name="package_name">com.lspdf.app</string>
+    <string name="custom_url_scheme">com.lspdf.app</string>
 </resources>

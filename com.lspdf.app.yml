@@ -3,8 +3,8 @@ Categories:
   - Writing
 License: AGPL-3.0-or-later
 WebSite: https://potatameister.github.io/ls-pdf/
-SourceCode: https://github.com/potatameister/PaperKnife
-IssueTracker: https://github.com/potatameister/PaperKnife/issues
+SourceCode: https://github.com/girishlade111/LS-PDF
+IssueTracker: https://github.com/girishlade111/LS-PDF/issues
 
 AutoName: LS PDF
 
@@ -26,9 +26,9 @@ Description: |-
   no analytics, and no advertisements.
 
 RepoType: git
-Repo: https://github.com/potatameister/PaperKnife.git
+Repo: https://github.com/girishlade111/LS-PDF.git
 Binaries: 
-  https://github.com/potatameister/PaperKnife/releases/download/v%v/ls-pdf-lite-v%v.apk
+  https://github.com/girishlade111/LS-PDF/releases/download/v%v/ls-pdf-lite-v%v.apk
 
 Builds:
   - versionName: 1.0.9

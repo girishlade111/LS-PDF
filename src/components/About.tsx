@@ -151,7 +151,7 @@ const AboutWeb = () => {
       {/* 4. Final Footer Links - Condensed */}
       <section className="max-w-4xl mx-auto px-6 text-center border-t border-gray-100 dark:border-zinc-900 pt-16">
         <div className="flex flex-wrap justify-center gap-8 mb-12">
-           <a href="https://github.com/potatameister/PaperKnife" target="_blank" className="flex items-center gap-2.5 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-rose-500 transition-colors group">
+           <a href="https://github.com/girishlade111/LS-PDF" target="_blank" className="flex items-center gap-2.5 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-rose-500 transition-colors group">
               <GHIcon size={16} /> Audit Source <ExternalLinkIcon size={12} className="opacity-40 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
            </a>
            <button onClick={() => navigate('/thanks')} className="flex items-center gap-2.5 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-rose-500 transition-colors group">
@@ -243,7 +243,7 @@ const AboutAPK = () => {
 
         {/* 4. Action Tiles */}
         <div className="grid grid-cols-1 gap-2 pt-2">
-          <a href="https://github.com/potatameister/PaperKnife" target="_blank" className="flex items-center justify-between p-5 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-white/5 rounded-[2rem] active:scale-[0.98] transition-all">
+          <a href="https://github.com/girishlade111/LS-PDF" target="_blank" className="flex items-center justify-between p-5 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-white/5 rounded-[2rem] active:scale-[0.98] transition-all">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-zinc-100 dark:bg-black rounded-xl flex items-center justify-center">
                    <GHIcon size={20} className="text-black dark:text-white" />

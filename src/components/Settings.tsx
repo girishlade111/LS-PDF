@@ -235,7 +235,7 @@ export default function Settings({ theme, setTheme }: { theme: Theme, setTheme: 
             icon={Bug} 
             title="Report Issue" 
             subtitle="GitHub Tracker"
-            onClick={() => window.open('https://github.com/potatameister/PaperKnife/issues', '_blank')}
+            onClick={() => window.open('https://github.com/girishlade111/LS-PDF/issues', '_blank')}
           />
           <SettingItem 
             icon={Info} 

@@ -1,4 +1,4 @@
-# LS PDF — PaperKnife
+# LS PDF
 
 > **Stop Uploading Your Privacy.** A privacy-first, fully client-side Swiss Army Knife for PDFs.
 
@@ -11,7 +11,7 @@
 
 ## Overview
 
-**LS PDF (PaperKnife)** is a privacy-first PDF utility with **17+ tools** — all running **entirely in your browser or on your Android device**. Zero files are ever uploaded to any server. Every operation happens locally in your device memory.
+**LS PDF** is a privacy-first PDF utility with **17+ tools** — all running **entirely in your browser or on your Android device**. Zero files are ever uploaded to any server. Every operation happens locally in your device memory.
 
 Available as:
 - 🌐 **Web app** (hosted on GitHub Pages)

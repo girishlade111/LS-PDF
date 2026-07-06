@@ -1,4 +1,4 @@
-package com.paperknife.app;
+package com.lspdf.app;
 
 import android.content.Intent;
 import android.net.Uri;
