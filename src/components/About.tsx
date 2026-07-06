@@ -13,12 +13,11 @@ import {
   ChevronDown as ChevronDownIcon,
   ServerOff as ServerOffIcon,
   ExternalLink as ExternalLinkIcon,
-  ChevronRight as ChevronRightIcon,
-  Sparkles as SparklesIcon,
+
   HardDrive as DiskIcon,
   EyeOff as PrivacyIcon
 } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+
 import { Capacitor } from '@capacitor/core'
 import { NativeToolLayout } from './tools/shared/NativeToolLayout'
 import { LsPdfLogo } from './Logo'
@@ -54,7 +53,6 @@ const SpecItem = ({ title, icon: Icon, children, defaultOpen = false }: { title:
 
 // --- WEB VERSION (TITAN v1.2 EXPLANATORY) ---
 const AboutWeb = () => {
-  const navigate = useNavigate()
   return (
     <div className="min-h-screen bg-[#FAFAFA] dark:bg-black text-gray-900 dark:text-zinc-100 selection:bg-rose-500 selection:text-white pb-24">
       
@@ -88,9 +86,7 @@ const AboutWeb = () => {
                  <a href="https://github.com/sponsors/potatameister" target="_blank" className="px-8 py-3.5 bg-white text-rose-600 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:scale-105 transition-transform shadow-lg flex items-center gap-2">
                     <HeartIcon size={14} fill="currentColor" /> Sponsor
                  </a>
-                 <button onClick={() => navigate('/thanks')} className="px-8 py-3.5 bg-rose-600 text-white border border-rose-400/50 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-rose-700 transition-colors flex items-center gap-2">
-                    <SparklesIcon size={14} /> Hall of Fame
-                 </button>
+
               </div>
            </div>
         </div>
@@ -154,14 +150,12 @@ const AboutWeb = () => {
            <a href="https://github.com/girishlade111/LS-PDF" target="_blank" className="flex items-center gap-2.5 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-rose-500 transition-colors group">
               <GHIcon size={16} /> Audit Source <ExternalLinkIcon size={12} className="opacity-40 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
            </a>
-           <button onClick={() => navigate('/thanks')} className="flex items-center gap-2.5 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-rose-500 transition-colors group">
-              <SparklesIcon size={16} /> Credits <ChevronRightIcon size={12} className="opacity-40 group-hover:translate-x-1 transition-transform" />
-           </button>
+
         </div>
         
         <div className="opacity-20 hover:opacity-50 transition-opacity duration-700">
           <LsPdfLogo size={32} iconColor="#F43F5E" className="mx-auto mb-4" />
-          <p className="text-[9px] font-black uppercase tracking-[0.6em] text-gray-400">potatameister</p>
+
         </div>
       </section>
 
@@ -172,7 +166,6 @@ const AboutWeb = () => {
 
 // --- APK VERSION (TITAN MOBILE OVERHAUL - PROTOCOL EXPLAINER) ---
 const AboutAPK = () => {
-  const navigate = useNavigate()
   return (
     <NativeToolLayout title="Protocol" description="System Internals" actions={null}>
       <div className="px-4 pb-32 animate-in fade-in slide-in-from-bottom-4 duration-700 space-y-4">
@@ -205,9 +198,7 @@ const AboutAPK = () => {
                  <a href="https://github.com/sponsors/potatameister" target="_blank" className="flex items-center justify-center gap-2 py-3 bg-white text-rose-600 rounded-xl font-black uppercase text-[9px] tracking-widest shadow-sm active:scale-95 transition-transform">
                     Sponsor
                  </a>
-                 <button onClick={() => navigate('/thanks')} className="flex items-center justify-center gap-2 py-3 bg-rose-600 text-white border border-rose-400/50 rounded-xl font-black uppercase text-[9px] tracking-widest active:scale-95 transition-transform">
-                    Hall of Fame
-                 </button>
+
               </div>
            </div>
         </div>
@@ -256,21 +247,10 @@ const AboutAPK = () => {
               <ExternalLinkIcon size={16} className="text-gray-300" />
           </a>
           
-          <button onClick={() => navigate('/thanks')} className="flex items-center justify-between p-5 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-white/5 rounded-[2rem] active:scale-[0.98] transition-all">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 bg-rose-50 dark:bg-rose-900/20 rounded-xl flex items-center justify-center">
-                   <SparklesIcon size={20} className="text-rose-500" />
-                </div>
-                <div className="text-left">
-                   <h4 className="font-bold text-sm dark:text-white">Credits</h4>
-                   <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wide">Hall of Fame</p>
-                </div>
-              </div>
-              <ChevronRightIcon size={16} className="text-gray-300" />
-          </button>
+
         </div>
 
-        <p className="text-[8px] font-black uppercase text-center text-gray-400 tracking-[0.5em] pt-8 pb-4">Handcrafted by potatameister</p>
+
       </div>
     </NativeToolLayout>
   )

@@ -245,7 +245,7 @@ export default function Layout({ children, theme, toggleTheme, tools, onFileDrop
                 <ul className="space-y-2.5 text-xs text-gray-500 dark:text-zinc-500">
                   <li><a href="https://github.com/sponsors/potatameister" target="_blank" className="flex items-center gap-2 hover:text-rose-500 transition-colors">Sponsor <HeartIcon size={10} className="text-rose-500" /></a></li>
                   <li><a href="https://github.com/girishlade111/LS-PDF/issues" target="_blank" className="hover:text-rose-500 transition-colors">Report Bug</a></li>
-                  <li><Link to="/thanks" className="hover:text-rose-500 transition-colors">Hall of Fame</Link></li>
+
                 </ul>
               </div>
 
@@ -254,7 +254,7 @@ export default function Layout({ children, theme, toggleTheme, tools, onFileDrop
             <div className="pt-6 border-t border-gray-100 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] text-gray-400 dark:text-zinc-600 font-medium">
               <p>© 2026 LS PDF Project. No cookies used.</p>
               <div className="flex gap-6 items-center">
-                 <a href="https://github.com/potatameister" target="_blank" className="hover:text-gray-900 dark:hover:text-white transition-colors">@potatameister</a>
+
               </div>
             </div>
           </div>
