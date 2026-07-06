@@ -15,6 +15,8 @@ export const LsPdfLogo = ({ size = 24, className = "", iconColor }: { size?: num
       </filter>
     </defs>
     <path d="M5 3H19V23H5V3Z" fill={iconColor || "#F43F5E"} filter="url(#paper-grain)" />
-    <text x="12" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="7.5" fill="white" letter-spacing="1">PDF</text>
+    <path d="M7 16V7h1.5M7 11h1.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M11 7h0.8A1 4.5 0 0 1 11.8 16H11V7" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M15 16V7h2.5M15 11h2" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 )
