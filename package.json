@@ -1,9 +1,11 @@
 {
-  "name": "ls-pdf",
-  "private": true,
+  "name": "@girishlade111/ls-pdf",
   "version": "1.0.9",
   "type": "module",
   "license": "AGPL-3.0-or-later",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -30,6 +32,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.13.0",
+    "sharp": "^0.35.3",
     "sonner": "^2.0.7",
     "tesseract.js": "^7.0.0"
   },

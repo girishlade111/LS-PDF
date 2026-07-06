@@ -33,6 +33,9 @@ dist-ssr
 GEMINI.md
 gha-creds-*.json
 
+# Build artifacts
+artifacts/
+
 # Capacitor
 android/app/build
 android/app/src/main/assets/public

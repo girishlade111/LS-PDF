@@ -69,7 +69,7 @@ export default function AndroidView({ theme, toggleTheme, onFileSelect }: Androi
       <header className="px-6 pt-safe pb-2 sticky top-0 z-50 bg-[#FAFAFA]/95 dark:bg-black/95 backdrop-blur-xl border-b border-transparent">
         <div className="flex items-center justify-between h-14">
           <div className="flex items-center gap-3">
-              <LsPdfLogo size={24} iconColor="#F43F5E" partColor="currentColor" />
+              <LsPdfLogo size={24} iconColor="#F43F5E" />
              <div className="flex flex-col">
                 <div className="flex items-center gap-1.5">
                     <span className="text-lg font-black tracking-tighter text-gray-900 dark:text-white leading-none">LS PDF</span>
