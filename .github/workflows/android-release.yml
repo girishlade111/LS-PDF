@@ -70,34 +70,47 @@ jobs:
           ./gradlew assembleRelease
           mv app/build/outputs/apk/release/app-release-unsigned.apk ../ls-pdf-fdroid-unsigned.apk
 
-      - name: Check signing key availability
-        id: check_key
-        env:
-          ANDROID_SIGNING_KEY: ${{ secrets.ANDROID_SIGNING_KEY }}
-        run: echo "has_key=$([ -n \"$ANDROID_SIGNING_KEY\" ] && echo true || echo false)" >> $GITHUB_OUTPUT
-
       - name: Sign Both APKs
-        id: sign_app
-        if: steps.check_key.outputs.has_key == 'true'
-        uses: ilharp/sign-android-release@v2
-        with:
-          releaseDir: .
-          signingKey: ${{ secrets.ANDROID_SIGNING_KEY }}
-          keyAlias: ${{ secrets.ANDROID_ALIAS }}
-          keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          buildToolsVersion: "34.0.0"
+        env:
+          SIGNING_KEY: ${{ secrets.ANDROID_SIGNING_KEY }}
+          KEY_ALIAS: ${{ secrets.ANDROID_ALIAS }}
+          KEYSTORE_PASS: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_PASS: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ -z "$SIGNING_KEY" ]; then
+            echo "No signing key found — skipping APK signing"
+            exit 0
+          fi
+          echo "$SIGNING_KEY" | base64 -d > keystore.jks
+          SDK=$(find /usr/local/lib/android/sdk -name apksigner 2>/dev/null | head -1)
+          if [ -z "$SDK" ]; then
+            SDK=$(find $ANDROID_HOME $ANDROID_SDK_ROOT -name apksigner 2>/dev/null | head -1)
+          fi
+          if [ -z "$SDK" ]; then
+            jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+              -keystore keystore.jks \
+              -storepass "$KEYSTORE_PASS" \
+              -keypass "$KEY_PASS" \
+              ls-pdf-global-unsigned.apk "$KEY_ALIAS"
+            jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+              -keystore keystore.jks \
+              -storepass "$KEYSTORE_PASS" \
+              -keypass "$KEY_PASS" \
+              ls-pdf-fdroid-unsigned.apk "$KEY_ALIAS"
+          else
+            for apk in ls-pdf-global-unsigned.apk ls-pdf-fdroid-unsigned.apk; do
+              "$SDK" sign --ks keystore.jks --ks-key-alias "$KEY_ALIAS" \
+                --ks-pass "pass:$KEYSTORE_PASS" --key-pass "pass:$KEY_PASS" "$apk"
+            done
+          fi
+          rm -f keystore.jks
+          echo "APKs signed successfully"
 
       - name: Rename & Prepare Artifacts
         run: |
           VERSION=$(node -p "require('./package.json').version")
-          if [ -f ls-pdf-global-unsigned-signed.apk ]; then
-            cp ls-pdf-global-unsigned-signed.apk "ls-pdf-v${VERSION}.apk"
-            cp ls-pdf-fdroid-unsigned-signed.apk "ls-pdf-lite-v${VERSION}.apk"
-          else
-            cp ls-pdf-global-unsigned.apk "ls-pdf-v${VERSION}.apk"
-            cp ls-pdf-fdroid-unsigned.apk "ls-pdf-lite-v${VERSION}.apk"
-          fi
+          cp ls-pdf-global-unsigned.apk "ls-pdf-v${VERSION}.apk"
+          cp ls-pdf-fdroid-unsigned.apk "ls-pdf-lite-v${VERSION}.apk"
           echo "APP_VERSION=${VERSION}" >> $GITHUB_ENV
 
       - name: Upload Artifacts
