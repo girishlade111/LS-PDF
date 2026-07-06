@@ -72,7 +72,7 @@ jobs:
 
       - name: Sign Both APKs
         id: sign_app
-        if: ${{ secrets.ANDROID_SIGNING_KEY != '' }}
+        if: secrets.ANDROID_SIGNING_KEY != ''
         uses: ilharp/sign-android-release@v2
         with:
           releaseDir: .
