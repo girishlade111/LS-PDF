@@ -72,6 +72,7 @@ jobs:
 
       - name: Sign Both APKs
         id: sign_app
+        if: ${{ secrets.ANDROID_SIGNING_KEY != '' }}
         uses: ilharp/sign-android-release@v2
         with:
           releaseDir: .
@@ -84,8 +85,13 @@ jobs:
       - name: Rename & Prepare Artifacts
         run: |
           VERSION=$(node -p "require('./package.json').version")
-          cp ls-pdf-global-unsigned-signed.apk "ls-pdf-v${VERSION}.apk"
-          cp ls-pdf-fdroid-unsigned-signed.apk "ls-pdf-lite-v${VERSION}.apk"
+          if [ -f ls-pdf-global-unsigned-signed.apk ]; then
+            cp ls-pdf-global-unsigned-signed.apk "ls-pdf-v${VERSION}.apk"
+            cp ls-pdf-fdroid-unsigned-signed.apk "ls-pdf-lite-v${VERSION}.apk"
+          else
+            cp ls-pdf-global-unsigned.apk "ls-pdf-v${VERSION}.apk"
+            cp ls-pdf-fdroid-unsigned.apk "ls-pdf-lite-v${VERSION}.apk"
+          fi
           echo "APP_VERSION=${VERSION}" >> $GITHUB_ENV
 
       - name: Upload Artifacts
@@ -95,4 +101,5 @@ jobs:
           path: |
             ls-pdf-v${{ env.APP_VERSION }}.apk
             ls-pdf-lite-v${{ env.APP_VERSION }}.apk
+
           if-no-files-found: error
