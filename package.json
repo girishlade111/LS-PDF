@@ -1,9 +1,11 @@
 {
-  "name": "ls-pdf",
-  "private": true,
+  "name": "@girishlade111/ls-pdf",
   "version": "1.0.9",
   "type": "module",
   "license": "AGPL-3.0-or-later",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
