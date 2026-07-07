@@ -12,6 +12,8 @@ import { usePipeline } from '../../utils/pipelineContext'
 import SuccessState from './shared/SuccessState'
 import PrivacyBadge from './shared/PrivacyBadge'
 import { NativeToolLayout } from './shared/NativeToolLayout'
+import { SEOHead } from '../../utils/useSEO'
+import { rearrangeSEO } from '../../utils/seoData'
 
 type RearrangePdfData = { file: File, pageCount: number, isLocked: boolean, pdfDoc?: any, password?: string, thumbnail?: string }
 
@@ -126,7 +128,9 @@ export default function RearrangeTool() {
   )
 
   return (
-    <NativeToolLayout title="Rearrange PDF" description="Drag and drop to reorder pages visually." actions={pdfData && !pdfData.isLocked && !downloadUrl && <ActionButton />}>
+    <>
+      <SEOHead {...rearrangeSEO} />
+      <NativeToolLayout title="Rearrange PDF" description="Drag and drop to reorder pages visually." actions={pdfData && !pdfData.isLocked && !downloadUrl && <ActionButton />}>
       <input type="file" accept=".pdf" className="hidden" ref={fileInputRef} onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])} />
       
       {!pdfData ? (
@@ -187,5 +191,6 @@ export default function RearrangeTool() {
       )}
       <PrivacyBadge />
     </NativeToolLayout>
+    </>
   )
 }

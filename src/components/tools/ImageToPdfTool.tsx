@@ -11,6 +11,8 @@ import { addActivity } from '../../utils/recentActivity'
 import SuccessState from './shared/SuccessState'
 import PrivacyBadge from './shared/PrivacyBadge'
 import { NativeToolLayout } from './shared/NativeToolLayout'
+import { SEOHead } from '../../utils/useSEO'
+import { imageToPdfSEO } from '../../utils/seoData'
 
 type ImageFile = { id: string, file: File, preview: string }
 
@@ -71,7 +73,9 @@ export default function ImageToPdfTool() {
   )
 
   return (
-    <NativeToolLayout title="Image to PDF" description="Convert photos and images into a professional PDF." actions={images.length > 0 && !downloadUrl && <ActionButton />}>
+    <>
+      <SEOHead {...imageToPdfSEO} />
+      <NativeToolLayout title="Image to PDF" description="Convert photos and images into a professional PDF." actions={images.length > 0 && !downloadUrl && <ActionButton />}>
       <input type="file" multiple accept="image/*" className="hidden" ref={fileInputRef} onChange={(e) => e.target.files && handleFiles(e.target.files)} />
       {images.length === 0 ? (
         <div onClick={() => fileInputRef.current?.click()} className="border-4 border-dashed border-gray-100 dark:border-zinc-900 rounded-[2.5rem] p-12 text-center hover:bg-rose-50 dark:hover:bg-rose-900/10 transition-all cursor-pointer group">
@@ -92,5 +96,6 @@ export default function ImageToPdfTool() {
       )}
       <PrivacyBadge />
     </NativeToolLayout>
+    </>
   )
 }

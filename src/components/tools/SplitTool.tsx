@@ -10,6 +10,8 @@ import { useObjectURL } from '../../utils/useObjectURL'
 import SuccessState from './shared/SuccessState'
 import PrivacyBadge from './shared/PrivacyBadge'
 import { NativeToolLayout } from './shared/NativeToolLayout'
+import { SEOHead } from '../../utils/useSEO'
+import { splitSEO } from '../../utils/seoData'
 
 type SplitPdfFile = {
   file: File
@@ -173,11 +175,13 @@ export default function SplitTool() {
   )
 
   return (
-    <NativeToolLayout
-      title="Split PDF"
-      description="Select pages visually or by range to extract them. Everything stays on your device."
-      actions={pdfData && !pdfData.isLocked && !objectUrl && <ActionButton />}
-    >
+    <>
+      <SEOHead {...splitSEO} />
+      <NativeToolLayout
+        title="Split PDF"
+        description="Select pages visually or by range to extract them. Everything stays on your device."
+        actions={pdfData && !pdfData.isLocked && !objectUrl && <ActionButton />}
+      >
       <input type="file" accept=".pdf" className="hidden" ref={fileInputRef} onChange={handleFileSelect} />
 
       {!pdfData ? (
@@ -328,5 +332,6 @@ export default function SplitTool() {
       )}
       <PrivacyBadge />
     </NativeToolLayout>
+    </>
   )
 }

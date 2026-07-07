@@ -11,6 +11,8 @@ import {
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { Tool, ToolCategory } from '../types'
+import { SEOHead } from '../utils/useSEO'
+import { homeSEO } from '../utils/seoData'
 
 const categoryColors: Record<ToolCategory, { bg: string, text: string, border: string, hover: string, glow: string }> = {
   Edit: { 
@@ -82,6 +84,7 @@ export default function WebView({ tools }: { tools: Tool[] }) {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] dark:bg-black transition-colors duration-500">
+      <SEOHead {...homeSEO} />
       {/* Hero Section */}
       <section className="relative pt-20 pb-16 px-6 overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(244,63,94,0.05),transparent_70%)] pointer-events-none" />

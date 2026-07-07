@@ -10,6 +10,8 @@ import { usePipeline } from '../../utils/pipelineContext'
 import SuccessState from './shared/SuccessState'
 import PrivacyBadge from './shared/PrivacyBadge'
 import { NativeToolLayout } from './shared/NativeToolLayout'
+import { SEOHead } from '../../utils/useSEO'
+import { signatureSEO } from '../../utils/seoData'
 
 type SignaturePdfData = { file: File, pageCount: number, isLocked: boolean, pdfDoc?: any, password?: string }
 
@@ -79,7 +81,9 @@ export default function SignatureTool() {
   )
 
   return (
-    <NativeToolLayout title="Signature" description="Sign any PDF by dragging your signature image." actions={pdfData && !pdfData.isLocked && !downloadUrl && <ActionButton />}>
+    <>
+      <SEOHead {...signatureSEO} />
+      <NativeToolLayout title="Signature" description="Sign any PDF by dragging your signature image." actions={pdfData && !pdfData.isLocked && !downloadUrl && <ActionButton />}>
       <input type="file" accept=".pdf" className="hidden" ref={fileInputRef} onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])} />
       <input type="file" accept="image/png,image/jpeg,image/webp" className="hidden" ref={signatureInputRef} onChange={(e) => { const file = e.target.files?.[0]; if (!file) return; if (!isAllowedSignatureImage(file)) { toast.error('Please upload a PNG, JPEG, or WebP image.'); e.currentTarget.value = ''; return; } if (signatureImg?.startsWith('blob:')) URL.revokeObjectURL(signatureImg); setSignatureFile(file); setSignatureImg(URL.createObjectURL(file)) }} />
       {!pdfData ? (
@@ -128,5 +132,6 @@ export default function SignatureTool() {
       )}
       <PrivacyBadge />
     </NativeToolLayout>
+    </>
   )
 }

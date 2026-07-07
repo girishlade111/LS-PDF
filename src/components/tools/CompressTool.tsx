@@ -11,6 +11,8 @@ import { useObjectURL } from '../../utils/useObjectURL'
 import SuccessState from './shared/SuccessState'
 import PrivacyBadge from './shared/PrivacyBadge'
 import { NativeToolLayout } from './shared/NativeToolLayout'
+import { SEOHead } from '../../utils/useSEO'
+import { compressSEO } from '../../utils/seoData'
 
 // Compare Slider Component (Optimized)
 const QualityCompare = ({ originalBuffer, compressedBuffer }: { originalBuffer: Uint8Array, compressedBuffer: Uint8Array }) => {
@@ -239,7 +241,9 @@ export default function CompressTool() {
   )
 
   return (
-    <NativeToolLayout title="Compress PDF" description="Reduce file size while maintaining quality. Everything stays on your device." actions={files.length > 0 && !showSuccess && <ActionButton />}>
+    <>
+      <SEOHead {...compressSEO} />
+      <NativeToolLayout title="Compress PDF" description="Reduce file size while maintaining quality. Everything stays on your device." actions={files.length > 0 && !showSuccess && <ActionButton />}>
       <input type="file" multiple accept=".pdf" className="hidden" ref={fileInputRef} onChange={(e) => e.target.files && handleFiles(e.target.files)} />
       
       {files.length === 0 ? (
@@ -351,5 +355,6 @@ export default function CompressTool() {
       )}
       <PrivacyBadge />
     </NativeToolLayout>
+    </>
   )
 }

@@ -10,6 +10,8 @@ import { usePipeline } from '../../utils/pipelineContext'
 import SuccessState from './shared/SuccessState'
 import PrivacyBadge from './shared/PrivacyBadge'
 import { NativeToolLayout } from './shared/NativeToolLayout'
+import { SEOHead } from '../../utils/useSEO'
+import { grayscaleSEO } from '../../utils/seoData'
 
 type PdfData = { file: File, thumbnail?: string, pageCount: number, isLocked: boolean, pdfDoc?: any, password?: string }
 
@@ -124,7 +126,9 @@ export default function GrayscaleTool() {
   )
 
   return (
-    <NativeToolLayout title="PDF to Grayscale" description="Remove colors from your PDF to save ink and storage." actions={pdfData && !pdfData.isLocked && !downloadUrl && <ActionButton />}>
+    <>
+      <SEOHead {...grayscaleSEO} />
+      <NativeToolLayout title="PDF to Grayscale" description="Remove colors from your PDF to save ink and storage." actions={pdfData && !pdfData.isLocked && !downloadUrl && <ActionButton />}>
       <input type="file" accept=".pdf" className="hidden" ref={fileInputRef} onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])} />
       {!pdfData ? (
         <div onClick={() => !isProcessing && fileInputRef.current?.click()} className="border-4 border-dashed border-gray-100 dark:border-zinc-900 rounded-[2.5rem] p-12 text-center hover:bg-rose-50 dark:hover:bg-rose-900/10 transition-all cursor-pointer group">
@@ -176,5 +180,6 @@ export default function GrayscaleTool() {
       )}
       <PrivacyBadge />
     </NativeToolLayout>
+    </>
   )
 }

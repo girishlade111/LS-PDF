@@ -9,6 +9,8 @@ import { usePipeline } from '../../utils/pipelineContext'
 import SuccessState from './shared/SuccessState'
 import PrivacyBadge from './shared/PrivacyBadge'
 import { NativeToolLayout } from './shared/NativeToolLayout'
+import { SEOHead } from '../../utils/useSEO'
+import { rotateSEO } from '../../utils/seoData'
 
 type RotatePdfData = { file: File, pageCount: number, isLocked: boolean, pdfDoc?: any, password?: string, thumbnail?: string }
 
@@ -99,7 +101,9 @@ export default function RotateTool() {
   )
 
   return (
-    <NativeToolLayout title="Rotate PDF" description="Tap individual pages to rotate 90 degrees." actions={pdfData && !pdfData.isLocked && !downloadUrl && <ActionButton />}>
+    <>
+      <SEOHead {...rotateSEO} />
+      <NativeToolLayout title="Rotate PDF" description="Tap individual pages to rotate 90 degrees." actions={pdfData && !pdfData.isLocked && !downloadUrl && <ActionButton />}>
       <input type="file" accept=".pdf" className="hidden" ref={fileInputRef} onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])} />
       
       {!pdfData ? (
@@ -178,5 +182,6 @@ export default function RotateTool() {
       )}
       <PrivacyBadge />
     </NativeToolLayout>
+    </>
   )
 }

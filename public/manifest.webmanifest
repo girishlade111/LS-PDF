@@ -1,47 +1,85 @@
 {
+  "name": "LS PDF — Free Private PDF Tools",
+  "short_name": "LS PDF",
+  "description": "A complete, free, and privacy-first PDF toolkit. Merge, split, compress, protect, convert, and edit PDFs entirely in your browser — no uploads, no servers.",
+  "id": "https://pdf.ladestack.in/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "lang": "en",
+  "dir": "ltr",
   "background_color": "#ffffff",
+  "theme_color": "#F43F5E",
+  "categories": ["utilities", "productivity"],
   "icons": [
     {
-      "src": "../icons/icon-48.webp",
-      "type": "image/png",
+      "src": "/icons/icon-48.webp",
+      "type": "image/webp",
       "sizes": "48x48",
       "purpose": "any maskable"
     },
     {
-      "src": "../icons/icon-72.webp",
-      "type": "image/png",
+      "src": "/icons/icon-72.webp",
+      "type": "image/webp",
       "sizes": "72x72",
       "purpose": "any maskable"
     },
     {
-      "src": "../icons/icon-96.webp",
-      "type": "image/png",
+      "src": "/icons/icon-96.webp",
+      "type": "image/webp",
       "sizes": "96x96",
       "purpose": "any maskable"
     },
     {
-      "src": "../icons/icon-128.webp",
-      "type": "image/png",
+      "src": "/icons/icon-128.webp",
+      "type": "image/webp",
       "sizes": "128x128",
       "purpose": "any maskable"
     },
     {
-      "src": "../icons/icon-192.webp",
-      "type": "image/png",
+      "src": "/icons/icon-192.webp",
+      "type": "image/webp",
       "sizes": "192x192",
       "purpose": "any maskable"
     },
     {
-      "src": "../icons/icon-256.webp",
-      "type": "image/png",
+      "src": "/icons/icon-256.webp",
+      "type": "image/webp",
       "sizes": "256x256",
       "purpose": "any maskable"
     },
     {
-      "src": "../icons/icon-512.webp",
-      "type": "image/png",
+      "src": "/icons/icon-512.webp",
+      "type": "image/webp",
       "sizes": "512x512",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Merge PDF",
+      "short_name": "Merge",
+      "url": "/merge",
+      "description": "Combine multiple PDF files into one"
+    },
+    {
+      "name": "Compress PDF",
+      "short_name": "Compress",
+      "url": "/compress",
+      "description": "Reduce PDF file size"
+    },
+    {
+      "name": "Split PDF",
+      "short_name": "Split",
+      "url": "/split",
+      "description": "Extract pages from a PDF"
+    },
+    {
+      "name": "PDF to Image",
+      "short_name": "PDF→Image",
+      "url": "/pdf-to-image",
+      "description": "Convert PDF pages to images"
     }
   ]
 }

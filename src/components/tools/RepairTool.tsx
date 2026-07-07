@@ -8,6 +8,8 @@ import { usePipeline } from '../../utils/pipelineContext'
 import SuccessState from './shared/SuccessState'
 import PrivacyBadge from './shared/PrivacyBadge'
 import { NativeToolLayout } from './shared/NativeToolLayout'
+import { SEOHead } from '../../utils/useSEO'
+import { repairSEO } from '../../utils/seoData'
 
 export default function RepairTool() {
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -63,7 +65,9 @@ export default function RepairTool() {
   )
 
   return (
-    <NativeToolLayout title="Repair PDF" description="Fix corrupted or unreadable PDF files by rebuilding structure." actions={originalFile && !downloadUrl && <ActionButton />}>
+    <>
+      <SEOHead {...repairSEO} />
+      <NativeToolLayout title="Repair PDF" description="Fix corrupted or unreadable PDF files by rebuilding structure." actions={originalFile && !downloadUrl && <ActionButton />}>
       <input type="file" accept=".pdf" className="hidden" ref={fileInputRef} onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])} />
       
       {!originalFile ? (
@@ -112,5 +116,6 @@ export default function RepairTool() {
       </div>
       <PrivacyBadge />
     </NativeToolLayout>
+    </>
   )
 }
