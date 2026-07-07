@@ -5,7 +5,6 @@
 
 import { useState } from 'react'
 import { 
-  Heart as HeartIcon, 
   Code as CodeIcon, 
   Cpu as CpuIcon, 
   Github as GHIcon, 
@@ -70,27 +69,7 @@ const AboutWeb = () => {
         </div>
       </section>
 
-      {/* 2. Sustainability Card - Condensed */}
-      <section className="max-w-5xl mx-auto px-6 mb-20">
-        <div className="bg-rose-500 text-white rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 relative overflow-hidden shadow-xl shadow-rose-500/20">
-           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_60%)] pointer-events-none" />
-           <div className="w-20 h-20 bg-white/20 rounded-3xl flex items-center justify-center shrink-0 backdrop-blur-md border border-white/20">
-              <HeartIcon size={32} fill="currentColor" />
-           </div>
-           <div className="flex-1 text-center md:text-left relative z-10">
-              <h3 className="text-3xl font-black tracking-tighter mb-3 leading-tight">Fuel the Engine.</h3>
-              <p className="text-rose-100 font-medium text-base mb-6 max-w-xl leading-relaxed">
-                 LS PDF is self-funded and ad-free. Your support ensures the project stays alive and free for everyone.
-              </p>
-              <div className="flex flex-wrap justify-center md:justify-start gap-3">
-                 <a href="https://github.com/sponsors/potatameister" target="_blank" className="px-8 py-3.5 bg-white text-rose-600 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:scale-105 transition-transform shadow-lg flex items-center gap-2">
-                    <HeartIcon size={14} fill="currentColor" /> Sponsor
-                 </a>
 
-              </div>
-           </div>
-        </div>
-      </section>
 
       {/* 3. Deep Specification - Tighter Layout */}
       <section className="max-w-6xl mx-auto px-6 mb-20">
@@ -179,29 +158,7 @@ const AboutAPK = () => {
           <p className="text-[9px] font-black uppercase tracking-widest text-rose-500">v1.0.9 Stable • Absolute Privacy</p>
         </div>
 
-        {/* 2. Fuel the Engine (Prominent Support - MOVED TO TOP) */}
-        <div className="bg-rose-500 text-white rounded-[2rem] p-6 relative overflow-hidden shadow-xl shadow-rose-500/20">
-           <div className="absolute top-0 right-0 p-6 opacity-10">
-              <HeartIcon size={100} fill="currentColor" />
-           </div>
-           <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-4">
-                 <div className="p-2 bg-white/20 rounded-xl backdrop-blur-md">
-                    <HeartIcon size={20} fill="currentColor" />
-                 </div>
-                 <h3 className="text-lg font-black uppercase tracking-tight">Fuel the Engine</h3>
-              </div>
-              <p className="text-sm font-medium text-rose-100 leading-relaxed mb-6">
-                 We are 100% self-funded. Your support ensures LS PDF stays free and open for everyone.
-              </p>
-              <div className="grid grid-cols-2 gap-3">
-                 <a href="https://github.com/sponsors/potatameister" target="_blank" className="flex items-center justify-center gap-2 py-3 bg-white text-rose-600 rounded-xl font-black uppercase text-[9px] tracking-widest shadow-sm active:scale-95 transition-transform">
-                    Sponsor
-                 </a>
 
-              </div>
-           </div>
-        </div>
 
         {/* 3. Explainer Protocol (The "Everything") */}
         <div className="bg-white dark:bg-zinc-900 rounded-[2rem] p-2 border border-gray-100 dark:border-white/5 shadow-sm overflow-hidden">

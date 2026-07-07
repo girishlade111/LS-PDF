@@ -17,7 +17,7 @@ import {
   LayoutGrid as LayoutGridIcon, 
   Settings as SettingsIcon,
   Github as GHIcon,
-  Heart as HeartIcon,
+
   Download
 } from 'lucide-react'
 import { Capacitor } from '@capacitor/core'
@@ -236,16 +236,6 @@ export default function Layout({ children, theme, toggleTheme, tools, onFileDrop
                   <li><Link to="/about" className="hover:text-rose-500 transition-colors">About</Link></li>
                   <li><Link to="/privacy" className="hover:text-rose-500 transition-colors">Privacy Spec</Link></li>
                   <li><a href="https://github.com/girishlade111/LS-PDF/blob/main/LICENSE" target="_blank" className="hover:text-rose-500 transition-colors">License</a></li>
-                </ul>
-              </div>
-
-              {/* Community Column */}
-              <div className="col-span-1 md:col-span-3">
-                <h4 className="font-bold text-[10px] uppercase tracking-widest text-gray-900 dark:text-white mb-4">Ecosystem</h4>
-                <ul className="space-y-2.5 text-xs text-gray-500 dark:text-zinc-500">
-                  <li><a href="https://github.com/sponsors/potatameister" target="_blank" className="flex items-center gap-2 hover:text-rose-500 transition-colors">Sponsor <HeartIcon size={10} className="text-rose-500" /></a></li>
-                  <li><a href="https://github.com/girishlade111/LS-PDF/issues" target="_blank" className="hover:text-rose-500 transition-colors">Report Bug</a></li>
-
                 </ul>
               </div>
 
