@@ -10,6 +10,8 @@ import { toast } from 'sonner'
 import { Theme } from '../types'
 import { NativeToolLayout } from './tools/shared/NativeToolLayout'
 import { hapticImpact } from '../utils/haptics'
+import { SEOHead } from '../utils/useSEO'
+import { settingsSEO } from '../utils/seoData'
 
 // --- Custom UI Components ---
 
@@ -106,6 +108,7 @@ export default function Settings({ theme, setTheme }: { theme: Theme, setTheme: 
 
   return (
     <NativeToolLayout title="System" description="Core Configuration" actions={null}>
+      <SEOHead {...settingsSEO} />
       <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 pb-40">
         
         {/* Integrated Header */}

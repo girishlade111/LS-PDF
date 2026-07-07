@@ -25,6 +25,8 @@ export interface ToolSEOData {
   canonical: string
   ogTitle?: string
   ogDescription?: string
+  ogImage?: string
+  robots?: string
   jsonLd: object | object[]
 }
 
@@ -697,6 +699,25 @@ export const privacySEO: ToolSEOData = {
     url: SITE_URL + '/privacy',
     description:
       'Privacy specification for LS PDF. Explains how user files and data are handled — entirely client-side with no collection or transmission to servers.',
+    inLanguage: 'en',
+  },
+}
+
+// ─── SETTINGS ─────────────────────────────────────────────────────────────────
+export const settingsSEO: ToolSEOData = {
+  title: 'Settings — LS PDF | Preferences & Configuration',
+  description:
+    'Configure LS PDF settings — theme, auto-download, haptic feedback, activity history, and privacy preferences. All settings are stored locally on your device.',
+  keywords:
+    'ls pdf settings, pdf tool preferences, auto download pdf, pdf tool configuration, privacy settings, theme settings, haptic feedback',
+  canonical: SITE_URL + '/settings',
+  robots: 'noindex, nofollow',
+  jsonLd: {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'LS PDF Settings',
+    url: SITE_URL + '/settings',
+    description: 'User preferences and configuration panel for the LS PDF toolkit.',
     inLanguage: 'en',
   },
 }
