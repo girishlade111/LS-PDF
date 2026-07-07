@@ -21,6 +21,8 @@ import { Capacitor } from '@capacitor/core'
 import { NativeToolLayout } from './tools/shared/NativeToolLayout'
 import { LsPdfLogo } from './Logo'
 import { ViewMode } from '../types'
+import { SEOHead } from '../utils/useSEO'
+import { aboutSEO } from '../utils/seoData'
 
 // --- UI COMPONENTS ---
 const SpecItem = ({ title, icon: Icon, children, defaultOpen = false }: { title: string, icon: any, children: React.ReactNode, defaultOpen?: boolean }) => {
@@ -54,6 +56,7 @@ const SpecItem = ({ title, icon: Icon, children, defaultOpen = false }: { title:
 const AboutWeb = () => {
   return (
     <div className="min-h-screen bg-[#FAFAFA] dark:bg-black text-gray-900 dark:text-zinc-100 selection:bg-rose-500 selection:text-white pb-24">
+      <SEOHead {...aboutSEO} />
       
       {/* 1. Impact Hero - Compact */}
       <section className="relative pt-20 pb-12 px-6 overflow-hidden">

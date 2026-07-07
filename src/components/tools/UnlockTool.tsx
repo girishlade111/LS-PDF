@@ -10,6 +10,8 @@ import { useObjectURL } from '../../utils/useObjectURL'
 import SuccessState from './shared/SuccessState'
 import PrivacyBadge from './shared/PrivacyBadge'
 import { NativeToolLayout } from './shared/NativeToolLayout'
+import { SEOHead } from '../../utils/useSEO'
+import { unlockSEO } from '../../utils/seoData'
 
 type UnlockPdfFile = {
   file: File
@@ -72,7 +74,9 @@ export default function UnlockTool() {
   )
 
   return (
-    <NativeToolLayout title="Unlock PDF" description="Remove passwords and restrictions permanently. Processed locally." actions={pdfData && !objectUrl && <ActionButton />}>
+    <>
+      <SEOHead {...unlockSEO} />
+      <NativeToolLayout title="Unlock PDF" description="Remove passwords and restrictions permanently. Processed locally." actions={pdfData && !objectUrl && <ActionButton />}>
       <input type="file" accept=".pdf" className="hidden" ref={fileInputRef} onChange={handleFileSelect} />
       {!pdfData ? (
         <button 
@@ -117,5 +121,6 @@ export default function UnlockTool() {
       )}
       <PrivacyBadge />
     </NativeToolLayout>
+    </>
   )
 }

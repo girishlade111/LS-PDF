@@ -7,11 +7,14 @@ import { Shield, EyeOff, ServerOff, Database as DatabaseIcon, History as History
 import { Capacitor } from '@capacitor/core'
 import { NativeToolLayout } from './tools/shared/NativeToolLayout'
 import { LsPdfLogo } from './Logo'
+import { SEOHead } from '../utils/useSEO'
+import { privacySEO } from '../utils/seoData'
 
 // --- WEB VERSION (TITAN HIGH-DENSITY) ---
 const PrivacyWeb = () => {
   return (
     <div className="min-h-screen bg-[#FAFAFA] dark:bg-black text-gray-900 dark:text-zinc-100 selection:bg-rose-500 selection:text-white p-6 md:p-12 pb-24">
+      <SEOHead {...privacySEO} />
       <div className="max-w-6xl mx-auto space-y-6">
         
         {/* Hero Section */}

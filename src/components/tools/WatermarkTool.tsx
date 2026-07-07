@@ -9,6 +9,8 @@ import { usePipeline } from '../../utils/pipelineContext'
 import SuccessState from './shared/SuccessState'
 import PrivacyBadge from './shared/PrivacyBadge'
 import { NativeToolLayout } from './shared/NativeToolLayout'
+import { SEOHead } from '../../utils/useSEO'
+import { watermarkSEO } from '../../utils/seoData'
 
 type WatermarkPdfData = { file: File, pageCount: number, isLocked: boolean, password?: string, pdfDoc?: any, thumbnail?: string }
 
@@ -109,7 +111,9 @@ export default function WatermarkTool() {
   )
 
   return (
-    <NativeToolLayout title="Watermark" description="Add secure text overlays to your documents locally." actions={pdfData && !pdfData.isLocked && !downloadUrl && <ActionButton />}>
+    <>
+      <SEOHead {...watermarkSEO} />
+      <NativeToolLayout title="Watermark" description="Add secure text overlays to your documents locally." actions={pdfData && !pdfData.isLocked && !downloadUrl && <ActionButton />}>
       <input type="file" accept=".pdf" className="hidden" ref={fileInputRef} onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])} />
       
       {!pdfData ? (
@@ -219,5 +223,6 @@ export default function WatermarkTool() {
       )}
       <PrivacyBadge />
     </NativeToolLayout>
+    </>
   )
 }

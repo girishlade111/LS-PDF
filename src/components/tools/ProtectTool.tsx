@@ -12,6 +12,8 @@ import { useObjectURL } from '../../utils/useObjectURL'
 import SuccessState from './shared/SuccessState'
 import PrivacyBadge from './shared/PrivacyBadge'
 import { NativeToolLayout } from './shared/NativeToolLayout'
+import { SEOHead } from '../../utils/useSEO'
+import { protectSEO } from '../../utils/seoData'
 
 type ProtectPdfFile = {
   file: File
@@ -100,7 +102,9 @@ export default function ProtectTool() {
   )
 
   return (
-    <NativeToolLayout title="Protect PDF" description="Add strong encryption to your documents. Processed locally." actions={pdfData && !pdfData.isLocked && !objectUrl && <ActionButton />}>
+    <>
+      <SEOHead {...protectSEO} />
+      <NativeToolLayout title="Protect PDF" description="Add strong encryption to your documents. Processed locally." actions={pdfData && !pdfData.isLocked && !objectUrl && <ActionButton />}>
       <input type="file" accept=".pdf" className="hidden" ref={fileInputRef} onChange={handleFileSelect} />
       {!pdfData ? (
         <button 
@@ -146,6 +150,7 @@ export default function ProtectTool() {
       )}
       <PrivacyBadge />
     </NativeToolLayout>
+    </>
   )
 }
           
