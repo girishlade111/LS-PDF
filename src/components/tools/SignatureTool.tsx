@@ -19,6 +19,7 @@ export default function SignatureTool() {
   const [pdfData, setPdfData] = useState<SignaturePdfData | null>(null); const [signatureImg, setSignatureImg] = useState<string | null>(null); const [signatureFile, setSignatureFile] = useState<File | null>(null)
   const [isProcessing, setIsProcessing] = useState(false); const [downloadUrl, setDownloadUrl] = useState<string | null>(null)
   const [customFileName, setCustomFileName] = useState('ls-pdf-signed')
+  const isAllowedSignatureImage = (file: File) => ['image/png', 'image/jpeg', 'image/webp'].includes(file.type)
   const [unlockPassword, setUnlockPassword] = useState(''); const [activePage] = useState(1); const [pos, setPos] = useState({ x: 50, y: 50 })
   const [size, setSize] = useState(150); const [thumbnail, setThumbnail] = useState<string | null>(null); const [isDraggingSig, setIsDraggingSig] = useState(false); const [isResizing, setIsResizing] = useState(false)
   const isNative = Capacitor.isNativePlatform()
@@ -80,7 +81,7 @@ export default function SignatureTool() {
   return (
     <NativeToolLayout title="Signature" description="Sign any PDF by dragging your signature image." actions={pdfData && !pdfData.isLocked && !downloadUrl && <ActionButton />}>
       <input type="file" accept=".pdf" className="hidden" ref={fileInputRef} onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])} />
-      <input type="file" accept="image/*" className="hidden" ref={signatureInputRef} onChange={(e) => { const file = e.target.files?.[0]; if (file) { setSignatureFile(file); setSignatureImg(URL.createObjectURL(file)) } }} />
+      <input type="file" accept="image/png,image/jpeg,image/webp" className="hidden" ref={signatureInputRef} onChange={(e) => { const file = e.target.files?.[0]; if (!file) return; if (!isAllowedSignatureImage(file)) { toast.error('Please upload a PNG, JPEG, or WebP image.'); e.currentTarget.value = ''; return; } if (signatureImg?.startsWith('blob:')) URL.revokeObjectURL(signatureImg); setSignatureFile(file); setSignatureImg(URL.createObjectURL(file)) }} />
       {!pdfData ? (
         <button 
           onClick={() => !isProcessing && fileInputRef.current?.click()} 
@@ -120,9 +121,9 @@ export default function SignatureTool() {
               </div>
             </>
           ) : (
-            <SuccessState message="Signed Successfully!" downloadUrl={downloadUrl} fileName={`${customFileName}.pdf`} onStartOver={() => { setDownloadUrl(null); setPdfData(null); setSignatureImg(null); }} />
+            <SuccessState message="Signed Successfully!" downloadUrl={downloadUrl} fileName={`${customFileName}.pdf`} onStartOver={() => { if (signatureImg?.startsWith('blob:')) URL.revokeObjectURL(signatureImg); setDownloadUrl(null); setPdfData(null); setSignatureImg(null); }} />
           )}
-          <button onClick={() => { setPdfData(null); setSignatureImg(null); }} className="w-full py-2 text-[10px] font-black uppercase text-gray-300 hover:text-rose-500 transition-colors">Close File</button>
+          <button onClick={() => { if (signatureImg?.startsWith('blob:')) URL.revokeObjectURL(signatureImg); setPdfData(null); setSignatureImg(null); }} className="w-full py-2 text-[10px] font-black uppercase text-gray-300 hover:text-rose-500 transition-colors">Close File</button>
         </div>
       )}
       <PrivacyBadge />
