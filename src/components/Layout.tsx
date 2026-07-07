@@ -239,6 +239,7 @@ export default function Layout({ children, theme, toggleTheme, tools, onFileDrop
                 </ul>
               </div>
 
+
             </div>
             
             <div className="pt-6 border-t border-gray-100 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] text-gray-400 dark:text-zinc-600 font-medium">
