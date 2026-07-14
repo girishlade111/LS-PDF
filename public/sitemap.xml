@@ -4,7 +4,7 @@
   <!-- Home Page -->
   <url>
     <loc>https://pdf.ladestack.in/</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -12,119 +12,119 @@
   <!-- Tool Pages -->
   <url>
     <loc>https://pdf.ladestack.in/merge</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://pdf.ladestack.in/split</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://pdf.ladestack.in/compress</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://pdf.ladestack.in/protect</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://pdf.ladestack.in/unlock</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://pdf.ladestack.in/rotate-pdf</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://pdf.ladestack.in/rearrange-pdf</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://pdf.ladestack.in/page-numbers</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://pdf.ladestack.in/watermark</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://pdf.ladestack.in/metadata</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://pdf.ladestack.in/signature</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://pdf.ladestack.in/grayscale</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://pdf.ladestack.in/pdf-to-image</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://pdf.ladestack.in/image-to-pdf</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://pdf.ladestack.in/extract-images</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://pdf.ladestack.in/pdf-to-text</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://pdf.ladestack.in/repair</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -132,16 +132,23 @@
   <!-- Secondary Pages -->
   <url>
     <loc>https://pdf.ladestack.in/about</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://pdf.ladestack.in/privacy</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://pdf.ladestack.in/settings</loc>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 
 </urlset>
