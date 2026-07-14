@@ -10,9 +10,15 @@ export default defineConfig({
   server: {
     host: true
   },
+  define: {
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
+  },
   build: {
     target: 'esnext',
-    minify: 'esbuild', // Faster and more stable in resource-constrained environments
+    minify: 'esbuild',
+    sourcemap: false,           // Smaller output, faster Vercel deploys
+    assetsInlineLimit: 0,       // Never inline assets as base64 — WASM workers must stay as files
+    chunkSizeWarningLimit: 3500, // pdf-lib, pdfjs, tesseract are legitimately large
     rollupOptions: {
       output: {
         manualChunks(id) {
@@ -37,3 +43,4 @@ export default defineConfig({
     }
   }
 })
+
