@@ -1,0 +1,11 @@
+# CodeRabbit Configuration File
+language: "en-US"
+tone_instructions: "Provide insightful code reviews focusing on performance, security, and React/TypeScript best practices."
+reviews:
+  profile: "chill"
+  request_tools:
+    ast-grep:
+      enabled: true
+  auto_review:
+    enabled: true
+    drafts: false
