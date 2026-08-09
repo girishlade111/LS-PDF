@@ -71,10 +71,15 @@ export const getWorkspace = async (toolId: string): Promise<WorkspaceData | null
 export const clearWorkspace = async (toolId: string) => {
   try {
     const db = await openDB();
-    const tx = db.transaction(STORE_NAME, 'readwrite');
-    const store = tx.objectStore(STORE_NAME);
-    store.delete(toolId);
+    return new Promise<void>((resolve, reject) => {
+      const tx = db.transaction(STORE_NAME, 'readwrite');
+      const store = tx.objectStore(STORE_NAME);
+      store.delete(toolId);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    });
   } catch (e) {
     console.error('Clear Workspace Error:', e);
   }
 };
+

@@ -29,6 +29,17 @@ const getCMapUrl = () => {
   return isCapacitor ? 'cmaps/' : '/ls-pdf/cmaps/';
 };
 
+const uint8ArrayToBase64 = (bytes: Uint8Array): string => {
+  let binary = '';
+  const len = bytes.byteLength;
+  const chunkSize = 1024;
+  for (let i = 0; i < len; i += chunkSize) {
+    const sub = bytes.subarray(i, Math.min(i + chunkSize, len));
+    binary += String.fromCharCode.apply(null, Array.from(sub));
+  }
+  return btoa(binary);
+};
+
 /**
  * Universal file downloader that works on Web and Android
  */
@@ -40,14 +51,7 @@ export const downloadFile = async (data: Uint8Array | string, fileName: string, 
       if (typeof data === 'string') {
         base64Data = data.includes(',') ? data.split(',')[1] : data;
       } else {
-        // High-performance chunked base64 conversion
-        const bytes = new Uint8Array(data);
-        const chunks = [];
-        const chunkSize = 0x8000; // 32KB chunks
-        for (let i = 0; i < bytes.length; i += chunkSize) {
-          chunks.push(String.fromCharCode.apply(null, Array.from(bytes.subarray(i, i + chunkSize))));
-        }
-        base64Data = btoa(chunks.join(''));
+        base64Data = uint8ArrayToBase64(new Uint8Array(data));
       }
 
       // Resolve duplicate filenames
@@ -111,14 +115,7 @@ export const shareFile = async (data: Uint8Array | string, fileName: string, mim
       if (typeof data === 'string') {
         base64Data = data.includes(',') ? data.split(',')[1] : data;
       } else {
-        // High-performance chunked base64 conversion
-        const bytes = new Uint8Array(data);
-        const chunks = [];
-        const chunkSize = 0x8000; // 32KB chunks
-        for (let i = 0; i < bytes.length; i += chunkSize) {
-          chunks.push(String.fromCharCode.apply(null, Array.from(bytes.subarray(i, i + chunkSize))));
-        }
-        base64Data = btoa(chunks.join(''));
+        base64Data = uint8ArrayToBase64(new Uint8Array(data));
       }
 
       const result = await Filesystem.writeFile({
