@@ -26,12 +26,13 @@ jobs:
       - name: Fetch OCR Binaries (Global Version Only)
         run: |
           mkdir -p public/tesseract
-          curl -Lo public/tesseract/tesseract-core.wasm https://unpkg.com/tesseract.js-core@v5.1.1/tesseract-core.wasm
-          curl -Lo public/tesseract/tesseract-core-simd.wasm https://unpkg.com/tesseract.js-core@v5.1.1/tesseract-core-simd.wasm
-          curl -Lo public/tesseract/tesseract-core-lstm.wasm https://unpkg.com/tesseract.js-core@v5.1.1/tesseract-core-lstm.wasm
-          curl -Lo public/tesseract/tesseract-core.wasm.js https://unpkg.com/tesseract.js-core@v5.1.1/tesseract-core.wasm.js
-          curl -Lo public/tesseract/worker.min.js https://unpkg.com/tesseract.js@v5.1.1/dist/worker.min.js
-          curl -Lo public/tesseract/eng.traineddata.gz https://raw.githubusercontent.com/naptha/tessdata/gh-pages/4.0.0/eng.traineddata.gz
+          CURL_FLAGS="--fail --show-error --retry 3 --connect-timeout 10 --max-time 120"
+          curl $CURL_FLAGS -Lo public/tesseract/tesseract-core.wasm https://unpkg.com/tesseract.js-core@v5.1.1/tesseract-core.wasm
+          curl $CURL_FLAGS -Lo public/tesseract/tesseract-core-simd.wasm https://unpkg.com/tesseract.js-core@v5.1.1/tesseract-core-simd.wasm
+          curl $CURL_FLAGS -Lo public/tesseract/tesseract-core-lstm.wasm https://unpkg.com/tesseract.js-core@v5.1.1/tesseract-core-lstm.wasm
+          curl $CURL_FLAGS -Lo public/tesseract/tesseract-core.wasm.js https://unpkg.com/tesseract.js-core@v5.1.1/tesseract-core.wasm.js
+          curl $CURL_FLAGS -Lo public/tesseract/worker.min.js https://unpkg.com/tesseract.js@v5.1.1/dist/worker.min.js
+          curl $CURL_FLAGS -Lo public/tesseract/eng.traineddata.gz https://raw.githubusercontent.com/naptha/tessdata/gh-pages/4.0.0/eng.traineddata.gz
           gunzip public/tesseract/eng.traineddata.gz
 
       - name: Build Web Assets (Global)
@@ -81,8 +82,8 @@ jobs:
           KEY_PASS: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           if [ -z "$SIGNING_KEY" ]; then
-            echo "No signing key found — skipping APK signing"
-            exit 0
+            echo "No signing key found — refusing to publish unsigned APK artifacts" >&2
+            exit 1
           fi
           echo "$SIGNING_KEY" | base64 -d > keystore.jks
           SDK=$(find /usr/local/lib/android/sdk -name apksigner 2>/dev/null | head -1)
