@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import com.getcapacitor.BridgeActivity;
+import org.json.JSONObject;
 
 public class MainActivity extends BridgeActivity {
     @Override
@@ -44,8 +45,9 @@ public class MainActivity extends BridgeActivity {
                         @Override
                         public void run() {
                             if (getBridge() != null && getBridge().getWebView() != null) {
+                                String quotedUri = JSONObject.quote(uriString);
                                 getBridge().getWebView().evaluateJavascript(
-                                    "window.dispatchEvent(new CustomEvent('fileIntent', { detail: { uri: '" + uriString + "' } }));",
+                                    "window.dispatchEvent(new CustomEvent('fileIntent', { detail: { uri: " + quotedUri + " } }));",
                                     null
                                 );
                             }
