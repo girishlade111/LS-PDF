@@ -2,20 +2,27 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+LS PDF follows a zero-server architecture where all PDF processing occurs locally on the client device. Security updates are actively provided for the latest minor releases.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| 1.0.x   | :white_check_mark: |
+| < 1.0   | :x:                |
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+We take the security and privacy of LS PDF very seriously. Because LS PDF handles sensitive documents locally, ensuring absolute privacy is our highest priority.
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+### Disclosure Policy
+
+If you discover a security vulnerability or privacy concern:
+
+1. **Do NOT disclose it publicly** (e.g., in public GitHub issues or social media) until it has been addressed.
+2. **Report via GitHub Private Vulnerability Reporting**: Go to the repository's [Security tab](https://github.com/girishlade111/LS-PDF/security/advisories) and click **"Report a vulnerability"**.
+3. Alternatively, open a private advisory directly through GitHub.
+
+### What to Expect
+
+- **Acknowledgement:** We will acknowledge receipt of your vulnerability report within 48 hours.
+- **Assessment & Fix:** We will evaluate the report, provide status updates, and release a patch as soon as possible.
+- **Credit:** Once fixed, we will publicly acknowledge your contribution (unless you prefer anonymity).
