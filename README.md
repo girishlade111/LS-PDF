@@ -128,7 +128,7 @@ LS PDF stores data **only on your device** and only for convenience features you
 ### Web (PWA)
 
 No installation needed. Open in any modern browser:
-- **Live site:** [https://girishlade111.github.io/LS-PDF](https://girishlade111.github.io/LS-PDF)
+- **Live site:** [https://ls-pdf.vercel.app](https://ls-pdf.vercel.app)
 - **Install as PWA:** Click the install icon in your browser's address bar (Chrome / Edge / Samsung Internet)
 
 ### Android APK
@@ -183,7 +183,13 @@ cd android
 
 To build the F-Droid lite variant (no OCR):
 
+POSIX shells (Linux / macOS / WSL):
 ```bash
+export VITE_DISABLE_OCR=true && npm run build && npx cap sync android
+```
+
+Windows CMD:
+```cmd
 set VITE_DISABLE_OCR=true && npm run build && npx cap sync android
 ```
 
