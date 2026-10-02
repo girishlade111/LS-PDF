@@ -321,3 +321,9 @@ src/
 **GNU Affero General Public License v3.0 or later (AGPL-3.0-or-later)**
 
 See [LICENSE](./LICENSE) for details.
+
+---
+
+## Built by Girish Lade
+
+Crafted with ❤️ by **Girish Lade** — founder of [LadeStack](https://ladestack.in). All tools are free to use, run 100% on your device, and never upload your files anywhere.
