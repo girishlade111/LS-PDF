@@ -89,7 +89,8 @@ export const downloadFile = async (data: Uint8Array | string, fileName: string, 
     }
   } else {
     // Standard Web Download
-    const blob = typeof data === 'string' 
+    const isUrl = typeof data === 'string' && (data.startsWith('blob:') || data.startsWith('data:') || data.startsWith('http://') || data.startsWith('https://'));
+    const blob = isUrl 
       ? await (await fetch(data)).blob() 
       : new Blob([data as BlobPart], { type: mimeType });
     const url = URL.createObjectURL(blob);
@@ -139,7 +140,8 @@ export const shareFile = async (data: Uint8Array | string, fileName: string, mim
     }
   } else {
     // Web Share API
-    const blob = typeof data === 'string' 
+    const isUrl = typeof data === 'string' && (data.startsWith('blob:') || data.startsWith('data:') || data.startsWith('http://') || data.startsWith('https://'));
+    const blob = isUrl 
       ? await (await fetch(data)).blob() 
       : new Blob([data as BlobPart], { type: mimeType });
     
