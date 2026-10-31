@@ -3,6 +3,7 @@ import { ArrowLeft } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { Capacitor } from '@capacitor/core'
 import ToolHeader from './ToolHeader'
+import { trackEvent } from '../../../utils/analytics'
 
 interface NativeToolLayoutProps {
   title: string
@@ -29,6 +30,10 @@ export const NativeToolLayout = ({
   // A more reliable way is to check the layout context or simply use media queries 
   // but since we want to avoid double headers with the main Layout.tsx:
   const showNativeHeader = isAndroidView
+
+  React.useEffect(() => {
+    trackEvent('tool_open', { tool: title })
+  }, [title])
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FAFAFA] dark:bg-black transition-colors">

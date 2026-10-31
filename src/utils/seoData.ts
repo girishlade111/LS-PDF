@@ -686,9 +686,9 @@ export const aboutSEO: ToolSEOData = {
 
 // ─── PRIVACY POLICY ───────────────────────────────────────────────────────────
 export const privacySEO: ToolSEOData = {
-  title: 'Privacy Policy — LS PDF | No Data Collection, No Tracking',
+  title: 'Privacy Policy — LS PDF | Document Privacy & Data Sovereignty',
   description:
-    'LS PDF collects zero user data. No analytics, no cookies, no server-side processing. Read our privacy specification to understand how your files and data are handled.',
+    'LS PDF processes documents 100% on-device with zero server uploads. Read our privacy specification to understand how your files, local storage, and anonymous metrics are handled.',
   keywords:
     'ls pdf privacy policy, pdf tool privacy, no data collection pdf, private pdf processing, cookie-free pdf tool, gdpr pdf tool',
   canonical: SITE_URL + '/privacy',

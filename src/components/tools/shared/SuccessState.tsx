@@ -5,6 +5,7 @@ import { downloadFile, shareFile } from '../../../utils/pdfHelpers'
 import { Capacitor } from '@capacitor/core'
 import { hapticSuccess } from '../../../utils/haptics'
 import PdfPreview from '../../PdfPreview'
+import { trackEvent } from '../../../utils/analytics'
 
 interface SuccessStateProps {
   message: string
@@ -20,6 +21,7 @@ export default function SuccessState({ message, downloadUrl, fileName, onStartOv
 
   useEffect(() => {
     hapticSuccess()
+    trackEvent('processing_success', { outputFormat: fileName.endsWith('.zip') ? 'zip' : 'pdf' })
     
     // Auto-Download Logic
     const shouldAutoDownload = localStorage.getItem('autoDownload') === 'true'
@@ -31,6 +33,7 @@ export default function SuccessState({ message, downloadUrl, fileName, onStartOv
           const buffer = await blob.arrayBuffer()
           const mimeType = fileName.endsWith('.zip') ? 'application/zip' : 'application/pdf'
           await downloadFile(new Uint8Array(buffer), fileName, mimeType)
+      trackEvent('download_completed', { outputFormat: fileName.endsWith('.zip') ? 'zip' : 'pdf' })
           toast.success(`Auto-saved as ${fileName}`)
         } catch (e) {
           console.error('Auto-download failed:', e)
@@ -50,6 +53,7 @@ export default function SuccessState({ message, downloadUrl, fileName, onStartOv
       const mimeType = fileName.endsWith('.zip') ? 'application/zip' : 'application/pdf'
       
       await downloadFile(new Uint8Array(buffer), fileName, mimeType)
+      trackEvent('download_completed', { outputFormat: fileName.endsWith('.zip') ? 'zip' : 'pdf' })
       toast.success(`Saved to Documents as ${fileName}`, { id: 'save-action' })
     } catch (err) {
       toast.error('Failed to save file', { id: 'save-action' })

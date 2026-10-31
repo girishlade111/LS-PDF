@@ -240,7 +240,7 @@ export default function Layout({ children, theme, toggleTheme, tools, onFileDrop
             </div>
             
             <div className="pt-6 border-t border-gray-100 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] text-gray-400 dark:text-zinc-600 font-medium">
-              <p>© 2026 LS PDF Project. No cookies used.</p>
+              <p>© 2026 LS PDF Project. Cookieless & 100% on-device document processing.</p>
               <div className="flex gap-6 items-center">
 
               </div>
