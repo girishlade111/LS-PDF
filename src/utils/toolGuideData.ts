@@ -156,7 +156,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       },
       {
         q: 'Will compressing a PDF reduce its quality?',
-        a: 'LS PDF offers lossless compression that reduces file size with minimal quality impact. Higher compression levels may reduce image quality slightly to achieve smaller sizes.'
+        a: 'LS PDF optimizes file size by rendering pages to high-resolution canvases and re-encoding them as optimized JPEG images. While higher quality settings preserve crisp visuals, this rasterization process converts selectable text into images, making it best suited for scans, receipts, and image-heavy documents.'
       },
       {
         q: 'Why is my PDF too large to email?',
@@ -463,28 +463,28 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     slug: 'signature',
     title: 'Signature',
     h1: 'Add Electronic Signature to PDF Online Free',
-    summary: 'Sign contracts and agreements directly in your browser by drawing or uploading an electronic signature stamp.',
+    summary: 'Sign contracts and agreements directly in your browser by placing and resizing an uploaded signature image stamp.',
     whatItDoes: [
-      'LS PDF Signature enables you to create a smooth handwritten signature on a responsive canvas or upload an existing transparent PNG signature image.',
+      'LS PDF Signature enables you to place and position an uploaded signature image (PNG, JPG, or WebP) directly onto document pages.',
       'You can drag your signature stamp onto any page, resize it to fit signature lines, and position it with precision.',
       'Important Distinction: This tool stamps a visual electronic signature onto document pages. It is not a cryptographic digital certificate (PKI/eIDAS hardware token), but satisfies standard electronic signing requirements for most agreements and forms.'
     ],
     howTo: [
       'Upload the PDF document requiring a signature.',
-      'Draw your signature on the digital canvas or upload a signature image.',
+      'Upload your signature image (transparent PNG recommended).',
       'Navigate to the desired page and drag your signature onto the document.',
       'Resize and position your signature, then click Sign & Download.'
     ],
     specs: [
-      { label: 'Signature Type', value: 'Visual Electronic Signature (Canvas / PNG stamp)' },
-      { label: 'Input Methods', value: 'Touch screen, Mouse draw, or PNG image upload' },
+      { label: 'Signature Type', value: 'Visual Electronic Signature (Image stamp)' },
+      { label: 'Supported Stamp Formats', value: 'PNG (transparent recommended), JPG, WebP image upload' },
       { label: 'Legal Distinction', value: 'Visual stamp; does not embed cryptographic PKI certificates' },
       { label: 'Privacy', value: 'Signature images and documents never leave your local device' }
     ],
     faqs: [
       {
         q: 'How do I electronically sign a PDF for free?',
-        a: 'Open LS PDF Signature, upload your PDF, draw or type your signature, drag it to the correct position, and download the signed document — all free and without creating an account.'
+        a: 'Open LS PDF Signature, upload your PDF, upload your signature image, position and resize it on the page, and download the signed document — all free and without creating an account.'
       },
       {
         q: 'Is an electronic signature from LS PDF legally valid?',
@@ -492,7 +492,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       },
       {
         q: 'Is my signature private and secure?',
-        a: 'Yes. Your signature image is created and applied entirely within your browser. It is never transmitted to any server.'
+        a: 'Yes. Your signature image is processed and embedded entirely within your browser. It is never transmitted to any server.'
       }
     ],
     related: [
@@ -531,7 +531,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       },
       {
         q: 'Why convert a PDF to grayscale?',
-        a: 'Grayscale PDFs use less color ink when printing, may be required by some printers or institutions, and can result in smaller file sizes.'
+        a: 'Grayscale PDFs save expensive color printer ink and meet strict black-and-white filing standards. However, because pages are re-encoded via canvas rendering, conversion does not guarantee a smaller file size; use Compress PDF if size reduction is your primary goal.'
       }
     ],
     related: [
@@ -683,6 +683,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     ],
     specs: [
       { label: 'Extraction Engines', value: 'PDF.js native text parser + Tesseract.js WebAssembly OCR' },
+      { label: 'OCR Language', value: 'English (Tesseract.js eng traineddata by default)' },
       { label: 'Output Format', value: 'Plain text file (.txt) and instant clipboard copy' },
       { label: 'OCR Processing', value: 'Runs 100% locally in browser memory via WebAssembly' },
       { label: 'Privacy', value: 'Zero cloud OCR; documents never leave your device' }
@@ -694,7 +695,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       },
       {
         q: 'Can LS PDF extract text from scanned PDFs?',
-        a: 'Yes. LS PDF uses Tesseract.js, an open-source OCR engine running entirely in your browser, to recognize and extract text from scanned or image-based PDFs.'
+        a: 'Yes. LS PDF uses Tesseract.js running locally in your browser to recognize text from scanned or image-based PDFs using English traineddata. OCR accuracy depends on scan resolution, contrast, and font clarity.'
       },
       {
         q: 'Is OCR processing private?',
@@ -721,7 +722,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     howTo: [
       'Upload your damaged or unreadable PDF document.',
       'The repair engine will parse and reconstruct available document objects.',
-      'Review the recovery status and preview the salvaged pages.',
+      'Review the recovery status reported by the repair engine.',
       'Click Download Repaired PDF to save your fixed document.'
     ],
     specs: [

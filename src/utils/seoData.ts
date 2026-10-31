@@ -205,7 +205,7 @@ export const splitSEO: ToolSEOData = {
 export const compressSEO: ToolSEOData = {
   title: 'Compress PDF Online Free — Reduce PDF File Size | LS PDF',
   description:
-    'Reduce your PDF file size for email, sharing, or storage without quality loss. Choose compression level. 100% free, no upload, processes instantly in your browser.',
+    'Reduce PDF file size by converting pages into optimized images. Choose compression balance. Private, fast, and free with zero server file uploads.',
   keywords:
     'compress pdf online, reduce pdf file size, pdf compressor free, shrink pdf, optimize pdf for email, pdf size reducer, compress pdf without upload',
   canonical: SITE_URL + '/compress',
@@ -214,7 +214,7 @@ export const compressSEO: ToolSEOData = {
       'Compress PDF Online — LS PDF',
       SITE_URL + '/compress',
       'Reduce PDF file size for easier sharing via email or cloud storage. Choose from multiple compression levels. 100% client-side processing.',
-      ['Multiple compression levels', 'Lossless and lossy modes', 'Real-time size preview', 'Batch compression support']
+      ['Multiple compression levels', 'Canvas rasterization and JPEG re-sampling', 'Real-time size preview', 'Batch compression support']
     ),
     makeFAQ([
       {
@@ -223,7 +223,7 @@ export const compressSEO: ToolSEOData = {
       },
       {
         q: 'Will compressing a PDF reduce its quality?',
-        a: 'LS PDF offers lossless compression that reduces file size with minimal quality impact. Higher compression levels may reduce image quality slightly to achieve smaller sizes.',
+        a: 'LS PDF compresses PDFs by rasterizing pages into optimized JPEG images. This delivers significant size reductions for scanned and image-heavy documents while removing selectable vector text.',
       },
       {
         q: 'Why is my PDF too large to email?',
@@ -439,7 +439,7 @@ export const metadataSEO: ToolSEOData = {
       },
       {
         q: 'Can I remove all metadata from a PDF?',
-        a: 'Yes. LS PDF offers a "Deep Clean" option that strips all identifying metadata from your PDF, including producer, creator, and XMP data.',
+        a: 'LS PDF offers a "Deep Clean" option that strips standard document properties (title, author, subject, producer, creator) and deletes the catalog XMP metadata stream from your PDF.',
       },
     ]),
   ],
@@ -449,21 +449,21 @@ export const metadataSEO: ToolSEOData = {
 export const signatureSEO: ToolSEOData = {
   title: 'Add Electronic Signature to PDF Free — Sign PDF Online | LS PDF',
   description:
-    'Draw, type, or upload your signature and add it to any PDF. Sign documents online for free, no upload, no account. Your signature never leaves your device.',
+    'Upload your transparent signature image and stamp it onto any PDF page. Sign documents online for free with zero uploads. Your signature never leaves your device.',
   keywords:
-    'sign pdf online free, add signature to pdf, electronic signature pdf, e-signature pdf, draw signature pdf, digital signature pdf, sign document online',
+    'sign pdf online free, add signature to pdf, electronic signature pdf, e-signature pdf, upload signature pdf, add signature stamp pdf, e-signature image, sign document online',
   canonical: SITE_URL + '/signature',
   jsonLd: [
     makeWebApp(
       'Sign PDF Online — LS PDF',
       SITE_URL + '/signature',
-      'Add your electronic signature to any PDF. Draw with mouse/touch, type, or upload a signature image. Place it anywhere on the document. 100% private.',
-      ['Draw signature with mouse or touch', 'Type signature in custom fonts', 'Upload signature image', 'Drag to position on any page']
+      'Stamp your visual signature image onto any PDF document. Upload transparent PNG, JPG, or WebP signatures and place them anywhere on any page. 100% private.',
+      ['Upload signature image (PNG, JPG, WebP)', 'Drag to position on any page', 'Preserve original document layout', 'Zero server uploads']
     ),
     makeFAQ([
       {
         q: 'How do I electronically sign a PDF for free?',
-        a: 'Open LS PDF Signature, upload your PDF, draw or type your signature, drag it to the correct position, and download the signed document — all free and without creating an account.',
+        a: 'Open LS PDF Signature, upload your PDF, upload your transparent signature image, drag it to the correct position, and download the signed document — all free and without creating an account.',
       },
       {
         q: 'Is an electronic signature from LS PDF legally valid?',
@@ -490,7 +490,7 @@ export const grayscaleSEO: ToolSEOData = {
       'Convert PDF to Grayscale — LS PDF',
       SITE_URL + '/grayscale',
       'Convert PDF pages to grayscale (black and white) to save color ink or meet document standards. Fast client-side processing.',
-      ['Convert all pages to grayscale', 'Reduces color ink consumption for printing', 'Maintains text sharpness', 'Reduces file size']
+      ['Convert all pages to grayscale', 'Reduces color ink consumption for printing', 'Client-side monochrome canvas filtering', 'Zero server uploads']
     ),
     makeFAQ([
       {
@@ -499,7 +499,7 @@ export const grayscaleSEO: ToolSEOData = {
       },
       {
         q: 'Why convert a PDF to grayscale?',
-        a: 'Grayscale PDFs use less color ink when printing, may be required by some printers or institutions, and can result in smaller file sizes.',
+        a: 'Grayscale PDFs use less color ink when printing, ensure clean monochrome contrast, and meet institutional filing standards for black and white documents.',
       },
     ]),
   ],
@@ -601,7 +601,7 @@ export const extractImagesSEO: ToolSEOData = {
 export const pdfToTextSEO: ToolSEOData = {
   title: 'PDF to Text Online Free — Extract Text from PDF (OCR) | LS PDF',
   description:
-    'Extract plain text from PDF documents, including scanned PDFs using OCR (Optical Character Recognition). Copy or download the extracted text. Free, no upload.',
+    'Extract plain text from PDF documents, including scanned PDFs using English OCR (Optical Character Recognition). Copy or download the extracted text. Free, no upload.',
   keywords:
     'pdf to text online, extract text from pdf, pdf text extractor free, ocr pdf online, pdf ocr tool, copy text from pdf, scanned pdf to text',
   canonical: SITE_URL + '/pdf-to-text',
@@ -610,7 +610,7 @@ export const pdfToTextSEO: ToolSEOData = {
       'PDF to Text (OCR) — LS PDF',
       SITE_URL + '/pdf-to-text',
       'Extract plain text from PDF documents. Includes OCR support for scanned or image-based PDFs using Tesseract.js — all processing done locally in your browser.',
-      ['Standard PDF text extraction', 'OCR for scanned PDFs using Tesseract.js', 'Copy or download extracted text', 'Multi-page support']
+      ['Standard PDF text stream extraction', 'English OCR for scanned PDFs using Tesseract.js', 'Copy or download extracted text', 'Multi-page support']
     ),
     makeFAQ([
       {
@@ -619,7 +619,7 @@ export const pdfToTextSEO: ToolSEOData = {
       },
       {
         q: 'Can LS PDF extract text from scanned PDFs?',
-        a: 'Yes. LS PDF uses Tesseract.js, an open-source OCR engine running entirely in your browser, to recognize and extract text from scanned or image-based PDFs.',
+        a: 'Yes. LS PDF uses Tesseract.js, an open-source OCR engine running entirely in your browser, to recognize and extract English text from scanned or image-based PDFs.',
       },
       {
         q: 'Is OCR processing private?',
@@ -661,7 +661,7 @@ export const repairSEO: ToolSEOData = {
 export const aboutSEO: ToolSEOData = {
   title: 'About LS PDF — Privacy-First PDF Tools | Zero Server Architecture',
   description:
-    'Learn how LS PDF works. A privacy-first, open-source PDF toolkit with zero server infrastructure. All processing happens locally in your browser using WebAssembly.',
+    'Learn how LS PDF works. A privacy-first, open-source PDF toolkit with zero server infrastructure. All document processing happens locally in your browser using JavaScript and WebAssembly.',
   keywords:
     'about ls pdf, privacy pdf tools, client side pdf processing, open source pdf tool, no server pdf, webassembly pdf, local pdf processing, free open source pdf',
   canonical: SITE_URL + '/about',
@@ -671,7 +671,7 @@ export const aboutSEO: ToolSEOData = {
     name: 'LS PDF',
     url: SITE_URL,
     description:
-      'LS PDF is an open-source, privacy-first PDF toolkit. All tools run 100% client-side in the browser using WebAssembly. No servers, no tracking, no cost.',
+      'LS PDF is an open-source, privacy-first PDF toolkit. All tools run 100% client-side in the browser using JavaScript and WebAssembly. No file uploads, no document tracking, no cost.',
     foundingDate: '2026',
     sameAs: ['https://github.com/girishlade111/LS-PDF'],
     knowsAbout: [
