@@ -38,32 +38,56 @@ if (!fs.existsSync(TEMPLATE_PATH)) {
   process.exit(1);
 }
 
-const template = fs.readFileSync(TEMPLATE_PATH, 'utf-8');
+const rawTemplate = fs.readFileSync(TEMPLATE_PATH, 'utf-8');
+
+// Ensure template is pristine even if prerender runs repeatedly without a preceding vite build
+let cleanTemplate = rawTemplate.replace(
+  /<div id="root">[\s\S]*?<\/div>\s*(<script type="module")/i,
+  '<div id="root"></div>\n    $1'
+);
+
+// Reset previously injected JSON-LD to a clean placeholder
+cleanTemplate = cleanTemplate.replace(
+  /<!-- JSON-LD Structured Data -->[\s\S]*?(?=<script type="module"|<\/head>)/i,
+  '<!-- JSON-LD: Organization Schema -->\n    <script type="application/ld+json">{}</script>\n'
+);
+
+const template = cleanTemplate;
+
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 
 interface RouteConfig {
   path: string;
   slug?: string;
+  desc?: string;
   seo: ToolSEOData;
 }
 
 const routes: RouteConfig[] = [
-  { path: 'merge', slug: 'merge', seo: mergeSEO },
-  { path: 'split', slug: 'split', seo: splitSEO },
-  { path: 'compress', slug: 'compress', seo: compressSEO },
-  { path: 'protect', slug: 'protect', seo: protectSEO },
-  { path: 'unlock', slug: 'unlock', seo: unlockSEO },
-  { path: 'rotate-pdf', slug: 'rotate-pdf', seo: rotateSEO },
-  { path: 'rearrange-pdf', slug: 'rearrange-pdf', seo: rearrangeSEO },
-  { path: 'page-numbers', slug: 'page-numbers', seo: pageNumbersSEO },
-  { path: 'watermark', slug: 'watermark', seo: watermarkSEO },
-  { path: 'metadata', slug: 'metadata', seo: metadataSEO },
-  { path: 'signature', slug: 'signature', seo: signatureSEO },
-  { path: 'grayscale', slug: 'grayscale', seo: grayscaleSEO },
-  { path: 'pdf-to-image', slug: 'pdf-to-image', seo: pdfToImageSEO },
-  { path: 'image-to-pdf', slug: 'image-to-pdf', seo: imageToPdfSEO },
-  { path: 'extract-images', slug: 'extract-images', seo: extractImagesSEO },
-  { path: 'pdf-to-text', slug: 'pdf-to-text', seo: pdfToTextSEO },
-  { path: 'repair', slug: 'repair', seo: repairSEO },
+  { path: 'merge', slug: 'merge', desc: 'Combine multiple PDF files into one document. Processed entirely on your device.', seo: mergeSEO },
+  { path: 'split', slug: 'split', desc: 'Visually extract specific pages or ranges. Processed entirely on your device.', seo: splitSEO },
+  { path: 'compress', slug: 'compress', desc: 'Optimize your file size for easier sharing. Processed entirely on your device.', seo: compressSEO },
+  { path: 'protect', slug: 'protect', desc: 'Secure your documents with strong password encryption. Processed entirely on your device.', seo: protectSEO },
+  { path: 'unlock', slug: 'unlock', desc: 'Remove password protection from your PDF files. Processed entirely on your device.', seo: unlockSEO },
+  { path: 'rotate-pdf', slug: 'rotate-pdf', desc: 'Fix page orientation permanently. Processed entirely on your device.', seo: rotateSEO },
+  { path: 'rearrange-pdf', slug: 'rearrange-pdf', desc: 'Drag and drop pages to reorder them. Processed entirely on your device.', seo: rearrangeSEO },
+  { path: 'page-numbers', slug: 'page-numbers', desc: 'Add numbering to your documents automatically. Processed entirely on your device.', seo: pageNumbersSEO },
+  { path: 'watermark', slug: 'watermark', desc: 'Overlay custom text for branding or security. Processed entirely on your device.', seo: watermarkSEO },
+  { path: 'metadata', slug: 'metadata', desc: 'Edit document properties for better privacy. Processed entirely on your device.', seo: metadataSEO },
+  { path: 'signature', slug: 'signature', desc: 'Add your electronic signature to any document. Processed entirely on your device.', seo: signatureSEO },
+  { path: 'grayscale', slug: 'grayscale', desc: 'Convert all document pages to black and white. Processed entirely on your device.', seo: grayscaleSEO },
+  { path: 'pdf-to-image', slug: 'pdf-to-image', desc: 'Convert document pages into high-quality images. Processed entirely on your device.', seo: pdfToImageSEO },
+  { path: 'image-to-pdf', slug: 'image-to-pdf', desc: 'Convert JPG, PNG, and WebP into a professional PDF. Processed entirely on your device.', seo: imageToPdfSEO },
+  { path: 'extract-images', slug: 'extract-images', desc: 'Pull out all original images embedded in a PDF. Processed entirely on your device.', seo: extractImagesSEO },
+  { path: 'pdf-to-text', slug: 'pdf-to-text', desc: 'Extract plain text from your PDF documents. Processed entirely on your device.', seo: pdfToTextSEO },
+  { path: 'repair', slug: 'repair', desc: 'Attempt to fix corrupted or unreadable documents. Processed entirely on your device.', seo: repairSEO },
   { path: 'about', seo: aboutSEO },
   { path: 'privacy', seo: privacySEO },
   { path: 'settings', seo: settingsSEO },
@@ -120,21 +144,29 @@ function generateBreadcrumbJsonLd(canonical: string): object {
 
 function generateHeaderHtml(): string {
   return `
-    <header class="border-b border-gray-100 dark:border-white/5 bg-white/80 dark:bg-black/80 backdrop-blur-md sticky top-0 z-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-        <a href="/" class="flex items-center gap-3">
-          <div class="w-9 h-9 bg-rose-500 rounded-xl flex items-center justify-center text-white font-black text-sm shadow-md shadow-rose-500/20">LS</div>
-          <div>
-            <span class="font-black text-gray-900 dark:text-white text-base tracking-tight block leading-tight">LS PDF</span>
-            <span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest block leading-none">Private &amp; In-Browser</span>
-          </div>
+    <header class="flex items-center justify-between px-4 md:px-8 h-16 md:h-20 border-b border-gray-100 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md sticky top-0 z-[100]">
+      <div class="flex items-center gap-2 md:gap-4 flex-1 min-w-0">
+        <a href="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity shrink-0">
+          <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="shrink-0">
+            <rect width="100" height="100" rx="28" fill="#F43F5E" />
+            <path d="M28 32H72V42H28V32Z" fill="white" />
+            <path d="M28 48H72V58H28V48Z" fill="white" />
+            <path d="M28 64H52V74H28V64Z" fill="white" />
+          </svg>
+          <span class="font-black tracking-tighter text-lg md:text-xl dark:text-white hidden xs:block">LS PDF</span>
         </a>
-        <nav aria-label="Primary Navigation" class="flex items-center gap-6 text-xs font-bold text-gray-600 dark:text-zinc-400">
-          <a href="/" class="hover:text-rose-500 transition-colors">Home</a>
-          <a href="/about" class="hover:text-rose-500 transition-colors">About</a>
-          <a href="/privacy" class="hover:text-rose-500 transition-colors">Privacy</a>
-          <a href="/settings" class="hover:text-rose-500 transition-colors">Settings</a>
-        </nav>
+        <div class="h-6 w-[1px] bg-gray-200 dark:bg-zinc-800 mx-1 md:mx-2 shrink-0"></div>
+        <div class="relative min-w-0">
+          <a href="/" class="flex items-center gap-2 px-2 md:px-3 py-1.5 rounded-xl transition-all font-black text-[10px] md:text-sm uppercase tracking-widest min-w-0 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-900" aria-label="All Tools Directory">
+            <span class="truncate">All Tools</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="m6 9 6 6 6-6"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <a href="https://github.com/girishlade111/LS-PDF" target="_blank" rel="noreferrer" class="p-2 md:p-2.5 rounded-xl text-gray-500 hover:text-rose-500 hover:bg-gray-50 dark:hover:bg-zinc-900 transition-colors" aria-label="GitHub Repository">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+        </a>
       </div>
     </header>
   `;
@@ -142,60 +174,74 @@ function generateHeaderHtml(): string {
 
 function generateFooterHtml(): string {
   return `
-    <footer class="border-t border-gray-100 dark:border-white/5 bg-white dark:bg-zinc-950 py-12 px-4 sm:px-6">
-      <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
-          <div>
-            <h4 class="text-xs font-black uppercase tracking-widest text-gray-400 dark:text-zinc-500 mb-4">Edit &amp; Organize</h4>
-            <ul class="space-y-2 text-xs font-semibold text-gray-600 dark:text-zinc-400">
-              <li><a href="/merge" class="hover:text-rose-500 transition-colors">Merge PDF</a></li>
-              <li><a href="/split" class="hover:text-rose-500 transition-colors">Split PDF</a></li>
-              <li><a href="/rotate-pdf" class="hover:text-rose-500 transition-colors">Rotate PDF</a></li>
-              <li><a href="/rearrange-pdf" class="hover:text-rose-500 transition-colors">Rearrange PDF</a></li>
-              <li><a href="/page-numbers" class="hover:text-rose-500 transition-colors">Page Numbers</a></li>
-              <li><a href="/watermark" class="hover:text-rose-500 transition-colors">Watermark</a></li>
-              <li><a href="/signature" class="hover:text-rose-500 transition-colors">Sign PDF</a></li>
+    <footer class="border-t border-gray-100 dark:border-zinc-800 bg-white dark:bg-zinc-950 pt-16 pb-12 mt-auto">
+      <div class="max-w-7xl mx-auto px-6 md:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-12 gap-8 md:gap-12 pb-16">
+          <div class="col-span-2 md:col-span-4 space-y-4">
+            <a href="/" class="flex items-center gap-2.5 text-gray-900 dark:text-white group w-fit">
+              <svg width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="shrink-0">
+                <rect width="100" height="100" rx="28" fill="#F43F5E" />
+                <path d="M28 32H72V42H28V32Z" fill="white" />
+                <path d="M28 48H72V58H28V48Z" fill="white" />
+                <path d="M28 64H52V74H28V64Z" fill="white" />
+              </svg>
+              <span class="font-black tracking-tight text-xl group-hover:text-rose-500 transition-colors">LS PDF</span>
+            </a>
+            <p class="text-gray-500 dark:text-zinc-400 text-xs leading-relaxed max-w-sm">
+              The privacy-first PDF toolkit. 17 client-side tools running 100% on your device with zero server uploads. Open source, cookieless, and free forever.
+            </p>
+            <div class="flex items-center gap-2 pt-2">
+              <div class="flex items-center gap-2 px-2.5 py-1 bg-emerald-50 dark:bg-emerald-900/10 text-emerald-600 dark:text-emerald-400 rounded-full text-[9px] font-bold uppercase tracking-wide border border-emerald-100 dark:border-emerald-900/20">
+                <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                Client Engine Active
+              </div>
+            </div>
+          </div>
+          <div class="col-span-1 md:col-span-2 space-y-3">
+            <h4 class="font-black text-[10px] uppercase tracking-widest text-rose-500">Edit</h4>
+            <ul class="space-y-2 text-xs list-none p-0">
+              <li><a href="/merge" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">Merge PDF</a></li>
+              <li><a href="/split" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">Split PDF</a></li>
+              <li><a href="/rotate-pdf" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">Rotate PDF</a></li>
+              <li><a href="/rearrange-pdf" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">Rearrange PDF</a></li>
+              <li><a href="/page-numbers" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">Page Numbers</a></li>
+              <li><a href="/watermark" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">Watermark</a></li>
+              <li><a href="/signature" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">Signature</a></li>
             </ul>
           </div>
-          <div>
-            <h4 class="text-xs font-black uppercase tracking-widest text-gray-400 dark:text-zinc-500 mb-4">Security &amp; Privacy</h4>
-            <ul class="space-y-2 text-xs font-semibold text-gray-600 dark:text-zinc-400">
-              <li><a href="/protect" class="hover:text-rose-500 transition-colors">Protect PDF</a></li>
-              <li><a href="/unlock" class="hover:text-rose-500 transition-colors">Unlock PDF</a></li>
-              <li><a href="/metadata" class="hover:text-rose-500 transition-colors">Edit Metadata</a></li>
-              <li><a href="/privacy" class="hover:text-rose-500 transition-colors">Privacy Specification</a></li>
+          <div class="col-span-1 md:col-span-2 space-y-3">
+            <h4 class="font-black text-[10px] uppercase tracking-widest text-emerald-500">Convert</h4>
+            <ul class="space-y-2 text-xs list-none p-0">
+              <li><a href="/pdf-to-image" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">PDF to Image</a></li>
+              <li><a href="/image-to-pdf" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">Image to PDF</a></li>
+              <li><a href="/extract-images" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">Extract Images</a></li>
+              <li><a href="/pdf-to-text" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">PDF to Text</a></li>
             </ul>
           </div>
-          <div>
-            <h4 class="text-xs font-black uppercase tracking-widest text-gray-400 dark:text-zinc-500 mb-4">Convert &amp; Extract</h4>
-            <ul class="space-y-2 text-xs font-semibold text-gray-600 dark:text-zinc-400">
-              <li><a href="/pdf-to-image" class="hover:text-rose-500 transition-colors">PDF to Image</a></li>
-              <li><a href="/image-to-pdf" class="hover:text-rose-500 transition-colors">Image to PDF</a></li>
-              <li><a href="/extract-images" class="hover:text-rose-500 transition-colors">Extract Images</a></li>
-              <li><a href="/pdf-to-text" class="hover:text-rose-500 transition-colors">PDF to Text (OCR)</a></li>
+          <div class="col-span-1 md:col-span-2 space-y-3">
+            <h4 class="font-black text-[10px] uppercase tracking-widest text-indigo-500">Security &amp; Optimize</h4>
+            <ul class="space-y-2 text-xs list-none p-0">
+              <li><a href="/protect" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">Protect PDF</a></li>
+              <li><a href="/unlock" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">Unlock PDF</a></li>
+              <li><a href="/metadata" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">Edit Metadata</a></li>
+              <li><a href="/compress" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">Compress PDF</a></li>
+              <li><a href="/grayscale" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">Grayscale</a></li>
+              <li><a href="/repair" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">Repair PDF</a></li>
             </ul>
           </div>
-          <div>
-            <h4 class="text-xs font-black uppercase tracking-widest text-gray-400 dark:text-zinc-500 mb-4">Optimize &amp; Repair</h4>
-            <ul class="space-y-2 text-xs font-semibold text-gray-600 dark:text-zinc-400">
-              <li><a href="/compress" class="hover:text-rose-500 transition-colors">Compress PDF</a></li>
-              <li><a href="/grayscale" class="hover:text-rose-500 transition-colors">Grayscale PDF</a></li>
-              <li><a href="/repair" class="hover:text-rose-500 transition-colors">Repair PDF</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="text-xs font-black uppercase tracking-widest text-gray-400 dark:text-zinc-500 mb-4">Project &amp; Source</h4>
-            <ul class="space-y-2 text-xs font-semibold text-gray-600 dark:text-zinc-400">
-              <li><a href="/about" class="hover:text-rose-500 transition-colors">About LS PDF</a></li>
-              <li><a href="/privacy" class="hover:text-rose-500 transition-colors">Privacy Policy</a></li>
-              <li><a href="/settings" class="hover:text-rose-500 transition-colors">Settings &amp; Auto-Wipe</a></li>
-              <li><a href="https://github.com/girishlade111/LS-PDF" target="_blank" rel="noopener noreferrer" class="hover:text-rose-500 transition-colors">GitHub Repository</a></li>
+          <div class="col-span-1 md:col-span-2 space-y-3">
+            <h4 class="font-black text-[10px] uppercase tracking-widest text-gray-900 dark:text-white">Protocol</h4>
+            <ul class="space-y-2 text-xs list-none p-0">
+              <li><a href="/about" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">About LS PDF</a></li>
+              <li><a href="/privacy" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">Privacy Spec</a></li>
+              <li><a href="/settings" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">Settings</a></li>
+              <li><a href="https://github.com/girishlade111/LS-PDF/blob/main/LICENSE" target="_blank" rel="noreferrer" class="text-gray-600 dark:text-zinc-400 hover:text-rose-500 transition-colors">License (AGPL-3.0)</a></li>
             </ul>
           </div>
         </div>
-        <div class="border-t border-gray-100 dark:border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400 dark:text-zinc-500">
-          <p>&copy; 2026 LS PDF. 100% Client-Side In-Browser PDF Suite. Free &amp; Open Source under AGPL-3.0.</p>
-          <p class="mt-2 sm:mt-0 font-medium">Built by <a href="https://ladestack.in" target="_blank" rel="noopener noreferrer" class="hover:text-rose-500 transition-colors">Girish Lade</a></p>
+        <div class="pt-8 border-t border-gray-100 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400 dark:text-zinc-500 font-medium">
+          <p>&copy; 2026 LS PDF Project. Cookieless &amp; 100% on-device document processing.</p>
+          <p class="text-[11px] text-gray-400">Crafted by Girish Lade &mdash; LadeStack</p>
         </div>
       </div>
     </footer>
@@ -207,99 +253,159 @@ function generateHomeBodyHtml(): string {
   const toolsHtml = toolList
     .map(
       (tool) => `
-      <article class="p-6 bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-white/5 hover:border-rose-500/30 transition-all shadow-sm">
-        <a href="/${tool.slug}" class="block group">
-          <h3 class="text-lg font-black text-gray-900 dark:text-white group-hover:text-rose-500 transition-colors mb-2">${tool.title}</h3>
-          <p class="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed">${tool.summary}</p>
-        </a>
-      </article>
+      <a href="/${tool.slug}" class="group relative flex flex-col p-6 rounded-[2rem] bg-white dark:bg-zinc-900/40 border border-gray-100 dark:border-white/5 hover:border-rose-500/50 dark:hover:border-rose-500/50 transition-all duration-300 text-left hover:shadow-2xl hover:shadow-rose-500/5 hover:-translate-y-1 block">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5 bg-rose-50 dark:bg-rose-900/20 text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-all duration-500">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <h2 class="font-black text-gray-900 dark:text-white mb-2 text-lg tracking-tight group-hover:text-rose-500 transition-colors">${escapeHtml(tool.title)}</h2>
+        <p class="text-sm text-gray-500 dark:text-zinc-400 font-medium leading-relaxed line-clamp-2">${escapeHtml(tool.summary)}</p>
+        <div class="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity text-rose-500">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </div>
+      </a>
     `
     )
     .join('');
 
   return `
-    ${generateHeaderHtml()}
-    <main id="main-content" class="min-h-screen">
-      <section class="py-14 sm:py-20 px-4 max-w-7xl mx-auto text-center">
-        <div class="inline-flex items-center gap-2 px-3 py-1 bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
-          100% Client-Side Processing • Zero Server Uploads
-        </div>
-        <h1 class="text-4xl sm:text-6xl font-black text-gray-900 dark:text-white tracking-tight leading-tight max-w-4xl mx-auto mb-6">
-          Free, Private &amp; In-Browser PDF Suite
-        </h1>
-        <p class="text-base sm:text-xl text-gray-600 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed mb-8">
-          The Swiss Army Knife for PDFs. 17 professional PDF utilities running entirely inside your browser memory via WebAssembly and Web Workers. No file uploads. No cookies. No ads. No tracking.
-        </p>
-        <div class="flex flex-wrap justify-center gap-3 text-xs font-bold text-gray-500 dark:text-zinc-400">
-          <span class="px-3 py-1.5 bg-gray-100 dark:bg-zinc-800 rounded-xl">Merge &amp; Split</span>
-          <span class="px-3 py-1.5 bg-gray-100 dark:bg-zinc-800 rounded-xl">Compress &amp; Repair</span>
-          <span class="px-3 py-1.5 bg-gray-100 dark:bg-zinc-800 rounded-xl">Protect &amp; Unlock</span>
-          <span class="px-3 py-1.5 bg-gray-100 dark:bg-zinc-800 rounded-xl">OCR &amp; Convert</span>
-          <span class="px-3 py-1.5 bg-gray-100 dark:bg-zinc-800 rounded-xl">Watermark &amp; Sign</span>
-        </div>
-      </section>
-
-      <section class="max-w-7xl mx-auto px-4 sm:px-6 mb-20" aria-label="Available PDF Tools">
-        <div class="flex items-center justify-between mb-8">
-          <div>
-            <h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight">All 17 PDF Tools</h2>
-            <p class="text-xs text-gray-400 dark:text-zinc-500 uppercase tracking-widest font-bold mt-1">Select any tool to process your document immediately</p>
-          </div>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          ${toolsHtml}
-        </div>
-      </section>
-
-      <section class="max-w-7xl mx-auto px-4 sm:px-6 mb-20" aria-label="Privacy &amp; Architecture">
-        <div class="p-8 sm:p-12 bg-zinc-50 dark:bg-zinc-900/40 rounded-3xl border border-gray-100 dark:border-white/5">
-          <div class="max-w-3xl">
-            <h2 class="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white tracking-tight mb-4">
-              Zero Server Uploads. True In-Browser PDF Security.
-            </h2>
-            <p class="text-sm sm:text-base text-gray-600 dark:text-zinc-400 leading-relaxed mb-4">
-              Traditional cloud PDF services require you to transmit sensitive financial statements, legal contracts, identity documents, and medical reports to remote cloud servers for manipulation. This creates unacceptable data breach and compliance risks.
+    <div class="min-h-screen flex flex-col bg-[#FAFAFA] dark:bg-black text-gray-900 dark:text-zinc-100 transition-colors duration-300">
+      ${generateHeaderHtml()}
+      <div class="min-h-screen bg-[#FAFAFA] dark:bg-black transition-colors duration-500">
+        <section class="relative pt-20 pb-16 px-6 overflow-hidden">
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(244,63,94,0.05),transparent_70%)] pointer-events-none"></div>
+          <div class="max-w-6xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-rose-50 dark:bg-rose-900/20 text-rose-500 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-8 border border-rose-100 dark:border-rose-900/30">
+              Professional PDF Engine
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black tracking-tighter dark:text-white mb-8 leading-[0.9]">
+              Stop Uploading <br/>
+              <span class="text-rose-500">Your Privacy.</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-base md:text-lg text-gray-500 dark:text-zinc-400 font-medium leading-relaxed">
+              A complete, private PDF toolkit with 17 tools. Merge, split, compress, protect, convert, and edit documents entirely in your browser. Zero file uploads, zero servers, and absolute data sovereignty.
             </p>
-            <p class="text-sm sm:text-base text-gray-600 dark:text-zinc-400 leading-relaxed mb-6">
-              LS PDF operates on a strict zero-server paradigm: every operation—merging, rasterizing, rendering, extracting, OCR, and cryptographic encryption—executes directly on your local CPU and GPU via Mozilla PDF.js, pdf-lib, and Web Workers. Your files never cross the network.
-            </p>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-gray-200 dark:border-zinc-800">
-              <div>
-                <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1">Local Processing</h3>
-                <p class="text-xs text-gray-500 dark:text-zinc-400">100% in-browser WebAssembly and Web Worker pipelines.</p>
-              </div>
-              <div>
-                <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1">Zero Telemetry</h3>
-                <p class="text-xs text-gray-500 dark:text-zinc-400">No document content, file names, or metadata are ever recorded.</p>
-              </div>
-              <div>
-                <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1">Auto-Wipe Memory</h3>
-                <p class="text-xs text-gray-500 dark:text-zinc-400">Configurable inactivity timer clears cached buffers automatically.</p>
-              </div>
+            <div class="max-w-2xl mx-auto relative group mt-12">
+              <input 
+                type="text"
+                placeholder="Search tools (e.g. merge, compress, protect...)"
+                class="w-full bg-white dark:bg-zinc-900 border border-gray-100 dark:border-white/5 rounded-[2rem] py-6 pl-8 pr-8 shadow-2xl shadow-gray-200/50 dark:shadow-none outline-none font-bold text-xl dark:text-white"
+              />
             </div>
           </div>
-        </div>
-      </section>
-    </main>
-    ${generateFooterHtml()}
+        </section>
+
+        <main class="max-w-7xl mx-auto px-6 pb-32">
+          <div class="flex flex-col md:flex-row gap-8">
+            <div class="flex-1">
+              <div class="flex items-center justify-between mb-12">
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] bg-zinc-900 dark:bg-white text-white dark:text-black border-transparent shadow-lg">All</span>
+                  <a href="/merge" class="px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] bg-white dark:bg-zinc-900 text-gray-400 border border-gray-100 dark:border-white/5 hover:border-rose-500">Edit</a>
+                  <a href="/protect" class="px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] bg-white dark:bg-zinc-900 text-gray-400 border border-gray-100 dark:border-white/5 hover:border-rose-500">Secure</a>
+                  <a href="/pdf-to-image" class="px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] bg-white dark:bg-zinc-900 text-gray-400 border border-gray-100 dark:border-white/5 hover:border-rose-500">Convert</a>
+                  <a href="/compress" class="px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] bg-white dark:bg-zinc-900 text-gray-400 border border-gray-100 dark:border-white/5 hover:border-rose-500">Optimize</a>
+                </div>
+                <p class="hidden md:block text-[10px] font-black text-gray-400 uppercase tracking-widest">17 Modules Active</p>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                ${toolsHtml}
+              </div>
+
+              <section class="mt-24 pt-16 border-t border-gray-100 dark:border-white/5 space-y-16 text-left" aria-label="Architecture and Features">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div class="p-8 bg-white dark:bg-zinc-900/40 rounded-[2rem] border border-gray-100 dark:border-white/5 space-y-4">
+                    <h2 class="text-xl font-black text-gray-900 dark:text-white tracking-tight">Zero-Server Privacy</h2>
+                    <p class="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed font-normal">
+                      Every operation runs 100% inside your browser memory using WebAssembly, Web Workers, and local canvas pipelines. Your confidential contracts, financial records, and medical files never touch a remote server.
+                    </p>
+                  </div>
+                  <div class="p-8 bg-white dark:bg-zinc-900/40 rounded-[2rem] border border-gray-100 dark:border-white/5 space-y-4">
+                    <h2 class="text-xl font-black text-gray-900 dark:text-white tracking-tight">High-Performance Engine</h2>
+                    <p class="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed font-normal">
+                      Powered by Mozilla PDF.js, pdf-lib, and Tesseract.js. Handle multi-megabyte documents, high-DPI rasterization, optical character recognition, and drag-and-drop page manipulation at native speed.
+                    </p>
+                  </div>
+                  <div class="p-8 bg-white dark:bg-zinc-900/40 rounded-[2rem] border border-gray-100 dark:border-white/5 space-y-4">
+                    <h2 class="text-xl font-black text-gray-900 dark:text-white tracking-tight">17 Specialized Tools</h2>
+                    <p class="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed font-normal">
+                      From page numbering and watermarking to AES password encryption, metadata sanitization, and image conversion. Everything you need for daily document processing without subscriptions or ads.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="space-y-6">
+                  <h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight">Explore the PDF Tool Suite</h2>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="space-y-3">
+                      <h3 class="text-xs font-black uppercase tracking-[0.2em] text-rose-500">Edit</h3>
+                      <ul class="space-y-2 list-none p-0 text-sm font-bold text-gray-700 dark:text-zinc-300">
+                        <li><a href="/merge" class="hover:text-rose-500 transition-colors">Merge PDF</a></li>
+                        <li><a href="/split" class="hover:text-rose-500 transition-colors">Split PDF</a></li>
+                        <li><a href="/rotate-pdf" class="hover:text-rose-500 transition-colors">Rotate PDF</a></li>
+                        <li><a href="/rearrange-pdf" class="hover:text-rose-500 transition-colors">Rearrange PDF</a></li>
+                        <li><a href="/page-numbers" class="hover:text-rose-500 transition-colors">Page Numbers</a></li>
+                        <li><a href="/watermark" class="hover:text-rose-500 transition-colors">Watermark</a></li>
+                        <li><a href="/signature" class="hover:text-rose-500 transition-colors">Signature</a></li>
+                      </ul>
+                    </div>
+                    <div class="space-y-3">
+                      <h3 class="text-xs font-black uppercase tracking-[0.2em] text-rose-500">Secure</h3>
+                      <ul class="space-y-2 list-none p-0 text-sm font-bold text-gray-700 dark:text-zinc-300">
+                        <li><a href="/protect" class="hover:text-rose-500 transition-colors">Protect PDF</a></li>
+                        <li><a href="/unlock" class="hover:text-rose-500 transition-colors">Unlock PDF</a></li>
+                        <li><a href="/metadata" class="hover:text-rose-500 transition-colors">Metadata</a></li>
+                      </ul>
+                    </div>
+                    <div class="space-y-3">
+                      <h3 class="text-xs font-black uppercase tracking-[0.2em] text-rose-500">Convert</h3>
+                      <ul class="space-y-2 list-none p-0 text-sm font-bold text-gray-700 dark:text-zinc-300">
+                        <li><a href="/pdf-to-image" class="hover:text-rose-500 transition-colors">PDF to Image</a></li>
+                        <li><a href="/image-to-pdf" class="hover:text-rose-500 transition-colors">Image to PDF</a></li>
+                        <li><a href="/extract-images" class="hover:text-rose-500 transition-colors">Extract Images</a></li>
+                        <li><a href="/pdf-to-text" class="hover:text-rose-500 transition-colors">PDF to Text</a></li>
+                      </ul>
+                    </div>
+                    <div class="space-y-3">
+                      <h3 class="text-xs font-black uppercase tracking-[0.2em] text-rose-500">Optimize</h3>
+                      <ul class="space-y-2 list-none p-0 text-sm font-bold text-gray-700 dark:text-zinc-300">
+                        <li><a href="/compress" class="hover:text-rose-500 transition-colors">Compress PDF</a></li>
+                        <li><a href="/grayscale" class="hover:text-rose-500 transition-colors">Grayscale</a></li>
+                        <li><a href="/repair" class="hover:text-rose-500 transition-colors">Repair PDF</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </main>
+      </div>
+      ${generateFooterHtml()}
+    </div>
   `;
 }
 
-function generateToolBodyHtml(guide: ToolGuideData): string {
+function generateToolBodyHtml(guide: ToolGuideData, desc: string): string {
   const whatItDoesHtml = guide.whatItDoes
-    .map((p) => `<p class="text-sm sm:text-base text-gray-600 dark:text-zinc-400 leading-relaxed mb-3">${p}</p>`)
+    .map((p) => `<p>${escapeHtml(p)}</p>`)
     .join('');
 
   const howToHtml = guide.howTo
-    .map((step) => `<li class="text-sm text-gray-600 dark:text-zinc-400 leading-relaxed pl-2">${step}</li>`)
+    .map((step, idx) => `
+      <li class="flex items-start gap-3 p-4 bg-gray-50 dark:bg-zinc-900 rounded-2xl border border-gray-100/80 dark:border-white/5">
+        <span class="w-6 h-6 rounded-full bg-rose-500 text-white text-xs font-black flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
+        <span class="text-xs md:text-sm text-gray-700 dark:text-zinc-300 font-medium leading-relaxed">${escapeHtml(step)}</span>
+      </li>
+    `)
     .join('');
 
   const specsHtml = guide.specs
     .map(
       (spec) => `
-      <div class="p-4 bg-gray-50 dark:bg-zinc-900/60 rounded-xl border border-gray-100 dark:border-white/5">
-        <dt class="text-xs font-black uppercase tracking-widest text-gray-400 dark:text-zinc-500 mb-1">${spec.label}</dt>
-        <dd class="text-sm font-bold text-gray-900 dark:text-zinc-200">${spec.value}</dd>
+      <div class="p-4 bg-white dark:bg-zinc-900/60 rounded-2xl border border-gray-100 dark:border-white/5">
+        <dt class="text-[10px] font-black uppercase tracking-widest text-gray-400 dark:text-zinc-500 mb-1">${escapeHtml(spec.label)}</dt>
+        <dd class="text-xs md:text-sm font-bold text-gray-900 dark:text-white">${escapeHtml(spec.value)}</dd>
       </div>
     `
     )
@@ -308,10 +414,15 @@ function generateToolBodyHtml(guide: ToolGuideData): string {
   const faqsHtml = guide.faqs
     .map(
       (faq) => `
-      <div class="p-5 bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-white/5">
-        <h3 class="text-base font-bold text-gray-900 dark:text-white mb-2">${faq.q}</h3>
-        <p class="text-sm text-gray-600 dark:text-zinc-400 leading-relaxed">${faq.a}</p>
-      </div>
+      <details class="group p-5 bg-white dark:bg-zinc-900/40 rounded-2xl border border-gray-100 dark:border-white/5 hover:border-rose-500/30 transition-all open:ring-1 open:ring-rose-500/20">
+        <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-sm md:text-base text-gray-900 dark:text-white select-none">
+          <span>${escapeHtml(faq.q)}</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400 group-open:rotate-180 transition-transform duration-200 shrink-0 ml-2"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <p class="mt-3 text-xs md:text-sm text-gray-600 dark:text-zinc-400 leading-relaxed font-normal pt-2 border-t border-gray-50 dark:border-white/5">
+          ${escapeHtml(faq.a)}
+        </p>
+      </details>
     `
     )
     .join('');
@@ -319,281 +430,290 @@ function generateToolBodyHtml(guide: ToolGuideData): string {
   const relatedHtml = guide.related
     .map(
       (rel) => `
-      <article class="p-5 bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-white/5 hover:border-rose-500/30 transition-all">
-        <a href="/${rel.slug}" class="block group">
-          <h3 class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-rose-500 transition-colors mb-1">${rel.title}</h3>
-          <p class="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed">${rel.desc}</p>
-        </a>
-      </article>
+      <a href="/${rel.slug}" class="group p-5 bg-white dark:bg-zinc-900/40 rounded-2xl border border-gray-100 dark:border-white/5 hover:border-rose-500/50 hover:shadow-lg hover:-translate-y-0.5 transition-all flex flex-col justify-between">
+        <div>
+          <h3 class="font-bold text-sm text-gray-900 dark:text-white group-hover:text-rose-500 transition-colors mb-1">${escapeHtml(rel.title)}</h3>
+          <p class="text-xs text-gray-500 dark:text-zinc-400 line-clamp-2">${escapeHtml(rel.desc)}</p>
+        </div>
+        <div class="flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-rose-500 mt-4 group-hover:translate-x-1 transition-transform">
+          <span>Open Tool</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </div>
+      </a>
     `
     )
     .join('');
 
   return `
-    ${generateHeaderHtml()}
-    <main id="main-content" class="min-h-screen py-10 px-4 sm:px-6 max-w-5xl mx-auto">
-      <nav aria-label="Breadcrumb Navigation" class="text-xs font-bold text-gray-400 dark:text-zinc-500 mb-6 flex items-center gap-2">
-        <a href="/" class="hover:text-rose-500 transition-colors">Home</a>
-        <span>&gt;</span>
-        <span class="text-gray-900 dark:text-zinc-300">${guide.title}</span>
-      </nav>
-
-      <header class="mb-10">
-        <h1 class="text-3xl sm:text-5xl font-black text-gray-900 dark:text-white tracking-tight mb-4">
-          ${guide.h1}
-        </h1>
-        <p class="text-base sm:text-lg text-gray-600 dark:text-zinc-400 max-w-3xl leading-relaxed">
-          ${guide.summary}
-        </p>
-      </header>
-
-      <section class="p-8 sm:p-12 mb-14 rounded-3xl border-2 border-dashed border-gray-200 dark:border-zinc-800 bg-gray-50/50 dark:bg-zinc-900/30 text-center" aria-label="File Upload Region">
-        <div class="max-w-md mx-auto">
-          <div class="w-12 h-12 bg-rose-500/10 text-rose-500 rounded-2xl flex items-center justify-center mx-auto mb-4 font-black text-xl">PDF</div>
-          <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Drop your PDF file here or select to begin</h2>
-          <p class="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed mb-4">
-            Files are processed strictly inside your device memory using WebAssembly. No files are ever uploaded to any server.
-          </p>
-          <div class="inline-block px-5 py-2.5 bg-rose-500 text-white rounded-xl font-bold text-xs shadow-md shadow-rose-500/20">
-            Select PDF Document
+    <div class="min-h-screen flex flex-col bg-[#FAFAFA] dark:bg-black text-gray-900 dark:text-zinc-100 transition-colors duration-300">
+      ${generateHeaderHtml()}
+      <div class="flex flex-col min-h-screen bg-[#FAFAFA] dark:bg-black transition-colors">
+        <main class="flex-1 flex flex-col p-4 md:p-8 max-w-5xl mx-auto w-full">
+          <div class="mb-8">
+            <div class="relative text-center mb-8 md:mb-12">
+              <h1 class="text-3xl md:text-5xl font-black mb-3 md:mb-4 dark:text-white px-10 text-gray-900 dark:text-white">
+                ${escapeHtml(guide.title)} <span class="text-rose-500">.</span>
+              </h1>
+              <p class="text-sm md:text-base text-gray-500 dark:text-zinc-400 max-w-lg mx-auto leading-relaxed">
+                ${escapeHtml(desc)}
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
 
-      <article class="space-y-12">
-        <section aria-labelledby="overview-heading">
-          <h2 id="overview-heading" class="text-2xl font-black text-gray-900 dark:text-white tracking-tight mb-4">
-            About ${guide.title}
-          </h2>
-          <div class="prose dark:prose-invert max-w-none">
-            ${whatItDoesHtml}
+          <div class="flex-1">
+            <div class="flex flex-col items-center justify-center p-8 md:p-12 border-2 border-dashed border-gray-200 dark:border-zinc-800 rounded-[2.5rem] bg-white dark:bg-zinc-900/50 text-center mb-12">
+              <div class="w-16 h-16 rounded-3xl bg-rose-50 dark:bg-rose-900/20 text-rose-500 flex items-center justify-center mb-4">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <h2 class="text-lg md:text-xl font-bold dark:text-white mb-2">Drop your PDF file here or select to begin</h2>
+              <p class="text-xs text-gray-400 max-w-sm mb-6">100% Client-Side. No files ever leave your device.</p>
+              <div class="px-6 py-3 bg-rose-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-rose-500/20">
+                Select PDF Document
+              </div>
+            </div>
+
+            <section class="mt-16 pt-12 border-t border-gray-100 dark:border-white/5 space-y-12 text-left" aria-label="${escapeHtml(guide.title)} Guide and Documentation">
+              <div class="space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 bg-rose-50 dark:bg-rose-900/20 text-rose-500 rounded-full text-[10px] font-black uppercase tracking-widest border border-rose-100 dark:border-rose-900/30">
+                  Document Guide
+                </div>
+                <h2 class="text-2xl md:text-3xl font-black text-gray-900 dark:text-white tracking-tight">About ${escapeHtml(guide.title)}</h2>
+                <div class="space-y-3 text-sm md:text-base text-gray-600 dark:text-zinc-400 leading-relaxed font-normal">
+                  ${whatItDoesHtml}
+                </div>
+              </div>
+
+              <div class="p-6 md:p-8 bg-white dark:bg-zinc-900/40 rounded-[2rem] border border-gray-100 dark:border-white/5 shadow-sm space-y-6">
+                <h2 class="text-xl md:text-2xl font-black text-gray-900 dark:text-white tracking-tight">How to Use ${escapeHtml(guide.title)}</h2>
+                <ol class="grid grid-cols-1 md:grid-cols-2 gap-4 list-none p-0">
+                  ${howToHtml}
+                </ol>
+              </div>
+
+              <div class="space-y-4">
+                <h2 class="text-xl md:text-2xl font-black text-gray-900 dark:text-white tracking-tight">Technical Specifications &amp; Security</h2>
+                <dl class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                  ${specsHtml}
+                </dl>
+              </div>
+
+              <div class="space-y-4">
+                <h2 class="text-xl md:text-2xl font-black text-gray-900 dark:text-white tracking-tight">Frequently Asked Questions</h2>
+                <div class="space-y-3">
+                  ${faqsHtml}
+                </div>
+              </div>
+
+              <div class="space-y-4 pt-4">
+                <h2 class="text-xl md:text-2xl font-black text-gray-900 dark:text-white tracking-tight">Related PDF Tools</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  ${relatedHtml}
+                </div>
+              </div>
+            </section>
           </div>
-        </section>
-
-        <section aria-labelledby="howto-heading">
-          <h2 id="howto-heading" class="text-2xl font-black text-gray-900 dark:text-white tracking-tight mb-4">
-            How to Use ${guide.title}
-          </h2>
-          <ol class="list-decimal list-inside space-y-2.5 bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-gray-100 dark:border-white/5">
-            ${howToHtml}
-          </ol>
-        </section>
-
-        <section aria-labelledby="specs-heading">
-          <h2 id="specs-heading" class="text-2xl font-black text-gray-900 dark:text-white tracking-tight mb-4">
-            Technical Specifications &amp; Security Disclosures
-          </h2>
-          <dl class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            ${specsHtml}
-          </dl>
-        </section>
-
-        <section aria-labelledby="faqs-heading">
-          <h2 id="faqs-heading" class="text-2xl font-black text-gray-900 dark:text-white tracking-tight mb-6">
-            Frequently Asked Questions
-          </h2>
-          <div class="space-y-3">
-            ${faqsHtml}
-          </div>
-        </section>
-
-        <section aria-labelledby="related-heading">
-          <h2 id="related-heading" class="text-2xl font-black text-gray-900 dark:text-white tracking-tight mb-4">
-            Related PDF Tools
-          </h2>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            ${relatedHtml}
-          </div>
-        </section>
-      </article>
-    </main>
-    ${generateFooterHtml()}
+        </main>
+      </div>
+      ${generateFooterHtml()}
+    </div>
   `;
 }
 
 function generateAboutBodyHtml(): string {
   return `
-    ${generateHeaderHtml()}
-    <main id="main-content" class="min-h-screen py-10 px-4 sm:px-6 max-w-4xl mx-auto">
-      <nav aria-label="Breadcrumb Navigation" class="text-xs font-bold text-gray-400 dark:text-zinc-500 mb-6 flex items-center gap-2">
-        <a href="/" class="hover:text-rose-500 transition-colors">Home</a>
-        <span>&gt;</span>
-        <span class="text-gray-900 dark:text-zinc-300">About</span>
-      </nav>
-
-      <header class="mb-10">
-        <h1 class="text-3xl sm:text-5xl font-black text-gray-900 dark:text-white tracking-tight mb-4">
-          About LS PDF
-        </h1>
-        <p class="text-base sm:text-lg text-gray-600 dark:text-zinc-400 leading-relaxed">
-          The Swiss Army Knife for PDFs. Fully client-side, privacy-preserving, and free under AGPL-3.0.
-        </p>
-      </header>
-
-      <article class="space-y-8 text-gray-700 dark:text-zinc-300 leading-relaxed text-sm sm:text-base">
-        <section>
-          <h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight mb-3">Our Mission: Private Document Processing</h2>
-          <p class="mb-3">
-            LS PDF was engineered to eliminate the fundamental privacy danger of modern online PDF software: uploading proprietary files to distant cloud backends. By using the computational power of modern browser standards—WebAssembly, Canvas 2D, and Web Workers—all operations execute entirely within your device.
-          </p>
-          <p>
-            Whether merging confidential business proposals, compressing tax filings, or redacting document metadata, your files never touch an external server.
-          </p>
+    <div class="min-h-screen flex flex-col bg-[#FAFAFA] dark:bg-black text-gray-900 dark:text-zinc-100 transition-colors duration-300">
+      ${generateHeaderHtml()}
+      <div class="min-h-screen bg-[#FAFAFA] dark:bg-black text-gray-900 dark:text-zinc-100 selection:bg-rose-500 selection:text-white pb-24">
+        <section class="relative pt-20 pb-12 px-6 overflow-hidden">
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(244,63,94,0.05),transparent_60%)] pointer-events-none"></div>
+          <div class="max-w-5xl mx-auto text-center relative z-10">
+            <h1 class="text-5xl md:text-7xl font-black tracking-tighter dark:text-white mb-6 leading-[0.9]">
+              Privacy is a <br/>
+              <span class="text-rose-500 font-black">Human Right.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-500 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed font-medium">
+              LS PDF is an absolute document engine. No servers, no tracking, no compromises. We transform your browser into a self-contained document laboratory.
+            </p>
+          </div>
         </section>
 
-        <section>
-          <h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight mb-3">Technology Stack</h2>
-          <ul class="list-disc list-inside space-y-1.5 text-gray-600 dark:text-zinc-400">
-            <li><strong>Frontend:</strong> React 18, TypeScript, Tailwind CSS, Vite 8</li>
-            <li><strong>PDF Core:</strong> Mozilla PDF.js (rendering &amp; text extraction), pdf-lib (assembly &amp; manipulation)</li>
-            <li><strong>Security:</strong> @pdfsmaller/pdf-encrypt-lite (RC4 &amp; AES-128 password encryption)</li>
-            <li><strong>OCR Engine:</strong> Tesseract.js (pure browser-side WebAssembly optical character recognition)</li>
-            <li><strong>Cross-Platform:</strong> Capacitor 8 (native Android execution bridge)</li>
-          </ul>
-        </section>
+        <section class="max-w-6xl mx-auto px-6 mb-20">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div class="lg:col-span-5 space-y-8">
+              <div class="inline-flex items-center gap-2 px-2.5 py-1 bg-zinc-100 dark:bg-white/5 rounded-md text-[9px] font-black uppercase tracking-widest text-gray-400 border border-gray-200/50 dark:border-white/5">
+                Technical Manifesto
+              </div>
+              <h2 class="text-3xl font-black tracking-tighter dark:text-white leading-[1.1]">
+                Architecture of <br/>
+                <span class="text-rose-500">Absolute Sovereignty.</span>
+              </h2>
+              <p class="text-gray-500 dark:text-zinc-400 text-sm font-medium leading-relaxed">
+                LS PDF rejects the trade-off between convenience and privacy. We've built an engine that runs where the user is, ensuring your sensitive data never crosses a network boundary.
+              </p>
+              <div class="p-6 bg-white dark:bg-zinc-900 rounded-[2rem] border border-gray-100 dark:border-white/5 shadow-sm">
+                <h4 class="font-black text-[10px] uppercase tracking-widest text-emerald-500 mb-3">Zero Infrastructure</h4>
+                <p class="text-xs text-gray-500 dark:text-zinc-400 font-medium leading-relaxed">
+                  We operate no backend. No databases. No file caches. LS PDF is a static distribution of code that activates your browser's existing power.
+                </p>
+              </div>
+            </div>
 
-        <section>
-          <h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight mb-3">Open Source &amp; Licensing</h2>
-          <p>
-            LS PDF is free and open-source software distributed under the GNU Affero General Public License v3.0 (AGPL-3.0). The full source code is publicly auditable on GitHub at <a href="https://github.com/girishlade111/LS-PDF" target="_blank" rel="noopener noreferrer" class="text-rose-500 font-bold hover:underline">girishlade111/LS-PDF</a>.
-          </p>
+            <div class="lg:col-span-7 bg-white dark:bg-zinc-900 rounded-[2.5rem] p-6 border border-gray-100 dark:border-white/5 shadow-sm space-y-6">
+              <div class="border-b border-gray-100 dark:border-zinc-800 pb-6">
+                <h3 class="font-black text-sm uppercase tracking-widest text-gray-900 dark:text-white mb-2">How it Works</h3>
+                <p class="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed">
+                  Every action is executed locally on your device's CPU. Using high-performance Web Workers and WebAssembly, LS PDF loads your PDF into a sandboxed environment within your browser tab.
+                </p>
+              </div>
+              <div class="border-b border-gray-100 dark:border-zinc-800 pb-6">
+                <h3 class="font-black text-sm uppercase tracking-widest text-gray-900 dark:text-white mb-2">Data Lifecycle</h3>
+                <p class="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed">
+                  Your documents live exclusively in your browser's volatile memory (RAM). We do not use persistent storage or cookies for your file content. Once the tab is closed, the data is destroyed.
+                </p>
+              </div>
+              <div>
+                <h3 class="font-black text-sm uppercase tracking-widest text-gray-900 dark:text-white mb-2">Open Source Verification</h3>
+                <p class="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed">
+                  Trust requires proof. Our entire codebase is open-source under AGPL-3.0 and available on GitHub for public audit.
+                </p>
+              </div>
+            </div>
+          </div>
         </section>
-      </article>
-    </main>
-    ${generateFooterHtml()}
+      </div>
+      ${generateFooterHtml()}
+    </div>
   `;
 }
 
 function generatePrivacyBodyHtml(): string {
   return `
-    ${generateHeaderHtml()}
-    <main id="main-content" class="min-h-screen py-10 px-4 sm:px-6 max-w-4xl mx-auto">
-      <nav aria-label="Breadcrumb Navigation" class="text-xs font-bold text-gray-400 dark:text-zinc-500 mb-6 flex items-center gap-2">
-        <a href="/" class="hover:text-rose-500 transition-colors">Home</a>
-        <span>&gt;</span>
-        <span class="text-gray-900 dark:text-zinc-300">Privacy Policy</span>
-      </nav>
+    <div class="min-h-screen flex flex-col bg-[#FAFAFA] dark:bg-black text-gray-900 dark:text-zinc-100 transition-colors duration-300">
+      ${generateHeaderHtml()}
+      <div class="min-h-screen bg-[#FAFAFA] dark:bg-black text-gray-900 dark:text-zinc-100 selection:bg-rose-500 selection:text-white p-6 md:p-12 pb-24">
+        <div class="max-w-6xl mx-auto space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+            <div class="md:col-span-8 bg-white dark:bg-zinc-900 rounded-[2.5rem] p-10 md:p-16 border border-gray-100 dark:border-white/5 relative overflow-hidden flex flex-col justify-center">
+              <div class="relative z-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-500 rounded-full text-[9px] font-black uppercase tracking-[0.3em] mb-6 border border-emerald-100 dark:border-emerald-900/30 shadow-sm">
+                  Certified Local Engine
+                </div>
+                <h1 class="text-5xl md:text-7xl font-black tracking-tighter dark:text-white leading-[0.9] mb-6">
+                  Architecture <br/>
+                  <span class="text-emerald-500 font-black">of Silence.</span>
+                </h1>
+                <p class="text-lg text-gray-500 dark:text-zinc-400 font-medium max-w-lg leading-relaxed">
+                  LS PDF isn't just "private" by policy; it's private by architecture. We've eliminated the server entirely, ensuring that "No Data Found" is a technical reality, not just a promise.
+                </p>
+              </div>
+            </div>
+            <div class="md:col-span-4 bg-zinc-900 text-white rounded-[2.5rem] p-10 flex flex-col items-center justify-center text-center relative overflow-hidden border border-white/5 shadow-2xl">
+              <h2 class="text-2xl font-black tracking-tighter relative z-10 mb-1 leading-none">Zero Server</h2>
+              <p class="text-[9px] font-black uppercase tracking-widest text-emerald-500 relative z-10">Absolute Sovereignty</p>
+            </div>
+          </div>
 
-      <header class="mb-10">
-        <h1 class="text-3xl sm:text-5xl font-black text-gray-900 dark:text-white tracking-tight mb-4">
-          Privacy Policy &amp; Security Specification
-        </h1>
-        <p class="text-base sm:text-lg text-gray-600 dark:text-zinc-400 leading-relaxed">
-          How LS PDF protects your data sovereignty: zero server uploads, no cookies, and transparent device storage.
-        </p>
-      </header>
-
-      <article class="space-y-8 text-gray-700 dark:text-zinc-300 leading-relaxed text-sm sm:text-base">
-        <section>
-          <h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight mb-3">1. Zero Document Transmission</h2>
-          <p>
-            LS PDF is architected on a zero-server principle. When you open a PDF, your file is read directly into your device's memory using browser File API and Blob structures. At no point are document bytes, file names, or file contents transmitted over the Internet.
-          </p>
-        </section>
-
-        <section>
-          <h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight mb-3">2. Local Storage and IndexedDB</h2>
-          <p class="mb-3">
-            To provide persistent convenience features across sessions, LS PDF utilizes your browser's local sandbox storage:
-          </p>
-          <ul class="list-disc list-inside space-y-1.5 text-gray-600 dark:text-zinc-400">
-            <li><strong>Activity History (IndexedDB):</strong> Stores recent download shortcuts on-device. Can be cleared at any time in Settings.</li>
-            <li><strong>Workspace Snapshots (IndexedDB):</strong> Temporarily holds in-progress multi-page edits to survive accidental refreshes. Cleared upon tool completion or via Auto-Wipe.</li>
-            <li><strong>Preferences (localStorage):</strong> Retains your dark/light theme and auto-wipe timer configuration.</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight mb-3">3. Cookieless Anonymous Analytics</h2>
-          <p>
-            LS PDF does not set any cookies and does not utilize invasive tracking pixels or fingerprinting scripts. Aggregate page load times and coarse traffic volumes are monitored using cookieless Vercel Web Analytics. This telemetry records only anonymized technical performance data and never collects document names, file contents, IP addresses, or personal identities.
-          </p>
-        </section>
-      </article>
-    </main>
-    ${generateFooterHtml()}
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="p-8 bg-white dark:bg-zinc-900 rounded-[2.25rem] border border-gray-100 dark:border-white/5 shadow-sm space-y-4">
+              <h3 class="font-black text-sm uppercase tracking-widest dark:text-white">On-Device Processing</h3>
+              <p class="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed font-medium">
+                Files are processed locally in your browser memory, with client-side IndexedDB storage used strictly for optional workspace recovery and activity logs. Files never leave your device and are never uploaded to any cloud server.
+              </p>
+            </div>
+            <div class="p-8 bg-white dark:bg-zinc-900 rounded-[2.25rem] border border-gray-100 dark:border-white/5 shadow-sm space-y-4">
+              <h3 class="font-black text-sm uppercase tracking-widest dark:text-white">Cookieless Traffic Metrics</h3>
+              <p class="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed font-medium">
+                We collect anonymous, cookieless traffic metrics via Vercel Web Analytics to measure site reliability and performance. No personal identifiers, IP addresses, or tracking cookies are collected. Document contents, text, and filenames never leave your browser.
+              </p>
+            </div>
+            <div class="p-8 bg-white dark:bg-zinc-900 rounded-[2.25rem] border border-gray-100 dark:border-white/5 shadow-sm space-y-4">
+              <h3 class="font-black text-sm uppercase tracking-widest dark:text-white">Zero Telemetry</h3>
+              <p class="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed font-medium">
+                No crash reporters, third-party trackers, or session recording SDKs. You can verify network traffic in your browser developer tools during any operation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      ${generateFooterHtml()}
+    </div>
   `;
 }
 
 function generateSettingsBodyHtml(): string {
   return `
-    ${generateHeaderHtml()}
-    <main id="main-content" class="min-h-screen py-10 px-4 sm:px-6 max-w-4xl mx-auto">
-      <nav aria-label="Breadcrumb Navigation" class="text-xs font-bold text-gray-400 dark:text-zinc-500 mb-6 flex items-center gap-2">
-        <a href="/" class="hover:text-rose-500 transition-colors">Home</a>
-        <span>&gt;</span>
-        <span class="text-gray-900 dark:text-zinc-300">Settings</span>
-      </nav>
-
-      <header class="mb-10">
-        <h1 class="text-3xl sm:text-5xl font-black text-gray-900 dark:text-white tracking-tight mb-4">
-          Application Settings
-        </h1>
-        <p class="text-base sm:text-lg text-gray-600 dark:text-zinc-400 leading-relaxed">
-          Manage local preferences, theme customization, workspace retention, and Auto-Wipe security timers.
-        </p>
-      </header>
-
-      <div class="space-y-6">
-        <div class="p-6 bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-white/5">
-          <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Theme Preference</h2>
-          <p class="text-xs text-gray-500 dark:text-zinc-400 mb-4">Choose between Light, Dark, or System automatic appearance.</p>
-        </div>
-
-        <div class="p-6 bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-white/5">
-          <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Auto-Wipe Security Timer</h2>
-          <p class="text-xs text-gray-500 dark:text-zinc-400 mb-4">Automatically purges cached IndexedDB documents and activity history after a period of user inactivity.</p>
-        </div>
-
-        <div class="p-6 bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-white/5">
-          <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Storage Management</h2>
-          <p class="text-xs text-gray-500 dark:text-zinc-400 mb-4">Clear all local workspace caches and reset all stored preferences.</p>
-        </div>
+    <div class="min-h-screen flex flex-col bg-[#FAFAFA] dark:bg-black text-gray-900 dark:text-zinc-100 transition-colors duration-300">
+      ${generateHeaderHtml()}
+      <div class="flex flex-col min-h-screen bg-[#FAFAFA] dark:bg-black transition-colors">
+        <main class="flex-1 flex flex-col p-4 md:p-8 max-w-5xl mx-auto w-full">
+          <div class="mb-8">
+            <div class="relative text-center mb-8 md:mb-12">
+              <h1 class="text-3xl md:text-5xl font-black mb-3 md:mb-4 dark:text-white px-10 text-gray-900 dark:text-white">
+                System <span class="text-rose-500">.</span>
+              </h1>
+              <p class="text-sm md:text-base text-gray-500 dark:text-zinc-400 max-w-lg mx-auto leading-relaxed">
+                Core Configuration
+              </p>
+            </div>
+          </div>
+          <div class="flex-1 space-y-6">
+            <div class="p-6 bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-white/5">
+              <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Theme Preference</h2>
+              <p class="text-xs text-gray-500 dark:text-zinc-400">Choose between Light, Dark, or System automatic appearance.</p>
+            </div>
+            <div class="p-6 bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-white/5">
+              <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Auto-Wipe Security Timer</h2>
+              <p class="text-xs text-gray-500 dark:text-zinc-400">Automatically purges cached IndexedDB documents and activity history after a period of user inactivity.</p>
+            </div>
+          </div>
+        </main>
       </div>
-    </main>
-    ${generateFooterHtml()}
+      ${generateFooterHtml()}
+    </div>
   `;
 }
 
 function generateNotFoundBodyHtml(): string {
   return `
-    ${generateHeaderHtml()}
-    <main id="main-content" class="min-h-screen py-16 px-4 sm:px-6 max-w-4xl mx-auto text-center">
-      <div class="w-16 h-16 bg-rose-500/10 text-rose-500 rounded-3xl flex items-center justify-center mx-auto mb-6 font-black text-2xl">404</div>
-      <h1 class="text-3xl sm:text-5xl font-black text-gray-900 dark:text-white tracking-tight mb-4">
-        404 - Page Not Found
-      </h1>
-      <p class="text-base text-gray-600 dark:text-zinc-400 max-w-md mx-auto leading-relaxed mb-8">
-        The PDF tool or page you requested does not exist or may have been moved. Return to the homepage or explore our popular tools below.
-      </p>
-      <div class="flex flex-wrap justify-center gap-4 mb-12">
-        <a href="/" class="px-6 py-3 bg-rose-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-rose-500/20 hover:bg-rose-600 transition-colors">
-          Return to Homepage
-        </a>
-      </div>
-      <div class="border-t border-gray-100 dark:border-white/5 pt-10">
-        <h2 class="text-xs font-black uppercase tracking-widest text-gray-400 dark:text-zinc-500 mb-6">Popular PDF Utilities</h2>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-left">
-          <a href="/merge" class="p-4 bg-white dark:bg-zinc-900 rounded-xl border border-gray-100 dark:border-white/5 hover:border-rose-500/30 transition-all">
-            <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1">Merge PDF</h3>
-            <p class="text-[11px] text-gray-400">Combine multiple documents</p>
-          </a>
-          <a href="/split" class="p-4 bg-white dark:bg-zinc-900 rounded-xl border border-gray-100 dark:border-white/5 hover:border-rose-500/30 transition-all">
-            <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1">Split PDF</h3>
-            <p class="text-[11px] text-gray-400">Extract page ranges</p>
-          </a>
-          <a href="/compress" class="p-4 bg-white dark:bg-zinc-900 rounded-xl border border-gray-100 dark:border-white/5 hover:border-rose-500/30 transition-all">
-            <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1">Compress PDF</h3>
-            <p class="text-[11px] text-gray-400">Optimize document size</p>
-          </a>
-          <a href="/pdf-to-text" class="p-4 bg-white dark:bg-zinc-900 rounded-xl border border-gray-100 dark:border-white/5 hover:border-rose-500/30 transition-all">
-            <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1">PDF to Text</h3>
-            <p class="text-[11px] text-gray-400">OCR &amp; native text extract</p>
+    <div class="min-h-screen flex flex-col bg-[#FAFAFA] dark:bg-black text-gray-900 dark:text-zinc-100 transition-colors duration-300">
+      ${generateHeaderHtml()}
+      <main class="min-h-screen py-16 px-4 sm:px-6 max-w-4xl mx-auto text-center">
+        <div class="w-16 h-16 bg-rose-500/10 text-rose-500 rounded-3xl flex items-center justify-center mx-auto mb-6 font-black text-2xl">404</div>
+        <h1 class="text-4xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight mb-4">
+          404 &mdash; Page Not Found <span class="text-rose-500">.</span>
+        </h1>
+        <p class="text-base text-gray-600 dark:text-zinc-400 max-w-md mx-auto leading-relaxed mb-8">
+          The PDF tool or page you requested does not exist or may have been moved. Return to the homepage or explore our popular tools below.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+          <a href="/" class="px-6 py-3 bg-rose-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-rose-500/20 hover:bg-rose-600 transition-colors">
+            Return to Homepage
           </a>
         </div>
-      </div>
-    </main>
-    ${generateFooterHtml()}
+        <div class="border-t border-gray-100 dark:border-white/5 pt-10">
+          <h2 class="text-xs font-black uppercase tracking-widest text-gray-400 dark:text-zinc-500 mb-6">Popular PDF Utilities</h2>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-left">
+            <a href="/merge" class="p-4 bg-white dark:bg-zinc-900 rounded-xl border border-gray-100 dark:border-white/5 hover:border-rose-500/30 transition-all">
+              <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1">Merge PDF</h3>
+              <p class="text-[11px] text-gray-400">Combine multiple documents</p>
+            </a>
+            <a href="/split" class="p-4 bg-white dark:bg-zinc-900 rounded-xl border border-gray-100 dark:border-white/5 hover:border-rose-500/30 transition-all">
+              <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1">Split PDF</h3>
+              <p class="text-[11px] text-gray-400">Extract page ranges</p>
+            </a>
+            <a href="/compress" class="p-4 bg-white dark:bg-zinc-900 rounded-xl border border-gray-100 dark:border-white/5 hover:border-rose-500/30 transition-all">
+              <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1">Compress PDF</h3>
+              <p class="text-[11px] text-gray-400">Optimize document size</p>
+            </a>
+            <a href="/pdf-to-text" class="p-4 bg-white dark:bg-zinc-900 rounded-xl border border-gray-100 dark:border-white/5 hover:border-rose-500/30 transition-all">
+              <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1">PDF to Text</h3>
+              <p class="text-[11px] text-gray-400">OCR &amp; native text extract</p>
+            </a>
+          </div>
+        </div>
+      </main>
+      ${generateFooterHtml()}
+    </div>
   `;
 }
 
@@ -601,19 +721,19 @@ function injectSEO(html: string, seo: ToolSEOData, bodyContent: string): string 
   let result = html;
 
   // Replace Title
-  result = result.replace(/<title>[^<]*<\/title>/g, `<title>${seo.title}</title>`);
+  result = result.replace(/<title>[^<]*<\/title>/g, `<title>${escapeHtml(seo.title)}</title>`);
 
   // Replace Meta Description
   result = result.replace(
     /<meta name="description" content="[^"]*"\s*\/?>/g,
-    `<meta name="description" content="${seo.description}" />`
+    `<meta name="description" content="${escapeHtml(seo.description)}" />`
   );
 
   // Replace Meta Keywords
   if (seo.keywords) {
     result = result.replace(
       /<meta name="keywords" content="[^"]*"\s*\/?>/g,
-      `<meta name="keywords" content="${seo.keywords}" />`
+      `<meta name="keywords" content="${escapeHtml(seo.keywords)}" />`
     );
   }
 
@@ -632,13 +752,13 @@ function injectSEO(html: string, seo: ToolSEOData, bodyContent: string): string 
   // Replace Open Graph Title
   result = result.replace(
     /<meta property="og:title" content="[^"]*"\s*\/?>/g,
-    `<meta property="og:title" content="${seo.ogTitle || seo.title}" />`
+    `<meta property="og:title" content="${escapeHtml(seo.ogTitle || seo.title)}" />`
   );
 
   // Replace Open Graph Description
   result = result.replace(
     /<meta property="og:description" content="[^"]*"\s*\/?>/g,
-    `<meta property="og:description" content="${seo.ogDescription || seo.description}" />`
+    `<meta property="og:description" content="${escapeHtml(seo.ogDescription || seo.description)}" />`
   );
 
   // Replace Twitter Url
@@ -650,13 +770,13 @@ function injectSEO(html: string, seo: ToolSEOData, bodyContent: string): string 
   // Replace Twitter Title
   result = result.replace(
     /<meta name="twitter:title" content="[^"]*"\s*\/?>/g,
-    `<meta name="twitter:title" content="${seo.ogTitle || seo.title}" />`
+    `<meta name="twitter:title" content="${escapeHtml(seo.ogTitle || seo.title)}" />`
   );
 
   // Replace Twitter Description
   result = result.replace(
     /<meta name="twitter:description" content="[^"]*"\s*\/?>/g,
-    `<meta name="twitter:description" content="${seo.ogDescription || seo.description}" />`
+    `<meta name="twitter:description" content="${escapeHtml(seo.ogDescription || seo.description)}" />`
   );
 
   // Replace robots if custom
@@ -696,7 +816,7 @@ const homeHtml = injectSEO(template, homeSEO, homeBody);
 fs.writeFileSync(TEMPLATE_PATH, homeHtml);
 console.log('Successfully prerendered and optimized: / (home page)');
 
-// 2. Generate sub-routes
+// 2. Generate sub-routes (clean directory structure: dist/<route>/index.html)
 for (const route of routes) {
   const routeDir = path.join(DIST_DIR, route.path);
   if (!fs.existsSync(routeDir)) {
@@ -705,7 +825,7 @@ for (const route of routes) {
 
   let bodyContent = '';
   if (route.slug && TOOL_GUIDES[route.slug]) {
-    bodyContent = generateToolBodyHtml(TOOL_GUIDES[route.slug]);
+    bodyContent = generateToolBodyHtml(TOOL_GUIDES[route.slug], route.desc || '');
   } else if (route.path === 'about') {
     bodyContent = generateAboutBodyHtml();
   } else if (route.path === 'privacy') {
@@ -715,13 +835,18 @@ for (const route of routes) {
   }
 
   const routeHtml = injectSEO(template, route.seo, bodyContent);
-  // Write both index.html inside folder and route.html for universal server matching
   fs.writeFileSync(path.join(routeDir, 'index.html'), routeHtml);
-  fs.writeFileSync(path.join(DIST_DIR, `${route.path}.html`), routeHtml);
+
+  // Clean up any legacy flat .html files to avoid file-directory routing ambiguity on Vercel
+  const legacyFlatFile = path.join(DIST_DIR, `${route.path}.html`);
+  if (fs.existsSync(legacyFlatFile)) {
+    fs.unlinkSync(legacyFlatFile);
+  }
+
   console.log(`Successfully prerendered and optimized: /${route.path}`);
 }
 
-// 3. Generate Mobile Routes (android-tools and android-history) so static direct access works
+// 3. Generate Mobile Routes (android-tools and android-history)
 const mobileRoutes = [
   { path: 'android-tools', title: 'Android Tools | LS PDF' },
   { path: 'android-history', title: 'Activity History | LS PDF' }
@@ -742,7 +867,12 @@ for (const mRoute of mobileRoutes) {
   };
   const mHtml = injectSEO(template, mSeo, `<div class="p-8 text-center"><h1 class="text-2xl font-bold">${mRoute.title}</h1></div>`);
   fs.writeFileSync(path.join(mDir, 'index.html'), mHtml);
-  fs.writeFileSync(path.join(DIST_DIR, `${mRoute.path}.html`), mHtml);
+
+  const legacyFlatMFile = path.join(DIST_DIR, `${mRoute.path}.html`);
+  if (fs.existsSync(legacyFlatMFile)) {
+    fs.unlinkSync(legacyFlatMFile);
+  }
+
   console.log(`Successfully prerendered mobile route: /${mRoute.path}`);
 }
 
@@ -765,4 +895,4 @@ const notFoundHtml = injectSEO(template, notFoundSeo, notFoundBody);
 fs.writeFileSync(path.join(DIST_DIR, '404.html'), notFoundHtml);
 console.log('Successfully prerendered 404 error page: dist/404.html');
 
-console.log('All 21 canonical routes + mobile routes + 404.html prerendered successfully.');
+console.log('All 21 canonical routes + mobile routes + 404.html prerendered successfully with zero file duplication.');
