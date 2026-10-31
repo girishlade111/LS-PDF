@@ -8,7 +8,7 @@
  * (at your option) any later version.
  */
 
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { 
   ChevronRight as ChevronRightIcon,
   FileText as FileTextIcon,
@@ -82,6 +82,7 @@ export default function AndroidView({ theme, toggleTheme, onFileSelect }: Androi
           <button 
             onClick={toggleTheme}
             className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 dark:bg-zinc-900 text-gray-500 dark:text-gray-400 active:bg-gray-200 dark:active:bg-zinc-800 transition-colors"
+            aria-label="Toggle Theme"
           >
             {theme === 'light' ? <MoonIcon size={18} /> : <SunIcon size={18} />}
           </button>
@@ -124,7 +125,7 @@ export default function AndroidView({ theme, toggleTheme, onFileSelect }: Androi
                   <ClipboardList size={12} className="text-gray-400" />
                   <h3 className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 leading-none">History Clipboard</h3>
                </div>
-               <button onClick={() => navigate('/android-history')} className="text-[9px] font-black uppercase text-rose-500 tracking-wider">View All</button>
+               <Link to="/android-history" className="text-[9px] font-black uppercase text-rose-500 tracking-wider">View All</Link>
             </div>
             
             <div className="bg-white dark:bg-zinc-900 rounded-[2rem] border border-gray-100 dark:border-white/5 shadow-sm divide-y divide-gray-50 dark:divide-white/5 overflow-hidden">
@@ -160,10 +161,10 @@ export default function AndroidView({ theme, toggleTheme, onFileSelect }: Androi
            
            <div className="grid grid-cols-2 gap-3">
              {quickActions.map((action) => (
-                <button
+                <Link
                   key={action.title}
-                  onClick={() => navigate(action.path)}
-                  className="p-5 bg-white dark:bg-zinc-900 rounded-[2rem] border border-gray-100 dark:border-white/5 flex flex-col justify-between h-32 shadow-sm active:bg-gray-50 dark:active:bg-white/5 transition-colors text-left relative overflow-hidden"
+                  to={action.path}
+                  className="p-5 bg-white dark:bg-zinc-900 rounded-[2rem] border border-gray-100 dark:border-white/5 flex flex-col justify-between h-32 shadow-sm active:bg-gray-50 dark:active:bg-white/5 transition-colors text-left relative overflow-hidden block"
                 >
                   <div className={`w-10 h-10 ${action.bg} ${action.color} rounded-xl flex items-center justify-center mb-2`}>
                     <action.icon size={20} strokeWidth={2.5} />
@@ -172,12 +173,12 @@ export default function AndroidView({ theme, toggleTheme, onFileSelect }: Androi
                      <span className="text-sm font-black text-gray-900 dark:text-white block leading-none mb-1">{action.title}</span>
                      <span className="text-[9px] font-bold text-gray-400 uppercase tracking-tight">{action.sub}</span>
                   </div>
-                </button>
+                </Link>
               ))}
 
-              <button
-                onClick={() => navigate('/android-tools')}
-                className="col-span-2 p-5 bg-rose-500 text-white rounded-[2rem] flex items-center justify-between shadow-lg shadow-rose-500/20 active:bg-rose-600 transition-colors group relative overflow-hidden"
+              <Link
+                to="/android-tools"
+                className="col-span-2 p-5 bg-rose-500 text-white rounded-[2rem] flex items-center justify-between shadow-lg shadow-rose-500/20 active:bg-rose-600 transition-colors group relative overflow-hidden block"
               >
                  <div className="absolute right-0 top-0 p-4 opacity-10 pointer-events-none">
                     <LayoutGridIcon size={100} />
@@ -194,7 +195,7 @@ export default function AndroidView({ theme, toggleTheme, onFileSelect }: Androi
                  <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center relative z-10">
                     <ChevronRightIcon size={16} />
                  </div>
-              </button>
+              </Link>
            </div>
         </section>
 

@@ -1,13 +1,15 @@
 import React from 'react'
 import { ArrowLeft } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Capacitor } from '@capacitor/core'
 import ToolHeader from './ToolHeader'
+import ToolDocumentation from './ToolDocumentation'
 import { trackEvent } from '../../../utils/analytics'
 
 interface NativeToolLayoutProps {
   title: string
   description: string
+  toolSlug?: string
   children: React.ReactNode
   actions?: React.ReactNode
   onBack?: () => void
@@ -16,19 +18,21 @@ interface NativeToolLayoutProps {
 export const NativeToolLayout = ({ 
   title, 
   description, 
+  toolSlug,
   children, 
   actions,
   onBack 
 }: NativeToolLayoutProps) => {
   const navigate = useNavigate()
+  const location = useLocation()
+  
+  const effectiveSlug = toolSlug || location.pathname.replace(/^\//, '')
   
   // Determine if we should show the native-style header
   // It should only show if we are in Android/APK mode
   const isNative = Capacitor.isNativePlatform()
-  const isAndroidView = isNative || document.body.classList.contains('android-mode') || window.location.pathname.includes('android')
+  const isAndroidView = isNative || (typeof document !== 'undefined' && document.body.classList.contains('android-mode')) || location.pathname.includes('android')
   
-  // A more reliable way is to check the layout context or simply use media queries 
-  // but since we want to avoid double headers with the main Layout.tsx:
   const showNativeHeader = isAndroidView
 
   React.useEffect(() => {
@@ -44,10 +48,11 @@ export const NativeToolLayout = ({
             <button 
               onClick={onBack || (() => navigate(-1))}
               className="w-10 h-10 flex items-center justify-center rounded-full active:bg-zinc-100 dark:active:bg-zinc-900 transition-colors -ml-1"
+              aria-label="Back"
             >
               <ArrowLeft size={24} className="text-gray-900 dark:text-white" />
             </button>
-            <h1 className="text-lg font-black tracking-tight text-gray-900 dark:text-white ml-1">{title}</h1>
+            <span className="text-lg font-black tracking-tight text-gray-900 dark:text-white ml-1">{title}</span>
           </div>
           <div className="w-10" />
         </header>
@@ -63,6 +68,7 @@ export const NativeToolLayout = ({
         {/* Content Wrapper */}
         <div className="flex-1">
           {children}
+          <ToolDocumentation toolSlug={effectiveSlug} />
         </div>
       </main>
 

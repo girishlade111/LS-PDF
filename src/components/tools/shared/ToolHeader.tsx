@@ -22,9 +22,9 @@ export default function ToolHeader({ title, highlight, description }: ToolHeader
           <ArrowLeft size={20} />
         </button>
       )}
-      <h2 className="text-3xl md:text-5xl font-black mb-3 md:mb-4 dark:text-white px-10">
-        {title} <span className="text-rose-500">{highlight}.</span>
-      </h2>
+      <h1 className="text-3xl md:text-5xl font-black mb-3 md:mb-4 dark:text-white px-10">
+        {title} <span className="text-rose-500">{highlight || '.'}</span>
+      </h1>
       <p className="text-sm md:text-base text-gray-500 dark:text-zinc-400 max-w-lg mx-auto leading-relaxed">
         {description}
       </p>
