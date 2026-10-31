@@ -3,7 +3,7 @@
 > **Stop uploading your privacy.** A fully client-side PDF toolkit — 17 tools, zero servers, absolute privacy.
 
 ![GitHub License](https://img.shields.io/github/license/girishlade111/LS-PDF)
-![GitHub Pages](https://img.shields.io/badge/deploy-GitHub%20Pages-blue)
+![Deployment](https://img.shields.io/badge/deploy-Vercel-black)
 ![Android](https://img.shields.io/badge/platform-Android-brightgreen)
 ![PWA](https://img.shields.io/badge/PWA-ready-blueviolet)
 
@@ -68,7 +68,7 @@
 - **Workspace Persistence** — In-progress work survives page refreshes via IndexedDB snapshots
 - **Dark / Light / System Theme** — Smooth CSS transitions, persisted to localStorage
 - **Haptic Feedback** — Vibration on action confirmations (Android)
-- **Privacy Vault** — Zero-server, no telemetry, no cookies, no analytics
+- **Privacy Vault** — Zero server uploads, zero document telemetry, zero cookies, cookieless aggregate visitor metrics via Vercel Web Analytics
 
 ---
 
@@ -79,7 +79,7 @@
 | **Runtime** | React 18 + TypeScript 5 |
 | **Bundler** | Vite 8 (esbuild minify, manual chunking for PDF libraries) |
 | **Styling** | Tailwind CSS 3 + PostCSS |
-| **Routing** | react-router-dom 7 (HashRouter) |
+| **Routing** | react-router-dom 7 (BrowserRouter) |
 | **Icons** | Lucide React |
 | **Drag & Drop** | @dnd-kit (core, sortable, utilities) |
 | **PDF Engine** | pdf-lib + pdfjs-dist 5 (Mozilla PDF.js) |
@@ -89,7 +89,7 @@
 | **Mobile Bridge** | Capacitor 8 (filesystem, haptics, share, app) |
 | **Notifications** | Sonner (toast notifications) |
 | **PWA** | vite-plugin-pwa (service worker, offline support) |
-| **CI/CD** | GitHub Actions (Pages deploy + Android release signing) |
+| **Hosting & CI/CD** | Vercel (Production Web Deployment at https://pdf.ladestack.in/) + GitHub Actions (Android release signing) |
 
 ---
 
@@ -98,9 +98,9 @@
 LS PDF is built on a **zero-server architecture**.
 
 - **No uploads.** All processing runs in your browser (WebAssembly, Canvas 2D, Web Workers) or natively on Android.
-- **No telemetry.** No analytics SDK, no crash reporter, no tracking pixels.
+- **Zero Document Telemetry.** No crash reporter, no third-party tracking pixels, zero cookies. Aggregate visitor traffic is measured via privacy-friendly, cookieless Vercel Web Analytics (which collects only coarse web performance metrics without capturing file names, document contents, or personal identifiers).
 - **No cookies.** Zero cookies are set by the application.
-- **No network requests.** The app never sends your documents over the network. The sole exception is loading the page itself (from GitHub Pages) and the optional Tesseract.js OCR worker (loaded from a CDN unless running the F-Droid build).
+- **No network requests.** The app never sends your documents over the network. The sole exception is loading the page assets (from https://pdf.ladestack.in/ on Vercel) and the optional Tesseract.js OCR worker (loaded from a CDN unless running the F-Droid build).
 
 You can verify this yourself: open DevTools → Network tab. Process any document. You will see zero outbound requests.
 
@@ -128,7 +128,7 @@ LS PDF stores data **only on your device** and only for convenience features you
 ### Web (PWA)
 
 No installation needed. Open in any modern browser:
-- **Live site:** [https://ls-pdf.vercel.app](https://ls-pdf.vercel.app)
+- **Live site:** [https://pdf.ladestack.in](https://pdf.ladestack.in) (canonical production domain)
 - **Install as PWA:** Click the install icon in your browser's address bar (Chrome / Edge / Samsung Internet)
 
 ### Android APK
@@ -300,7 +300,7 @@ src/
 
 ## Deployment
 
-- **GitHub Pages:** Push to `main` → auto-deploys via `.github/workflows/deploy.yml`
+- **Web Production:** Push to `main` → auto-deploys to https://pdf.ladestack.in/ via Vercel GitHub integration
 - **Android APK:** Push to `main` → builds & signs both variants via `.github/workflows/android-release.yml`
 
 ---

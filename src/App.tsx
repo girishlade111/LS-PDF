@@ -36,6 +36,7 @@ import About from './components/About'
 import PrivacyPolicy from './components/PrivacyPolicy'
 import SettingsView from './components/Settings'
 import PdfPreview from './components/PdfPreview'
+import NotFoundView from './components/NotFoundView'
 
 // Tools - Also moving to static imports for stability in APK
 import MergeTool from './components/tools/MergeTool'
@@ -378,7 +379,7 @@ function App() {
                 <Route path="/about" element={<About viewMode={viewMode} />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />
                 <Route path="/settings" element={<SettingsView theme={theme} setTheme={setTheme} />} />
-
+                <Route path="*" element={<NotFoundView />} />
               </Routes>
             </Suspense>
 
@@ -387,7 +388,7 @@ function App() {
               <div className="fixed bottom-24 right-6 z-[100] flex flex-col gap-2">
                 <button
                   onClick={() => setViewMode(prev => prev === 'web' ? 'android' : 'web')}
-                  className="bg-gray-900 dark:bg-zinc-800 text-white p-4 rounded-3xl shadow-2xl hover:bg-rose-500 transition-all duration-300 flex items-center gap-3 border border-white/10 group active:scale-95"
+                  className="bg-gray-900 dark:bg-zinc-800 text-white p-4 rounded-3xl shadow-2xl hover:bg-rose-500 transition-colors duration-300 flex items-center gap-3 border border-white/10 group active:scale-95"
                   title="Toggle Chameleon Mode"
                 >
                   {viewMode === 'web' ? <SmartphoneIcon size={20} /> : <MonitorIcon size={20} />}

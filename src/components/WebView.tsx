@@ -7,9 +7,12 @@ import { useState, useMemo } from 'react'
 import { 
   Search as SearchIcon, 
   ChevronRight as ChevronRightIcon, 
-  Sparkles as SparklesIcon
+  Sparkles as SparklesIcon,
+  ShieldCheck,
+  Cpu,
+  Layers
 } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Tool, ToolCategory } from '../types'
 import { SEOHead } from '../utils/useSEO'
 import { homeSEO } from '../utils/seoData'
@@ -45,29 +48,28 @@ const categoryColors: Record<ToolCategory, { bg: string, text: string, border: s
   }
 }
 
-const ToolCard = ({ title, desc, icon: Icon, onClick, category }: Tool & { onClick?: () => void }) => {
+const ToolCard = ({ title, desc, icon: Icon, path, category }: Tool) => {
   const colors = categoryColors[category]
   
   return (
-    <button 
-      onClick={onClick}
-      className="group relative flex flex-col p-6 rounded-[2rem] bg-white dark:bg-zinc-900/40 border border-gray-100 dark:border-white/5 hover:border-rose-500/50 dark:hover:border-rose-500/50 transition-all duration-300 text-left hover:shadow-2xl hover:shadow-rose-500/5 hover:-translate-y-1"
+    <Link 
+      to={path || '/'}
+      className="group relative flex flex-col p-6 rounded-[2rem] bg-white dark:bg-zinc-900/40 border border-gray-100 dark:border-white/5 hover:border-rose-500/50 dark:hover:border-rose-500/50 transition-all duration-300 text-left hover:shadow-2xl hover:shadow-rose-500/5 hover:-translate-y-1 block"
     >
       <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-5 ${colors.bg} ${colors.text} group-hover:bg-rose-500 group-hover:text-white transition-all duration-500`}>
         <Icon size={24} strokeWidth={2} />
       </div>
-      <h3 className="font-black text-gray-900 dark:text-white mb-2 text-lg tracking-tight group-hover:text-rose-500 transition-colors">{title}</h3>
+      <h2 className="font-black text-gray-900 dark:text-white mb-2 text-lg tracking-tight group-hover:text-rose-500 transition-colors">{title}</h2>
       <p className="text-sm text-gray-500 dark:text-zinc-400 font-medium leading-relaxed line-clamp-2">{desc}</p>
       
       <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity text-rose-500">
         <ChevronRightIcon size={20} />
       </div>
-    </button>
+    </Link>
   )
 }
 
 export default function WebView({ tools }: { tools: Tool[] }) {
-  const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState<ToolCategory | 'All'>('All')
 
@@ -97,6 +99,9 @@ export default function WebView({ tools }: { tools: Tool[] }) {
             Stop Uploading <br/>
             <span className="text-rose-500">Your Privacy.</span>
           </h1>
+          <p className="max-w-2xl mx-auto text-base md:text-lg text-gray-500 dark:text-zinc-400 font-medium leading-relaxed">
+            A complete, private PDF toolkit with 17 tools. Merge, split, compress, protect, convert, and edit documents entirely in your browser. Zero file uploads, zero servers, and absolute data sovereignty.
+          </p>
           
           <div className="max-w-2xl mx-auto relative group mt-12">
             <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none text-gray-400 group-focus-within:text-rose-500 transition-colors">
@@ -139,7 +144,6 @@ export default function WebView({ tools }: { tools: Tool[] }) {
                 <ToolCard 
                   key={tool.title} 
                   {...tool} 
-                  onClick={() => navigate(tool.path || '/')}
                 />
               ))}
             </div>
@@ -154,6 +158,62 @@ export default function WebView({ tools }: { tools: Tool[] }) {
                 <button onClick={() => { setSearchQuery(''); setActiveCategory('All'); }} className="mt-8 text-rose-500 font-black uppercase tracking-widest text-xs hover:underline underline-offset-8">Reset Dashboard</button>
               </div>
             )}
+
+            {/* Semantic Architecture & Capabilities Section */}
+            <section className="mt-24 pt-16 border-t border-gray-100 dark:border-white/5 space-y-16 text-left" aria-label="Architecture and Features">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="p-8 bg-white dark:bg-zinc-900/40 rounded-[2rem] border border-gray-100 dark:border-white/5 space-y-4">
+                  <div className="w-12 h-12 rounded-2xl bg-rose-50 dark:bg-rose-900/20 text-rose-500 flex items-center justify-center">
+                    <ShieldCheck size={24} />
+                  </div>
+                  <h2 className="text-xl font-black text-gray-900 dark:text-white tracking-tight">Zero-Server Privacy</h2>
+                  <p className="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed font-normal">
+                    Every operation runs 100% inside your browser memory using WebAssembly, Web Workers, and local canvas pipelines. Your confidential contracts, financial records, and medical files never touch a remote server.
+                  </p>
+                </div>
+
+                <div className="p-8 bg-white dark:bg-zinc-900/40 rounded-[2rem] border border-gray-100 dark:border-white/5 space-y-4">
+                  <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 text-indigo-500 flex items-center justify-center">
+                    <Cpu size={24} />
+                  </div>
+                  <h2 className="text-xl font-black text-gray-900 dark:text-white tracking-tight">High-Performance Engine</h2>
+                  <p className="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed font-normal">
+                    Powered by Mozilla PDF.js, pdf-lib, and Tesseract.js. Handle multi-megabyte documents, high-DPI rasterization, optical character recognition, and drag-and-drop page manipulation at native speed.
+                  </p>
+                </div>
+
+                <div className="p-8 bg-white dark:bg-zinc-900/40 rounded-[2rem] border border-gray-100 dark:border-white/5 space-y-4">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-900/20 text-emerald-500 flex items-center justify-center">
+                    <Layers size={24} />
+                  </div>
+                  <h2 className="text-xl font-black text-gray-900 dark:text-white tracking-tight">17 Specialized Tools</h2>
+                  <p className="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed font-normal">
+                    From page numbering and watermarking to AES password encryption, metadata sanitization, and image conversion. Everything you need for daily document processing without subscriptions or ads.
+                  </p>
+                </div>
+              </div>
+
+              {/* Categorized Tool Directory */}
+              <div className="space-y-6">
+                <h2 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">Explore the PDF Tool Suite</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {categories.filter(c => c !== 'All').map(cat => (
+                    <div key={cat} className="space-y-3">
+                      <h3 className="text-xs font-black uppercase tracking-[0.2em] text-rose-500">{cat}</h3>
+                      <ul className="space-y-2 list-none p-0">
+                        {tools.filter(t => t.category === cat).map(t => (
+                          <li key={t.title}>
+                            <Link to={t.path || '/'} className="text-sm font-bold text-gray-700 dark:text-zinc-300 hover:text-rose-500 dark:hover:text-rose-400 transition-colors">
+                              {t.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       </main>

@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { 
   Search, ChevronRight
 } from 'lucide-react'
@@ -7,7 +7,6 @@ import { Tool, ToolCategory } from '../types'
 import { LsPdfLogo } from './Logo'
 
 export default function AndroidToolsView({ tools }: { tools: Tool[] }) {
-  const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
 
   const categoryColors: Record<ToolCategory, { bg: string, text: string, icon: string, border: string }> = {
@@ -33,7 +32,7 @@ export default function AndroidToolsView({ tools }: { tools: Tool[] }) {
   }, [filteredTools])
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] dark:bg-black pb-32 transition-colors">
+    <div className="min-h-screen bg-[#FAFAFA] dark:bg-black pb-32 transition-colors text-left">
       <header className="px-6 pt-[calc(env(safe-area-inset-top)+0.75rem)] pb-6">
         <h1 className="text-4xl font-black tracking-tighter dark:text-white mb-8">All Tools</h1>
         
@@ -54,28 +53,28 @@ export default function AndroidToolsView({ tools }: { tools: Tool[] }) {
       <main className="px-4 space-y-8">
         {(Object.keys(groupedTools) as ToolCategory[]).map((category) => (
           <section key={category} className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <h3 className="px-2 mb-4 text-[11px] font-black uppercase tracking-[0.2em] text-[#49454F] dark:text-[#CAC4D0]">
+            <h2 className="px-2 mb-4 text-[11px] font-black uppercase tracking-[0.2em] text-[#49454F] dark:text-[#CAC4D0]">
               {category} Tools
-            </h3>
+            </h2>
             <div className="grid grid-cols-1 gap-2">
               {groupedTools[category].map((tool, i) => {
                 const colors = categoryColors[tool.category]
                 const Icon = tool.icon
                 return (
-                  <button
+                  <Link
                     key={i}
-                    onClick={() => tool.implemented && tool.path && navigate(tool.path)}
+                    to={tool.path || '/'}
                     className="flex items-center gap-4 p-4 bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 active:bg-gray-50 dark:active:bg-black transition-all shadow-sm"
                   >
                     <div className={`w-12 h-12 ${colors.bg} ${colors.icon} rounded-xl flex items-center justify-center shrink-0`}>
                       <Icon size={24} strokeWidth={1.5} />
                     </div>
                     <div className="flex-1 min-w-0 text-left">
-                      <h4 className="font-bold text-sm dark:text-white truncate">{tool.title}</h4>
+                      <h3 className="font-bold text-sm dark:text-white truncate">{tool.title}</h3>
                       <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{tool.desc}</p>
                     </div>
                     <ChevronRight size={18} className="text-gray-300" />
-                  </button>
+                  </Link>
                 )
               })}
             </div>
