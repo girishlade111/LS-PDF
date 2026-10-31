@@ -1,24 +1,24 @@
 # Vercel ignores these paths to speed up deploys and avoid uploading unnecessary files
 
 # Android build artifacts
-android/
+/android/
 *.apk
-fastlane/
-artifacts/
-com.lspdf.app.yml
-fdroid.yml
-capacitor.config.ts
+/fastlane/
+/artifacts/
+/com.lspdf.app.yml
+/fdroid.yml
+/capacitor.config.ts
 
 # Source icon assets (only /public/icons is needed at runtime)
-icons/
-assets/
+/icons/
+/assets/
 
 # Git history
-.git/
+/.git/
 
 # Local dev / IDE
-.vscode/
-.idea/
+/.vscode/
+/.idea/
 *.local
 
 # OS artifacts
