@@ -134,7 +134,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     whatItDoes: [
       'LS PDF Compress optimizes documents by re-sampling embedded graphics and reconstructing pages with configurable JPEG image compression.',
       'The interactive slider gives you immediate control over the balance between file size savings and visual clarity.',
-      'Notice: Because this compression implementation rasterizes document pages onto high-resolution canvases to maximize size reduction, selectable vector text layers are converted to visual images. For scanned forms, contracts, and image-heavy reports, this achieves dramatic size reductions.'
+      'Notice: Because this compression implementation rasterizes document pages onto canvases to compress embedded imagery, selectable vector text layers are converted into visual images. Actual file size savings and visual clarity depend on original document contents and selected quality settings.'
     ],
     howTo: [
       'Choose or drag your large PDF file into the upload zone.',
@@ -156,7 +156,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       },
       {
         q: 'Will compressing a PDF reduce its quality?',
-        a: 'LS PDF optimizes file size by rendering pages to high-resolution canvases and re-encoding them as optimized JPEG images. While higher quality settings preserve crisp visuals, this rasterization process converts selectable text into images, making it best suited for scans, receipts, and image-heavy documents.'
+        a: 'LS PDF optimizes file size by rendering pages to canvas and re-encoding them as optimized JPEG images. While higher quality settings preserve clearer visuals, this rasterization process converts selectable text into images. Output file size and image clarity vary depending on original document content and selected compression settings.'
       },
       {
         q: 'Why is my PDF too large to email?',
@@ -488,7 +488,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       },
       {
         q: 'Is an electronic signature from LS PDF legally valid?',
-        a: 'Electronic signatures are legally recognized in many countries under laws like the ESIGN Act (USA) and eIDAS (EU) for most document types. Always check the requirements for your specific use case.'
+        a: 'This tool applies an image-based visual stamp onto document pages. It does not provide cryptographic digital certificates (PKI), biometric validation, or identity verification. Whether a visual signature is accepted depends on your jurisdiction and specific agreement requirements.'
       },
       {
         q: 'Is my signature private and secure?',
@@ -506,10 +506,10 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     slug: 'grayscale',
     title: 'Grayscale',
     h1: 'Convert PDF to Grayscale Online Free',
-    summary: 'Transform full-color PDF documents into black-and-white to save colored printer ink and create clean, high-contrast archives.',
+    summary: 'Transform full-color PDF documents into black-and-white to help reduce color toner usage and create clean monochrome archives.',
     whatItDoes: [
       'LS PDF Grayscale renders document pages through client-side color-matrix filters, converting color images and graphics to monochrome grayscale values.',
-      'This eliminates costly color ink usage when printing documents on office laser printers and ensures clean contrast for official document submissions.',
+      'This helps reduce color toner usage on office printers and produces clean monochrome contrast across pages.',
       'The conversion runs directly in your browser using canvas filters and Web Workers to process multi-page documents without server bottlenecks.'
     ],
     howTo: [
@@ -520,7 +520,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     ],
     specs: [
       { label: 'Color Conversion', value: 'Luminance-weighted monochrome grayscale' },
-      { label: 'Use Case', value: 'Print ink economy, official filings, black-and-white archiving' },
+      { label: 'Use Case', value: 'Monochrome printing, visual standardization, black-and-white archiving' },
       { label: 'Engine', value: 'HTML5 Canvas & pdf-lib client assembly' },
       { label: 'Privacy', value: 'Zero server uploads; 100% on-device processing' }
     ],
@@ -531,7 +531,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       },
       {
         q: 'Why convert a PDF to grayscale?',
-        a: 'Grayscale PDFs save expensive color printer ink and meet strict black-and-white filing standards. However, because pages are re-encoded via canvas rendering, conversion does not guarantee a smaller file size; use Compress PDF if size reduction is your primary goal.'
+        a: 'Converting to grayscale removes color elements to help reduce color toner usage when printing and provide uniform monochrome appearance. However, because pages are re-encoded via canvas rendering, conversion does not guarantee a smaller file size or compliance with specific institutional filing guidelines; use Compress PDF if size reduction is your primary goal.'
       }
     ],
     related: [
@@ -713,32 +713,32 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     slug: 'repair',
     title: 'Repair PDF',
     h1: 'Repair Corrupted PDF Online Free',
-    summary: 'Reconstruct broken xref tables and recover readable content from damaged or malformed PDF documents.',
+    summary: 'Attempt to recover readable pages and elements from unreadable or damaged PDF files using fault-tolerant in-browser parsing.',
     whatItDoes: [
-      'LS PDF Repair parses corrupted, truncated, or malformed PDF files and attempts to reconstruct damaged cross-reference (xref) tables and object streams.',
-      'It recovers readable pages, embedded text, and graphics and re-packages them into a clean, standards-compliant PDF file.',
-      'Important Limitation: Repair is best-effort. If core structural data or raw file bytes have been permanently overwritten or destroyed, complete recovery may not be possible. However, it successfully fixes common transmission glitches, bad trailer dictionaries, and malformed headers.'
+      'LS PDF Repair attempts to open damaged, incomplete, or unreadable PDF files using fault-tolerant parser settings that ignore invalid objects.',
+      'If readable document elements can be accessed, the engine exports them into a clean, newly generated PDF file.',
+      'Important Limitation: Recovery is strictly best-effort. If core structural data or underlying file bytes are permanently destroyed or missing, complete recovery is not possible.'
     ],
     howTo: [
       'Upload your damaged or unreadable PDF document.',
-      'The repair engine will parse and reconstruct available document objects.',
+      'Click Attempt Repair to evaluate readable document data.',
       'Review the recovery status reported by the repair engine.',
-      'Click Download Repaired PDF to save your fixed document.'
+      'Download your salvaged PDF file if recovery succeeded.'
     ],
     specs: [
-      { label: 'Supported Recovery', value: 'Malformed trailers, broken xref tables, bad EOF markers' },
-      { label: 'Engine', value: 'pdf-lib resilient parser with fallback stream reconstruction' },
-      { label: 'Limitation', value: 'Best-effort recovery; cannot restore erased byte streams' },
-      { label: 'Privacy', value: 'All salvage operations execute 100% locally in RAM' }
+      { label: 'Recovery Strategy', value: 'Fault-tolerant lenient object parsing' },
+      { label: 'Engine', value: 'pdf-lib with error-tolerant document loading' },
+      { label: 'Limitation', value: 'Best-effort recovery; cannot restore destroyed byte data' },
+      { label: 'Privacy', value: 'All salvage operations execute 100% locally in browser memory' }
     ],
     faqs: [
       {
         q: 'How do I fix a corrupted PDF file?',
-        a: 'Upload your damaged PDF to LS PDF Repair. The tool will attempt to analyze and reconstruct the PDF structure to make it readable. Download the repaired file.'
+        a: 'Upload your damaged PDF to LS PDF Repair and click Attempt Repair. The tool attempts to salvage accessible objects and export a readable PDF file.'
       },
       {
         q: 'Can LS PDF fix all types of PDF corruption?',
-        a: 'LS PDF can fix many common PDF errors, but severely corrupted files where core data is lost may not be fully recoverable. The tool will attempt the best possible repair.'
+        a: 'No. The tool uses best-effort parsing to salvage damaged files, but severely corrupted or zero-byte files cannot be recovered if fundamental document data is lost.'
       }
     ],
     related: [

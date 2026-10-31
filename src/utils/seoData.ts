@@ -223,7 +223,7 @@ export const compressSEO: ToolSEOData = {
       },
       {
         q: 'Will compressing a PDF reduce its quality?',
-        a: 'LS PDF compresses PDFs by rasterizing pages into optimized JPEG images. This delivers significant size reductions for scanned and image-heavy documents while removing selectable vector text.',
+        a: 'LS PDF compresses PDFs by rendering pages to canvas and re-encoding them as JPEG images. While this can reduce file sizes for scanned and image-heavy documents, selectable vector text is converted to images, and results depend on original document content and selected compression levels.',
       },
       {
         q: 'Why is my PDF too large to email?',
@@ -449,7 +449,7 @@ export const metadataSEO: ToolSEOData = {
 export const signatureSEO: ToolSEOData = {
   title: 'Add Electronic Signature to PDF Free — Sign PDF Online | LS PDF',
   description:
-    'Upload your transparent signature image and stamp it onto any PDF page. Sign documents online for free with zero uploads. Your signature never leaves your device.',
+    'Upload your signature image (PNG, JPG, or WebP) and stamp it onto any PDF page. Place and resize visually online for free with zero file uploads.',
   keywords:
     'sign pdf online free, add signature to pdf, electronic signature pdf, e-signature pdf, upload signature pdf, add signature stamp pdf, e-signature image, sign document online',
   canonical: SITE_URL + '/signature',
@@ -457,17 +457,17 @@ export const signatureSEO: ToolSEOData = {
     makeWebApp(
       'Sign PDF Online — LS PDF',
       SITE_URL + '/signature',
-      'Stamp your visual signature image onto any PDF document. Upload transparent PNG, JPG, or WebP signatures and place them anywhere on any page. 100% private.',
+      'Stamp your visual signature image onto any PDF document. Upload PNG, JPG, or WebP signatures and place them anywhere on any page. 100% private.',
       ['Upload signature image (PNG, JPG, WebP)', 'Drag to position on any page', 'Preserve original document layout', 'Zero server uploads']
     ),
     makeFAQ([
       {
         q: 'How do I electronically sign a PDF for free?',
-        a: 'Open LS PDF Signature, upload your PDF, upload your transparent signature image, drag it to the correct position, and download the signed document — all free and without creating an account.',
+        a: 'Open LS PDF Signature, upload your PDF, upload your signature image (PNG, JPG, or WebP), position and resize it on the page, and download the signed document — all free and without creating an account.',
       },
       {
         q: 'Is an electronic signature from LS PDF legally valid?',
-        a: 'Electronic signatures are legally recognized in many countries under laws like the ESIGN Act (USA) and eIDAS (EU) for most document types. Always check the requirements for your specific use case.',
+        a: 'This tool applies an image-based visual signature stamp to document pages. It does not provide cryptographic digital certificates (PKI), timestamping, or identity verification. Legal acceptance depends on your specific document requirements and local regulations.',
       },
       {
         q: 'Is my signature private and secure?',
@@ -489,7 +489,7 @@ export const grayscaleSEO: ToolSEOData = {
     makeWebApp(
       'Convert PDF to Grayscale — LS PDF',
       SITE_URL + '/grayscale',
-      'Convert PDF pages to grayscale (black and white) to save color ink or meet document standards. Fast client-side processing.',
+      'Convert PDF pages to grayscale (black and white) for monochrome printing or visual standardization. Fast client-side processing.',
       ['Convert all pages to grayscale', 'Reduces color ink consumption for printing', 'Client-side monochrome canvas filtering', 'Zero server uploads']
     ),
     makeFAQ([
@@ -499,7 +499,7 @@ export const grayscaleSEO: ToolSEOData = {
       },
       {
         q: 'Why convert a PDF to grayscale?',
-        a: 'Grayscale PDFs use less color ink when printing, ensure clean monochrome contrast, and meet institutional filing standards for black and white documents.',
+        a: 'Converting to grayscale removes color elements to help reduce color toner usage on printers and provide uniform monochrome appearance. Because pages are rendered and re-encoded via canvas, it does not guarantee smaller file sizes or compliance with specific legal filing guidelines; use Compress PDF if size reduction is your primary goal.',
       },
     ]),
   ],
@@ -633,25 +633,25 @@ export const pdfToTextSEO: ToolSEOData = {
 export const repairSEO: ToolSEOData = {
   title: 'Repair Corrupted PDF Online Free — Fix PDF File | LS PDF',
   description:
-    'Attempt to repair and recover data from corrupted, damaged, or unreadable PDF files. Fix common PDF errors in your browser. Free, no upload required.',
+    'Attempt to salvage and recover data from unreadable or damaged PDF files using fault-tolerant in-browser parsing. 100% private, no file uploads.',
   keywords:
-    'repair pdf online, fix corrupted pdf, pdf repair tool free, recover damaged pdf, broken pdf fix, pdf file repair, corrupted pdf recovery',
+    'repair pdf online, fix corrupted pdf, pdf repair tool free, recover damaged pdf, broken pdf fix, pdf file repair, salvage pdf',
   canonical: SITE_URL + '/repair',
   jsonLd: [
     makeWebApp(
       'Repair PDF — LS PDF',
       SITE_URL + '/repair',
-      'Attempt to recover and repair corrupted or damaged PDF files. Fix common structural errors to make PDFs readable again. 100% client-side processing.',
-      ['Recovers corrupted PDF structures', 'Fixes common PDF syntax errors', 'Attempts to restore readable content', 'No data sent to any server']
+      'Attempt to recover readable data from malformed or unreadable PDF files using resilient client-side parsing. 100% private processing.',
+      ['Best-effort recovery for damaged PDFs', 'Fault-tolerant object loading', 'Direct client-side document export', 'Zero server file uploads']
     ),
     makeFAQ([
       {
         q: 'How do I fix a corrupted PDF file?',
-        a: 'Upload your damaged PDF to LS PDF Repair. The tool will attempt to analyze and reconstruct the PDF structure to make it readable. Download the repaired file.',
+        a: 'Upload your damaged PDF to LS PDF Repair and click Attempt Repair. The tool uses fault-tolerant parsing to salvage accessible document objects and re-save them as a readable PDF.',
       },
       {
         q: 'Can LS PDF fix all types of PDF corruption?',
-        a: 'LS PDF can fix many common PDF errors, but severely corrupted files where core data is lost may not be fully recoverable. The tool will attempt the best possible repair.',
+        a: 'No. Recovery is best-effort. If critical file data or core byte streams are permanently missing or corrupted, the document cannot be recovered.',
       },
     ]),
   ],
