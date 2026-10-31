@@ -55,9 +55,9 @@ const PrivacyWeb = () => {
             <div className="w-10 h-10 bg-rose-50 dark:bg-rose-900/20 text-rose-500 rounded-xl flex items-center justify-center">
               <Cpu size={20} />
             </div>
-            <h3 className="font-black text-sm uppercase tracking-widest dark:text-white">RAM Processing</h3>
+            <h3 className="font-black text-sm uppercase tracking-widest dark:text-white">On-Device Processing</h3>
             <p className="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed font-medium">
-              Files are streamed into your browser's volatile memory (RAM). We do not use disk-based caching or temporary cloud storage.
+              Files are processed locally in your browser memory, with client-side IndexedDB storage used strictly for optional workspace recovery and activity logs. Files never leave your device and are never uploaded to any cloud server.
             </p>
           </div>
 
@@ -65,9 +65,9 @@ const PrivacyWeb = () => {
             <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 text-blue-500 rounded-xl flex items-center justify-center">
               <EyeOff size={20} />
             </div>
-            <h3 className="font-black text-sm uppercase tracking-widest dark:text-white">Zero Telemetry</h3>
+            <h3 className="font-black text-sm uppercase tracking-widest dark:text-white">Cookieless Traffic Metrics</h3>
             <p className="text-sm text-gray-500 dark:text-zinc-400 leading-relaxed font-medium">
-              No tracking pixels. No cookies. No user IDs. We have no way of knowing how many files you process or who you are.
+              We collect anonymous, cookieless traffic metrics via Vercel Web Analytics to measure site reliability and performance. No personal identifiers, IP addresses, or tracking cookies are collected. Document contents, text, and filenames never leave your browser and are never transmitted to analytics.
             </p>
           </div>
 
@@ -137,8 +137,8 @@ const PrivacyAPK = () => {
            />
            <PrivacyItem 
              icon={EyeOff} 
-             title="No Telemetry" 
-             desc="We use zero tracking, analytics, or user identifiers. Your usage is completely invisible to us." 
+             title="No Document Telemetry"
+             desc="Native Android operations run 100% locally on your device CPU. Your documents and usage never leave your phone." 
              color="text-blue-500 bg-blue-50 dark:bg-blue-900/20"
            />
            <PrivacyItem 

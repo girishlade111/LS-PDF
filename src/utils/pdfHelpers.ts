@@ -26,7 +26,7 @@ export interface PdfMetaData {
 // Fixed cMapUrl for true offline usage (relative to base)
 const getCMapUrl = () => {
   const isCapacitor = Capacitor.isNativePlatform();
-  return isCapacitor ? 'cmaps/' : '/ls-pdf/cmaps/';
+  return isCapacitor ? 'cmaps/' : '/cmaps/';
 };
 
 const uint8ArrayToBase64 = (bytes: Uint8Array): string => {
