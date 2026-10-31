@@ -137,10 +137,10 @@ function injectSEO(html: string, seo: ToolSEOData): string {
     );
   }
 
-  // Replace Canonical Link
+  // Replace Canonical Link (with data-rh="true" for react-helmet-async hydration)
   result = result.replace(
-    /<link rel="canonical" href="[^"]*"\s*\/?>/g,
-    `<link rel="canonical" href="${seo.canonical}" />`
+    /<link rel="canonical"[^>]*\s*\/?>/g,
+    `<link rel="canonical" href="${seo.canonical}" data-rh="true" />`
   );
 
   // Replace Open Graph Url
