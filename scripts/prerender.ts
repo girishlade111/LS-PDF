@@ -73,7 +73,7 @@ interface RouteConfig {
 const routes: RouteConfig[] = [
   { path: 'merge', slug: 'merge', desc: 'Combine multiple PDF files into one document. Processed entirely on your device.', seo: mergeSEO },
   { path: 'split', slug: 'split', desc: 'Visually extract specific pages or ranges. Processed entirely on your device.', seo: splitSEO },
-  { path: 'compress', slug: 'compress', desc: 'Optimize your file size for easier sharing. Processed entirely on your device.', seo: compressSEO },
+  { path: 'compress', slug: 'compress', desc: 'Reduce file size by converting pages into optimized images. Processed entirely on your device.', seo: compressSEO },
   { path: 'protect', slug: 'protect', desc: 'Secure your documents with strong password encryption. Processed entirely on your device.', seo: protectSEO },
   { path: 'unlock', slug: 'unlock', desc: 'Remove password protection from your PDF files. Processed entirely on your device.', seo: unlockSEO },
   { path: 'rotate-pdf', slug: 'rotate-pdf', desc: 'Fix page orientation permanently. Processed entirely on your device.', seo: rotateSEO },
@@ -87,7 +87,7 @@ const routes: RouteConfig[] = [
   { path: 'image-to-pdf', slug: 'image-to-pdf', desc: 'Convert JPG, PNG, and WebP into a professional PDF. Processed entirely on your device.', seo: imageToPdfSEO },
   { path: 'extract-images', slug: 'extract-images', desc: 'Pull out all original images embedded in a PDF. Processed entirely on your device.', seo: extractImagesSEO },
   { path: 'pdf-to-text', slug: 'pdf-to-text', desc: 'Extract plain text from your PDF documents. Processed entirely on your device.', seo: pdfToTextSEO },
-  { path: 'repair', slug: 'repair', desc: 'Attempt to fix corrupted or unreadable documents. Processed entirely on your device.', seo: repairSEO },
+  { path: 'repair', slug: 'repair', desc: 'Attempt to recover damaged PDF files using error-tolerant parsing. Processed entirely on your device.', seo: repairSEO },
   { path: 'about', seo: aboutSEO },
   { path: 'privacy', seo: privacySEO },
   { path: 'settings', seo: settingsSEO },

@@ -134,7 +134,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     whatItDoes: [
       'LS PDF Compress optimizes documents by re-sampling embedded graphics and reconstructing pages with configurable JPEG image compression.',
       'The interactive slider gives you immediate control over the balance between file size savings and visual clarity.',
-      'Notice: Because this compression implementation rasterizes document pages onto high-resolution canvases to maximize size reduction, selectable vector text layers are converted to visual images. For scanned forms, contracts, and image-heavy reports, this achieves dramatic size reductions.'
+      'Notice: Because this compression implementation rasterizes document pages onto canvases to compress embedded imagery, selectable vector text layers are converted into visual images. Actual file size savings and visual clarity depend on original document contents and selected quality settings.'
     ],
     howTo: [
       'Choose or drag your large PDF file into the upload zone.',
@@ -156,7 +156,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       },
       {
         q: 'Will compressing a PDF reduce its quality?',
-        a: 'LS PDF offers lossless compression that reduces file size with minimal quality impact. Higher compression levels may reduce image quality slightly to achieve smaller sizes.'
+        a: 'LS PDF optimizes file size by rendering pages to canvas and re-encoding them as optimized JPEG images. While higher quality settings preserve clearer visuals, this rasterization process converts selectable text into images. Output file size and image clarity vary depending on original document content and selected compression settings.'
       },
       {
         q: 'Why is my PDF too large to email?',
@@ -463,36 +463,36 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     slug: 'signature',
     title: 'Signature',
     h1: 'Add Electronic Signature to PDF Online Free',
-    summary: 'Sign contracts and agreements directly in your browser by drawing or uploading an electronic signature stamp.',
+    summary: 'Sign contracts and agreements directly in your browser by placing and resizing an uploaded signature image stamp.',
     whatItDoes: [
-      'LS PDF Signature enables you to create a smooth handwritten signature on a responsive canvas or upload an existing transparent PNG signature image.',
+      'LS PDF Signature enables you to place and position an uploaded signature image (PNG, JPG, or WebP) directly onto document pages.',
       'You can drag your signature stamp onto any page, resize it to fit signature lines, and position it with precision.',
       'Important Distinction: This tool stamps a visual electronic signature onto document pages. It is not a cryptographic digital certificate (PKI/eIDAS hardware token), but satisfies standard electronic signing requirements for most agreements and forms.'
     ],
     howTo: [
       'Upload the PDF document requiring a signature.',
-      'Draw your signature on the digital canvas or upload a signature image.',
+      'Upload your signature image (transparent PNG recommended).',
       'Navigate to the desired page and drag your signature onto the document.',
       'Resize and position your signature, then click Sign & Download.'
     ],
     specs: [
-      { label: 'Signature Type', value: 'Visual Electronic Signature (Canvas / PNG stamp)' },
-      { label: 'Input Methods', value: 'Touch screen, Mouse draw, or PNG image upload' },
+      { label: 'Signature Type', value: 'Visual Electronic Signature (Image stamp)' },
+      { label: 'Supported Stamp Formats', value: 'PNG (transparent recommended), JPG, WebP image upload' },
       { label: 'Legal Distinction', value: 'Visual stamp; does not embed cryptographic PKI certificates' },
       { label: 'Privacy', value: 'Signature images and documents never leave your local device' }
     ],
     faqs: [
       {
         q: 'How do I electronically sign a PDF for free?',
-        a: 'Open LS PDF Signature, upload your PDF, draw or type your signature, drag it to the correct position, and download the signed document — all free and without creating an account.'
+        a: 'Open LS PDF Signature, upload your PDF, upload your signature image, position and resize it on the page, and download the signed document — all free and without creating an account.'
       },
       {
         q: 'Is an electronic signature from LS PDF legally valid?',
-        a: 'Electronic signatures are legally recognized in many countries under laws like the ESIGN Act (USA) and eIDAS (EU) for most document types. Always check the requirements for your specific use case.'
+        a: 'This tool applies an image-based visual stamp onto document pages. It does not provide cryptographic digital certificates (PKI), biometric validation, or identity verification. Whether a visual signature is accepted depends on your jurisdiction and specific agreement requirements.'
       },
       {
         q: 'Is my signature private and secure?',
-        a: 'Yes. Your signature image is created and applied entirely within your browser. It is never transmitted to any server.'
+        a: 'Yes. Your signature image is processed and embedded entirely within your browser. It is never transmitted to any server.'
       }
     ],
     related: [
@@ -506,10 +506,10 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     slug: 'grayscale',
     title: 'Grayscale',
     h1: 'Convert PDF to Grayscale Online Free',
-    summary: 'Transform full-color PDF documents into black-and-white to save colored printer ink and create clean, high-contrast archives.',
+    summary: 'Transform full-color PDF documents into black-and-white to help reduce color toner usage and create clean monochrome archives.',
     whatItDoes: [
       'LS PDF Grayscale renders document pages through client-side color-matrix filters, converting color images and graphics to monochrome grayscale values.',
-      'This eliminates costly color ink usage when printing documents on office laser printers and ensures clean contrast for official document submissions.',
+      'This helps reduce color toner usage on office printers and produces clean monochrome contrast across pages.',
       'The conversion runs directly in your browser using canvas filters and Web Workers to process multi-page documents without server bottlenecks.'
     ],
     howTo: [
@@ -520,7 +520,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     ],
     specs: [
       { label: 'Color Conversion', value: 'Luminance-weighted monochrome grayscale' },
-      { label: 'Use Case', value: 'Print ink economy, official filings, black-and-white archiving' },
+      { label: 'Use Case', value: 'Monochrome printing, visual standardization, black-and-white archiving' },
       { label: 'Engine', value: 'HTML5 Canvas & pdf-lib client assembly' },
       { label: 'Privacy', value: 'Zero server uploads; 100% on-device processing' }
     ],
@@ -531,7 +531,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       },
       {
         q: 'Why convert a PDF to grayscale?',
-        a: 'Grayscale PDFs use less color ink when printing, may be required by some printers or institutions, and can result in smaller file sizes.'
+        a: 'Converting to grayscale removes color elements to help reduce color toner usage when printing and provide uniform monochrome appearance. However, because pages are re-encoded via canvas rendering, conversion does not guarantee a smaller file size or compliance with specific institutional filing guidelines; use Compress PDF if size reduction is your primary goal.'
       }
     ],
     related: [
@@ -683,6 +683,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     ],
     specs: [
       { label: 'Extraction Engines', value: 'PDF.js native text parser + Tesseract.js WebAssembly OCR' },
+      { label: 'OCR Language', value: 'English (Tesseract.js eng traineddata by default)' },
       { label: 'Output Format', value: 'Plain text file (.txt) and instant clipboard copy' },
       { label: 'OCR Processing', value: 'Runs 100% locally in browser memory via WebAssembly' },
       { label: 'Privacy', value: 'Zero cloud OCR; documents never leave your device' }
@@ -694,7 +695,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       },
       {
         q: 'Can LS PDF extract text from scanned PDFs?',
-        a: 'Yes. LS PDF uses Tesseract.js, an open-source OCR engine running entirely in your browser, to recognize and extract text from scanned or image-based PDFs.'
+        a: 'Yes. LS PDF uses Tesseract.js running locally in your browser to recognize text from scanned or image-based PDFs using English traineddata. OCR accuracy depends on scan resolution, contrast, and font clarity.'
       },
       {
         q: 'Is OCR processing private?',
@@ -712,32 +713,32 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     slug: 'repair',
     title: 'Repair PDF',
     h1: 'Repair Corrupted PDF Online Free',
-    summary: 'Reconstruct broken xref tables and recover readable content from damaged or malformed PDF documents.',
+    summary: 'Attempt to recover readable pages and elements from unreadable or damaged PDF files using fault-tolerant in-browser parsing.',
     whatItDoes: [
-      'LS PDF Repair parses corrupted, truncated, or malformed PDF files and attempts to reconstruct damaged cross-reference (xref) tables and object streams.',
-      'It recovers readable pages, embedded text, and graphics and re-packages them into a clean, standards-compliant PDF file.',
-      'Important Limitation: Repair is best-effort. If core structural data or raw file bytes have been permanently overwritten or destroyed, complete recovery may not be possible. However, it successfully fixes common transmission glitches, bad trailer dictionaries, and malformed headers.'
+      'LS PDF Repair attempts to open damaged, incomplete, or unreadable PDF files using fault-tolerant parser settings that ignore invalid objects.',
+      'If readable document elements can be accessed, the engine exports them into a clean, newly generated PDF file.',
+      'Important Limitation: Recovery is strictly best-effort. If core structural data or underlying file bytes are permanently destroyed or missing, complete recovery is not possible.'
     ],
     howTo: [
       'Upload your damaged or unreadable PDF document.',
-      'The repair engine will parse and reconstruct available document objects.',
-      'Review the recovery status and preview the salvaged pages.',
-      'Click Download Repaired PDF to save your fixed document.'
+      'Click Attempt Repair to evaluate readable document data.',
+      'Review the recovery status reported by the repair engine.',
+      'Download your salvaged PDF file if recovery succeeded.'
     ],
     specs: [
-      { label: 'Supported Recovery', value: 'Malformed trailers, broken xref tables, bad EOF markers' },
-      { label: 'Engine', value: 'pdf-lib resilient parser with fallback stream reconstruction' },
-      { label: 'Limitation', value: 'Best-effort recovery; cannot restore erased byte streams' },
-      { label: 'Privacy', value: 'All salvage operations execute 100% locally in RAM' }
+      { label: 'Recovery Strategy', value: 'Fault-tolerant lenient object parsing' },
+      { label: 'Engine', value: 'pdf-lib with error-tolerant document loading' },
+      { label: 'Limitation', value: 'Best-effort recovery; cannot restore destroyed byte data' },
+      { label: 'Privacy', value: 'All salvage operations execute 100% locally in browser memory' }
     ],
     faqs: [
       {
         q: 'How do I fix a corrupted PDF file?',
-        a: 'Upload your damaged PDF to LS PDF Repair. The tool will attempt to analyze and reconstruct the PDF structure to make it readable. Download the repaired file.'
+        a: 'Upload your damaged PDF to LS PDF Repair and click Attempt Repair. The tool attempts to salvage accessible objects and export a readable PDF file.'
       },
       {
         q: 'Can LS PDF fix all types of PDF corruption?',
-        a: 'LS PDF can fix many common PDF errors, but severely corrupted files where core data is lost may not be fully recoverable. The tool will attempt the best possible repair.'
+        a: 'No. The tool uses best-effort parsing to salvage damaged files, but severely corrupted or zero-byte files cannot be recovered if fundamental document data is lost.'
       }
     ],
     related: [
