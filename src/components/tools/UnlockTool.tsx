@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Lock, Unlock, Loader2, X } from 'lucide-react'
 import { decryptPDF, isEncrypted } from '@pdfsmaller/pdf-decrypt'
+import { saslPrep } from '@pdfsmaller/pdf-encrypt'
 import { toast } from 'sonner'
 
 import { getPdfMetaData, unlockPdf } from '../../utils/pdfHelpers'
@@ -56,14 +57,43 @@ export default function UnlockTool() {
     if (!pdfData || (pdfData.isLocked && !password)) return
     setIsProcessing(true); await new Promise(resolve => setTimeout(resolve, 100))
     try {
-      const result = await unlockPdf(pdfData.file, password)
-      if (!result.success) throw new Error('Incorrect password.')
       const arrayBuffer = await pdfData.file.arrayBuffer()
       const bytes = new Uint8Array(arrayBuffer)
-      const encInfo = await isEncrypted(bytes).catch(() => ({ encrypted: true }))
-      const unlockedPdfBytes = encInfo.encrypted
-        ? await decryptPDF(bytes, password)
-        : bytes
+      let encInfo: { encrypted: boolean } | null = null
+      try {
+        encInfo = await isEncrypted(bytes)
+      } catch (encError: any) {
+        if (encError.message?.includes('Unsupported encryption')) {
+          throw new Error('This PDF uses an unsupported encryption format (such as legacy AES-128). Only standard AES-256 and RC4 are supported.')
+        }
+        throw encError
+      }
+
+      const result = await unlockPdf(pdfData.file, password)
+      if (!result.success) throw new Error('Incorrect password.')
+      let unlockedPdfBytes: Uint8Array
+      if (encInfo?.encrypted) {
+        try {
+          unlockedPdfBytes = await decryptPDF(bytes, password)
+        } catch (decryptErr: any) {
+          if (decryptErr.message?.includes('Incorrect password')) {
+            try {
+              const prepped = saslPrep(password)
+              if (prepped !== password) {
+                unlockedPdfBytes = await decryptPDF(bytes, prepped)
+              } else {
+                throw decryptErr
+              }
+            } catch {
+              throw decryptErr
+            }
+          } else {
+            throw decryptErr
+          }
+        }
+      } else {
+        unlockedPdfBytes = bytes
+      }
 
       const blob = new Blob([unlockedPdfBytes as any], { type: 'application/pdf' })
       const url = createUrl(blob)

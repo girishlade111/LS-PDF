@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Lock, ShieldCheck, Loader2, ArrowRight, X } from 'lucide-react'
 import { PDFDocument } from 'pdf-lib'
-import { encryptPDF } from '@pdfsmaller/pdf-encrypt'
+import { encryptPDF, saslPrep } from '@pdfsmaller/pdf-encrypt'
 import { decryptPDF } from '@pdfsmaller/pdf-decrypt'
 import { toast } from 'sonner'
 import { Capacitor } from '@capacitor/core'
@@ -78,7 +78,20 @@ export default function ProtectTool() {
       const arrayBuffer = await pdfData.file.arrayBuffer()
       let sourceBytes: Uint8Array = new Uint8Array(arrayBuffer)
       if (pdfData.sourcePassword) {
-        sourceBytes = (await decryptPDF(sourceBytes as any, pdfData.sourcePassword)) as Uint8Array
+        try {
+          sourceBytes = (await decryptPDF(sourceBytes as any, pdfData.sourcePassword)) as Uint8Array
+        } catch (decErr: any) {
+          if (decErr.message?.includes('Incorrect password')) {
+            const prepped = saslPrep(pdfData.sourcePassword)
+            if (prepped !== pdfData.sourcePassword) {
+              sourceBytes = (await decryptPDF(sourceBytes as any, prepped)) as Uint8Array
+            } else {
+              throw decErr
+            }
+          } else {
+            throw decErr
+          }
+        }
       }
       const sourcePdf = await PDFDocument.load(sourceBytes)
       const newPdf = await PDFDocument.create()
