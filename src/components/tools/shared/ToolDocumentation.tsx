@@ -130,7 +130,7 @@ export default function ToolDocumentation({ toolSlug }: ToolDocumentationProps) 
                   <ChevronDown size={18} className="text-gray-400 group-open:rotate-180 transition-transform duration-200 shrink-0 ml-2" />
                 </summary>
                 <p className="mt-3 text-xs md:text-sm text-gray-600 dark:text-zinc-400 leading-relaxed font-normal pt-2 border-t border-gray-50 dark:border-white/5">
-                  {faq.a}
+                  {renderParagraphWithLinks(faq.a)}
                 </p>
               </details>
             ))}
