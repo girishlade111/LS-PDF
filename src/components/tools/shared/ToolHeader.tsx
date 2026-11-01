@@ -24,7 +24,7 @@ export default function ToolHeader({ title, highlight, description, heading }: T
         </button>
       )}
       <h1 className="text-3xl md:text-5xl font-black mb-3 md:mb-4 dark:text-white px-10">
-        {heading || title} <span className="text-rose-500">{highlight || '.'}</span>
+        {heading || title} <span className="text-rose-500" aria-hidden="true">{highlight || '.'}</span>
       </h1>
       <p className="text-sm md:text-base text-gray-500 dark:text-zinc-400 max-w-lg mx-auto leading-relaxed">
         {description}

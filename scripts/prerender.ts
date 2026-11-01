@@ -452,7 +452,7 @@ function generateToolBodyHtml(guide: ToolGuideData, desc: string): string {
           <div class="mb-8">
             <div class="relative text-center mb-8 md:mb-12">
               <h1 class="text-3xl md:text-5xl font-black mb-3 md:mb-4 dark:text-white px-10 text-gray-900 dark:text-white">
-                ${escapeHtml(guide.h1 || guide.title)} <span class="text-rose-500">.</span>
+                ${escapeHtml(guide.h1 || guide.title)} <span class="text-rose-500" aria-hidden="true">.</span>
               </h1>
               <p class="text-sm md:text-base text-gray-500 dark:text-zinc-400 max-w-lg mx-auto leading-relaxed">
                 ${escapeHtml(desc)}
@@ -649,7 +649,7 @@ function generateSettingsBodyHtml(): string {
           <div class="mb-8">
             <div class="relative text-center mb-8 md:mb-12">
               <h1 class="text-3xl md:text-5xl font-black mb-3 md:mb-4 dark:text-white px-10 text-gray-900 dark:text-white">
-                System <span class="text-rose-500">.</span>
+                System <span class="text-rose-500" aria-hidden="true">.</span>
               </h1>
               <p class="text-sm md:text-base text-gray-500 dark:text-zinc-400 max-w-lg mx-auto leading-relaxed">
                 Core Configuration
@@ -680,7 +680,7 @@ function generateNotFoundBodyHtml(): string {
       <main class="min-h-screen py-16 px-4 sm:px-6 max-w-4xl mx-auto text-center">
         <div class="w-16 h-16 bg-rose-500/10 text-rose-500 rounded-3xl flex items-center justify-center mx-auto mb-6 font-black text-2xl">404</div>
         <h1 class="text-4xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight mb-4">
-          404 &mdash; Page Not Found <span class="text-rose-500">.</span>
+          404 &mdash; Page Not Found <span class="text-rose-500" aria-hidden="true">.</span>
         </h1>
         <p class="text-base text-gray-600 dark:text-zinc-400 max-w-md mx-auto leading-relaxed mb-8">
           The PDF tool or page you requested does not exist or may have been moved. Return to the homepage or explore our popular tools below.

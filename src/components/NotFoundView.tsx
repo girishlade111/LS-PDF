@@ -23,7 +23,7 @@ export default function NotFoundView() {
       </div>
 
       <h1 className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight mb-4">
-        404 &mdash; Page Not Found <span className="text-rose-500">.</span>
+        404 &mdash; Page Not Found <span className="text-rose-500" aria-hidden="true">.</span>
       </h1>
       
       <p className="max-w-md text-sm md:text-base text-gray-500 dark:text-zinc-400 font-medium leading-relaxed mb-10">

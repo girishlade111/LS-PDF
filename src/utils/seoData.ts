@@ -359,7 +359,7 @@ export const rearrangeSEO: ToolSEOData = {
 
 // ─── PAGE NUMBERS ────────────────────────────────────────────────────────────
 export const pageNumbersSEO: ToolSEOData = {
-  title: 'Add Page Numbers to PDF Online Free — Number PDF Pages | LS PDF',
+  title: 'Add Page Numbers to PDF Online Free | LS PDF',
   description:
     'Automatically add page numbers to your PDF. Customize position (header/footer), format, and starting number. Free, no upload, instant results in your browser.',
   keywords:
@@ -481,7 +481,7 @@ export const signatureSEO: ToolSEOData = {
 export const grayscaleSEO: ToolSEOData = {
   title: 'Convert PDF to Grayscale Online Free — Black & White PDF | LS PDF',
   description:
-    'Convert all pages of a PDF to black and white (grayscale) to reduce color ink usage or meet specific document requirements. Free, no upload, instant in browser.',
+    'Convert PDF pages to grayscale for monochrome printing and a consistent black-and-white appearance. Free browser-based processing with no document uploads.',
   keywords:
     'convert pdf to grayscale, black and white pdf, pdf grayscale converter free, remove color from pdf, pdf to black white, grayscale pdf online',
   canonical: SITE_URL + '/grayscale',

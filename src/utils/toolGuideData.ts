@@ -712,7 +712,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
   repair: {
     slug: 'repair',
     title: 'Repair PDF',
-    h1: 'Recover Damaged PDF Files Online Free',
+    h1: 'Attempt Damaged PDF Repair Online Free',
     summary: 'Attempt to recover readable pages and elements from unreadable or damaged PDF files using fault-tolerant in-browser parsing.',
     whatItDoes: [
       'LS PDF Repair attempts to open damaged, incomplete, or unreadable PDF files using fault-tolerant parser settings that ignore invalid objects.',
