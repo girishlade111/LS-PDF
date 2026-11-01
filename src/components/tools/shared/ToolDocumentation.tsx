@@ -6,6 +6,25 @@ interface ToolDocumentationProps {
   toolSlug: string
 }
 
+function renderParagraphWithLinks(text: string) {
+  const parts = text.split(/(\[[^\]]+\]\(\/?[-a-zA-Z0-9_]+\))/g);
+  return parts.map((part, i) => {
+    const match = part.match(/^\[([^\]]+)\]\((\/[-a-zA-Z0-9_]+)\)$/);
+    if (match) {
+      return (
+        <Link
+          key={i}
+          to={match[2]}
+          className="text-rose-500 hover:text-rose-600 dark:hover:text-rose-400 underline decoration-rose-500/30 hover:decoration-rose-500 font-semibold transition-colors"
+        >
+          {match[1]}
+        </Link>
+      );
+    }
+    return part;
+  });
+}
+
 export default function ToolDocumentation({ toolSlug }: ToolDocumentationProps) {
   const guide: ToolGuideData | undefined = TOOL_GUIDES[toolSlug]
 
@@ -23,7 +42,7 @@ export default function ToolDocumentation({ toolSlug }: ToolDocumentationProps) 
         </h2>
         <div className="space-y-3 text-sm md:text-base text-gray-600 dark:text-zinc-400 leading-relaxed font-normal">
           {guide.whatItDoes.map((paragraph, idx) => (
-            <p key={idx}>{paragraph}</p>
+            <p key={idx}>{renderParagraphWithLinks(paragraph)}</p>
           ))}
         </div>
       </div>

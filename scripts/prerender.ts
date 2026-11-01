@@ -386,9 +386,23 @@ function generateHomeBodyHtml(): string {
   `;
 }
 
+function renderParagraphWithLinksHtml(text: string): string {
+  const parts = text.split(/(\[[^\]]+\]\(\/?[-a-zA-Z0-9_]+\))/g);
+  return parts
+    .map((part) => {
+      const match = part.match(/^\[([^\]]+)\]\((\/[-a-zA-Z0-9_]+)\)$/);
+      if (match) {
+        const [, label, href] = match;
+        return `<a href="${escapeHtml(href)}" class="text-rose-500 hover:text-rose-600 dark:hover:text-rose-400 underline decoration-rose-500/30 hover:decoration-rose-500 font-semibold transition-colors">${escapeHtml(label)}</a>`;
+      }
+      return escapeHtml(part);
+    })
+    .join('');
+}
+
 function generateToolBodyHtml(guide: ToolGuideData, desc: string): string {
   const whatItDoesHtml = guide.whatItDoes
-    .map((p) => `<p>${escapeHtml(p)}</p>`)
+    .map((p) => `<p>${renderParagraphWithLinksHtml(p)}</p>`)
     .join('');
 
   const howToHtml = guide.howTo

@@ -378,6 +378,10 @@ export const pageNumbersSEO: ToolSEOData = {
         a: 'Upload your PDF to LS PDF Page Numbers, configure the position, format, and starting number, then click Apply. The numbered PDF downloads instantly.',
       },
       {
+        q: 'Can I skip page numbering on the first page?',
+        a: 'Yes. LS PDF allows you to set a page offset so your cover page or title page remains unnumbered.',
+      },
+      {
         q: 'Can I choose where page numbers appear (header or footer)?',
         a: 'Yes. LS PDF lets you place page numbers in the header or footer, and position them left, center, or right.',
       },
@@ -402,12 +406,16 @@ export const watermarkSEO: ToolSEOData = {
     ),
     makeFAQ([
       {
-        q: 'How do I add a watermark to a PDF for free?',
-        a: 'Upload your PDF to LS PDF Watermark, enter your watermark text, customize the appearance, and click Apply. The watermarked PDF downloads instantly.',
+        q: 'How do I add a watermark to a PDF online for free?',
+        a: 'Upload your PDF to LS PDF Watermark, type your custom watermark text, adjust opacity and angle, and click Apply. Your watermarked PDF is ready instantly.',
+      },
+      {
+        q: 'Can I customize the watermark text and appearance?',
+        a: 'Yes. You can customize the font size, rotation angle, opacity (transparency), and text content of the watermark.',
       },
       {
         q: 'Can I add a "CONFIDENTIAL" or "DRAFT" watermark?',
-        a: 'Yes. You can type any text as your watermark, including "CONFIDENTIAL," "DRAFT," your company name, or any custom message.',
+        a: 'Yes. You can enter any custom text including "CONFIDENTIAL", "DRAFT", or your company name, and adjust its opacity and rotation.',
       },
     ]),
   ],
