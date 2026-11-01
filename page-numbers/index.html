@@ -45,7 +45,7 @@
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Add Page Numbers to PDF — LS PDF","url":"https://pdf.ladestack.in/page-numbers","description":"Add customizable page numbers to your PDF. Choose position (header/footer/corners), number format, and starting number. 100% client-side.","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","browserRequirements":"Requires a modern browser with JavaScript and WebAssembly support","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0.00","priceCurrency":"USD","availability":"https://schema.org/OnlineOnly"},"featureList":["Custom position (corners, center)","Multiple number formats","Custom start number","Font size and color options","No file uploads required","100% client-side processing","Privacy-first — files never leave your device","Free to use — no subscription or account needed","No advertisements","Works offline after first load"],"provider":{"@type":"Organization","name":"LS PDF","url":"https://pdf.ladestack.in"}}</script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I add page numbers to a PDF for free?","acceptedAnswer":{"@type":"Answer","text":"Upload your PDF to LS PDF Page Numbers, configure the position, format, and starting number, then click Apply. The numbered PDF downloads instantly."}},{"@type":"Question","name":"Can I choose where page numbers appear (header or footer)?","acceptedAnswer":{"@type":"Answer","text":"Yes. LS PDF lets you place page numbers in the header or footer, and position them left, center, or right."}}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I add page numbers to a PDF for free?","acceptedAnswer":{"@type":"Answer","text":"Upload your PDF to LS PDF Page Numbers, configure the position, format, and starting number, then click Apply. The numbered PDF downloads instantly."}},{"@type":"Question","name":"Can I skip page numbering on the first page?","acceptedAnswer":{"@type":"Answer","text":"Yes. LS PDF allows you to set a page offset so your cover page or title page remains unnumbered."}},{"@type":"Question","name":"Can I choose where page numbers appear (header or footer)?","acceptedAnswer":{"@type":"Answer","text":"Yes. LS PDF lets you place page numbers in the header or footer, and position them left, center, or right."}}]}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://pdf.ladestack.in/"},{"@type":"ListItem","position":2,"name":"Add Page Numbers","item":"https://pdf.ladestack.in/page-numbers"}]}</script>
 
     <!-- Dark mode injection (must run before render to prevent flash) -->
@@ -59,14 +59,14 @@
         }
       })();
     </script>
-    <script type="module" crossorigin src="/ls-pdf/assets/index-BS5WPbLe.js"></script>
+    <script type="module" crossorigin src="/ls-pdf/assets/index-DKWFuCr8.js"></script>
     <link rel="modulepreload" crossorigin href="/ls-pdf/assets/rolldown-runtime-CfSZB2vO.js">
     <link rel="modulepreload" crossorigin href="/ls-pdf/assets/vendor-ui-TiSzgYZA.js">
     <link rel="modulepreload" crossorigin href="/ls-pdf/assets/pdfjs-viewer-Dks5-OL6.js">
     <link rel="modulepreload" crossorigin href="/ls-pdf/assets/vendor-utils-DpaVCrt4.js">
     <link rel="modulepreload" crossorigin href="/ls-pdf/assets/pdf-lib-core-kjpBpIXA.js">
     <link rel="modulepreload" crossorigin href="/ls-pdf/assets/tesseract-core-D5PlNF9P.js">
-    <link rel="stylesheet" crossorigin href="/ls-pdf/assets/index-BRKrD6NC.css">
+    <link rel="stylesheet" crossorigin href="/ls-pdf/assets/index-DpM1znps.css">
   </head>
   <body>
     <div id="root">
@@ -130,7 +130,7 @@
                 </div>
                 <h2 class="text-2xl md:text-3xl font-black text-gray-900 dark:text-white tracking-tight">About Page Numbers</h2>
                 <div class="space-y-3 text-sm md:text-base text-gray-600 dark:text-zinc-400 leading-relaxed font-normal">
-                  <p>LS PDF Page Numbers stamps dynamic pagination numbers directly onto the content stream of every page in your document.</p><p>You have complete control over position (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right), margins, font size, and format (e.g., &quot;1&quot;, &quot;Page 1&quot;, &quot;Page 1 of 10&quot;).</p><p>You can also specify a page offset to skip cover pages or start numbering from a specific index.</p>
+                  <p>LS PDF Page Numbers stamps dynamic pagination numbers directly onto the content stream of every page in your document.</p><p>You have complete control over placement (header or footer, left, center, or right), margins, font size, and format templates (such as &quot;Page 1 of 10&quot;).</p><p>To mark documents with confidentiality notices alongside page numbers, use <a href="/watermark" class="text-rose-500 hover:text-rose-600 dark:hover:text-rose-400 underline decoration-rose-500/30 hover:decoration-rose-500 font-semibold transition-colors">Watermark</a>. If you are preparing a multi-document bundle, combine files first with <a href="/merge" class="text-rose-500 hover:text-rose-600 dark:hover:text-rose-400 underline decoration-rose-500/30 hover:decoration-rose-500 font-semibold transition-colors">Merge PDF</a> before numbering.</p>
                 </div>
               </div>
 
@@ -212,6 +212,16 @@
         </p>
       </details>
     
+      <details class="group p-5 bg-white dark:bg-zinc-900/40 rounded-2xl border border-gray-100 dark:border-white/5 hover:border-rose-500/30 transition-all open:ring-1 open:ring-rose-500/20">
+        <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-sm md:text-base text-gray-900 dark:text-white select-none">
+          <span>Can I choose where page numbers appear (header or footer)?</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400 group-open:rotate-180 transition-transform duration-200 shrink-0 ml-2"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <p class="mt-3 text-xs md:text-sm text-gray-600 dark:text-zinc-400 leading-relaxed font-normal pt-2 border-t border-gray-50 dark:border-white/5">
+          Yes. LS PDF lets you place page numbers in the header or footer, and position them left, center, or right.
+        </p>
+      </details>
+    
                 </div>
               </div>
 
@@ -221,7 +231,7 @@
                   
       <a href="/watermark" class="group p-5 bg-white dark:bg-zinc-900/40 rounded-2xl border border-gray-100 dark:border-white/5 hover:border-rose-500/50 hover:shadow-lg hover:-translate-y-0.5 transition-all flex flex-col justify-between">
         <div>
-          <h3 class="font-bold text-sm text-gray-900 dark:text-white group-hover:text-rose-500 transition-colors mb-1">Watermark PDF</h3>
+          <h3 class="font-bold text-sm text-gray-900 dark:text-white group-hover:text-rose-500 transition-colors mb-1">Watermark</h3>
           <p class="text-xs text-gray-500 dark:text-zinc-400 line-clamp-2">Add text branding or confidential labels.</p>
         </div>
         <div class="flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-rose-500 mt-4 group-hover:translate-x-1 transition-transform">
@@ -243,7 +253,7 @@
     
       <a href="/metadata" class="group p-5 bg-white dark:bg-zinc-900/40 rounded-2xl border border-gray-100 dark:border-white/5 hover:border-rose-500/50 hover:shadow-lg hover:-translate-y-0.5 transition-all flex flex-col justify-between">
         <div>
-          <h3 class="font-bold text-sm text-gray-900 dark:text-white group-hover:text-rose-500 transition-colors mb-1">Edit Metadata</h3>
+          <h3 class="font-bold text-sm text-gray-900 dark:text-white group-hover:text-rose-500 transition-colors mb-1">Metadata</h3>
           <p class="text-xs text-gray-500 dark:text-zinc-400 line-clamp-2">Add document title and author info.</p>
         </div>
         <div class="flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-rose-500 mt-4 group-hover:translate-x-1 transition-transform">
