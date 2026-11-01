@@ -11,7 +11,8 @@
     "build": "tsc && vite build && npx tsx scripts/prerender.ts",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test:security": "node tests/security/security_matrix.test.cjs"
+    "test:security": "node tests/security/security_matrix.test.cjs",
+    "test:browser": "node tests/security/browser_validation.cjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.0.2",

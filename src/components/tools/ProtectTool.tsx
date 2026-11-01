@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
 import { Lock, ShieldCheck, Loader2, ArrowRight, X } from 'lucide-react'
-import { PDFDocument } from 'pdf-lib'
 import { encryptPDF, saslPrep } from '@pdfsmaller/pdf-encrypt'
 import { decryptPDF } from '@pdfsmaller/pdf-decrypt'
 import { toast } from 'sonner'
@@ -93,14 +92,8 @@ export default function ProtectTool() {
           }
         }
       }
-      const sourcePdf = await PDFDocument.load(sourceBytes)
-      const newPdf = await PDFDocument.create()
-      const pages = await newPdf.copyPages(sourcePdf, sourcePdf.getPageIndices())
-      pages.forEach(page => newPdf.addPage(page))
-      const pdfBytes = await newPdf.save()
-      
-      // Heavy task: encryption
-      const encryptedBytes = await encryptPDF(pdfBytes, password)
+      // Encrypt the original PDF bytes directly to preserve AcroForms, outlines, metadata, and document structure
+      const encryptedBytes = await encryptPDF(sourceBytes, password)
       
       const blob = new Blob([encryptedBytes as any], { type: 'application/pdf' })
       const url = createUrl(blob)
