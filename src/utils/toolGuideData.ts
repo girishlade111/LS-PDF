@@ -462,7 +462,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
   signature: {
     slug: 'signature',
     title: 'Signature',
-    h1: 'Add Electronic Signature to PDF Online Free',
+    h1: 'Add Signature Stamp to PDF Online Free',
     summary: 'Sign contracts and agreements directly in your browser by placing and resizing an uploaded signature image stamp.',
     whatItDoes: [
       'LS PDF Signature enables you to place and position an uploaded signature image (PNG, JPG, or WebP) directly onto document pages.',
@@ -544,7 +544,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
   'pdf-to-image': {
     slug: 'pdf-to-image',
     title: 'PDF to Image',
-    h1: 'PDF to Image Online Free',
+    h1: 'Convert PDF to Image Online Free',
     summary: 'Convert PDF document pages into high-resolution JPG or PNG images with individual page downloads or organized ZIP archives.',
     whatItDoes: [
       'LS PDF PDF to Image renders high-definition raster images of each document page using Mozilla\'s PDF.js rendering engine.',
@@ -587,7 +587,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
   'image-to-pdf': {
     slug: 'image-to-pdf',
     title: 'Image to PDF',
-    h1: 'Image to PDF Online Free',
+    h1: 'Convert Image to PDF Online Free',
     summary: 'Convert photos and images (JPG, PNG, WebP) into professional, standardized PDF documents with drag-and-drop page ordering.',
     whatItDoes: [
       'LS PDF Image to PDF transforms your photo collections, receipts, scanned documents, and graphics into clean, standard PDF pages.',
@@ -668,7 +668,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
   'pdf-to-text': {
     slug: 'pdf-to-text',
     title: 'PDF to Text',
-    h1: 'PDF to Text Online Free',
+    h1: 'Extract Text from PDF Online Free',
     summary: 'Extract readable plain text from PDF documents using fast native stream extraction or client-side Tesseract.js OCR for scanned pages.',
     whatItDoes: [
       'LS PDF PDF to Text provides two distinct text extraction pipelines depending on your document type.',
@@ -712,7 +712,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
   repair: {
     slug: 'repair',
     title: 'Repair PDF',
-    h1: 'Repair Corrupted PDF Online Free',
+    h1: 'Recover Damaged PDF Files Online Free',
     summary: 'Attempt to recover readable pages and elements from unreadable or damaged PDF files using fault-tolerant in-browser parsing.',
     whatItDoes: [
       'LS PDF Repair attempts to open damaged, incomplete, or unreadable PDF files using fault-tolerant parser settings that ignore invalid objects.',

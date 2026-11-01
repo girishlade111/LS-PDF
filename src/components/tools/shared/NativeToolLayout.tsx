@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { Capacitor } from '@capacitor/core'
 import ToolHeader from './ToolHeader'
 import ToolDocumentation from './ToolDocumentation'
+import { TOOL_GUIDES } from '../../../utils/toolGuideData'
 import { trackEvent } from '../../../utils/analytics'
 
 interface NativeToolLayoutProps {
@@ -27,6 +28,8 @@ export const NativeToolLayout = ({
   const location = useLocation()
   
   const effectiveSlug = toolSlug || location.pathname.replace(/^\//, '')
+  const guide = TOOL_GUIDES[effectiveSlug]
+  const heading = guide?.h1 || title
   
   // Determine if we should show the native-style header
   // It should only show if we are in Android/APK mode
@@ -62,7 +65,7 @@ export const NativeToolLayout = ({
       <main className={`flex-1 flex flex-col p-4 md:p-8 max-w-5xl mx-auto w-full ${actions ? 'pb-32 md:pb-8' : ''}`}>
         {/* Web View Header (Only Visible on Desktop or when native header is hidden) */}
         <div className={`${showNativeHeader ? 'hidden md:block' : 'block'} mb-8`}>
-           <ToolHeader title={title} description={description} />
+           <ToolHeader title={title} heading={heading} description={description} />
         </div>
 
         {/* Content Wrapper */}

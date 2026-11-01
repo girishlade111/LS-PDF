@@ -331,7 +331,7 @@ export const rotateSEO: ToolSEOData = {
 
 // ─── REARRANGE PDF ───────────────────────────────────────────────────────────
 export const rearrangeSEO: ToolSEOData = {
-  title: 'Rearrange PDF Pages Online Free — Reorder PDF | LS PDF',
+  title: 'Rearrange PDF Pages Online Free — Reorder PDF Document | LS PDF',
   description:
     'Drag and drop to reorder PDF pages visually. Delete unwanted pages and rearrange your document layout. Free, no upload, runs 100% in your browser.',
   keywords:
@@ -359,7 +359,7 @@ export const rearrangeSEO: ToolSEOData = {
 
 // ─── PAGE NUMBERS ────────────────────────────────────────────────────────────
 export const pageNumbersSEO: ToolSEOData = {
-  title: 'Add Page Numbers to PDF Online Free | LS PDF',
+  title: 'Add Page Numbers to PDF Online Free — Number PDF Pages | LS PDF',
   description:
     'Automatically add page numbers to your PDF. Customize position (header/footer), format, and starting number. Free, no upload, instant results in your browser.',
   keywords:
@@ -387,7 +387,7 @@ export const pageNumbersSEO: ToolSEOData = {
 
 // ─── WATERMARK ───────────────────────────────────────────────────────────────
 export const watermarkSEO: ToolSEOData = {
-  title: 'Add Watermark to PDF Online Free — Text Watermark | LS PDF',
+  title: 'Add Watermark to PDF Online Free — Custom Text Watermark | LS PDF',
   description:
     'Add custom text watermarks to your PDF for branding, security, or confidentiality marking. Adjust opacity, angle, font, and position. Free, no upload.',
   keywords:
@@ -415,7 +415,7 @@ export const watermarkSEO: ToolSEOData = {
 
 // ─── METADATA ────────────────────────────────────────────────────────────────
 export const metadataSEO: ToolSEOData = {
-  title: 'Edit PDF Metadata Online Free — Remove PDF Info | LS PDF',
+  title: 'Edit PDF Metadata Online Free — Remove or Clean PDF Info | LS PDF',
   description:
     'Edit or remove PDF metadata including title, author, subject, keywords, creator, and producer. Clean metadata for privacy. Free, no upload, 100% client-side.',
   keywords:
@@ -447,7 +447,7 @@ export const metadataSEO: ToolSEOData = {
 
 // ─── SIGNATURE ───────────────────────────────────────────────────────────────
 export const signatureSEO: ToolSEOData = {
-  title: 'Add Electronic Signature to PDF Free — Sign PDF Online | LS PDF',
+  title: 'Sign PDF Online Free — Add Signature Stamp to PDF | LS PDF',
   description:
     'Upload your signature image (PNG, JPG, or WebP) and stamp it onto any PDF page. Place and resize visually online for free with zero file uploads.',
   keywords:
@@ -507,7 +507,7 @@ export const grayscaleSEO: ToolSEOData = {
 
 // ─── PDF TO IMAGE ─────────────────────────────────────────────────────────────
 export const pdfToImageSEO: ToolSEOData = {
-  title: 'PDF to Image Online Free — Convert PDF Pages to JPG/PNG | LS PDF',
+  title: 'PDF to Image Online Free — Convert PDF Pages to JPG or PNG | LS PDF',
   description:
     'Convert PDF pages to high-quality JPG or PNG images. Choose resolution (DPI), select specific pages. Free, no upload, processes entirely in your browser.',
   keywords:
@@ -539,7 +539,7 @@ export const pdfToImageSEO: ToolSEOData = {
 
 // ─── IMAGE TO PDF ─────────────────────────────────────────────────────────────
 export const imageToPdfSEO: ToolSEOData = {
-  title: 'Image to PDF Online Free — Convert JPG, PNG to PDF | LS PDF',
+  title: 'Image to PDF Online Free — Convert JPG and PNG to PDF | LS PDF',
   description:
     'Convert JPG, PNG, and WebP images to a professional PDF document. Add multiple images, reorder them, and control page size. Free, no upload, runs in your browser.',
   keywords:
@@ -571,7 +571,7 @@ export const imageToPdfSEO: ToolSEOData = {
 
 // ─── EXTRACT IMAGES ───────────────────────────────────────────────────────────
 export const extractImagesSEO: ToolSEOData = {
-  title: 'Extract Images from PDF Online Free | LS PDF',
+  title: 'Extract Images from PDF Online Free — Save Embedded Photos | LS PDF',
   description:
     'Extract and download all embedded images from a PDF document. Get original-quality images without any server upload. Free, private, runs in your browser.',
   keywords:
@@ -599,7 +599,7 @@ export const extractImagesSEO: ToolSEOData = {
 
 // ─── PDF TO TEXT ──────────────────────────────────────────────────────────────
 export const pdfToTextSEO: ToolSEOData = {
-  title: 'PDF to Text Online Free — Extract Text from PDF (OCR) | LS PDF',
+  title: 'PDF to Text Online Free — Extract Text & English OCR | LS PDF',
   description:
     'Extract plain text from PDF documents, including scanned PDFs using English OCR (Optical Character Recognition). Copy or download the extracted text. Free, no upload.',
   keywords:
@@ -631,7 +631,7 @@ export const pdfToTextSEO: ToolSEOData = {
 
 // ─── REPAIR PDF ───────────────────────────────────────────────────────────────
 export const repairSEO: ToolSEOData = {
-  title: 'Repair Corrupted PDF Online Free — Fix PDF File | LS PDF',
+  title: 'Repair PDF Online Free — Attempt Damaged File Recovery | LS PDF',
   description:
     'Attempt to salvage and recover data from unreadable or damaged PDF files using fault-tolerant in-browser parsing. 100% private, no file uploads.',
   keywords:
