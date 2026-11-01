@@ -87,7 +87,7 @@ const routes: RouteConfig[] = [
   { path: 'image-to-pdf', slug: 'image-to-pdf', desc: 'Convert JPG, PNG, and WebP into a professional PDF. Processed entirely on your device.', seo: imageToPdfSEO },
   { path: 'extract-images', slug: 'extract-images', desc: 'Pull out all original images embedded in a PDF. Processed entirely on your device.', seo: extractImagesSEO },
   { path: 'pdf-to-text', slug: 'pdf-to-text', desc: 'Extract plain text from your PDF documents. Processed entirely on your device.', seo: pdfToTextSEO },
-  { path: 'repair', slug: 'repair', desc: 'Attempt to fix corrupted or unreadable documents. Processed entirely on your device.', seo: repairSEO },
+  { path: 'repair', slug: 'repair', desc: 'Attempt to recover damaged PDF files using error-tolerant parsing. Processed entirely on your device.', seo: repairSEO },
   { path: 'about', seo: aboutSEO },
   { path: 'privacy', seo: privacySEO },
   { path: 'settings', seo: settingsSEO },

@@ -50,7 +50,7 @@ export default function RepairTool() {
       
       setDownloadUrl(url)
       addActivity({ name: `${customFileName}.pdf`, tool: 'Repair', size: blob.size, resultUrl: url })
-      toast.success('PDF rebuilt successfully!')
+      toast.success('PDF recovered successfully!')
     } catch (error: any) { 
       toast.error(`Repair failed: ${error.message}`) 
     } finally { 
@@ -67,7 +67,7 @@ export default function RepairTool() {
   return (
     <>
       <SEOHead {...repairSEO} />
-      <NativeToolLayout title="Repair PDF" description="Fix corrupted or unreadable PDF files by rebuilding structure." actions={originalFile && !downloadUrl && <ActionButton />}>
+      <NativeToolLayout title="Repair PDF" description="Attempt to recover damaged PDF files using error-tolerant parsing. Some corrupted documents may not be recoverable." actions={originalFile && !downloadUrl && <ActionButton />}>
       <input type="file" accept=".pdf" className="hidden" ref={fileInputRef} onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])} />
       
       {!originalFile ? (
@@ -101,7 +101,7 @@ export default function RepairTool() {
                 </div>
               </div>
             ) : (
-              <SuccessState message="Reconstruction Complete!" downloadUrl={downloadUrl} fileName={`${customFileName}.pdf`} onStartOver={() => { setDownloadUrl(null); setOriginalFile(null); }} showPreview={true} />
+              <SuccessState message="Recovery Complete!" downloadUrl={downloadUrl} fileName={`${customFileName}.pdf`} onStartOver={() => { setDownloadUrl(null); setOriginalFile(null); }} showPreview={true} />
             )}
           </div>
         </div>
@@ -111,7 +111,7 @@ export default function RepairTool() {
         <ShieldAlert className="text-amber-500 shrink-0" size={20} />
         <div className="text-xs text-amber-700 dark:text-amber-400 leading-relaxed text-left">
           <p className="font-black mb-1 uppercase tracking-widest text-[10px]">Technical Protocol:</p>
-          LS PDF rebuilds the internal cross-reference table and regenerates the file structure from scratch. This can restore access to many files that "cannot be opened."
+          LS PDF uses error-tolerant parsing to salvage accessible document objects and re-save them. Severely damaged or truncated files with missing core data may not be recoverable.
         </div>
       </div>
       <PrivacyBadge />
