@@ -386,9 +386,43 @@ function generateHomeBodyHtml(): string {
   `;
 }
 
+const VALID_CANONICAL_PATHS = new Set([
+  '/merge',
+  '/split',
+  '/compress',
+  '/protect',
+  '/unlock',
+  '/rotate-pdf',
+  '/rearrange-pdf',
+  '/page-numbers',
+  '/watermark',
+  '/signature',
+  '/metadata',
+  '/pdf-to-image',
+  '/image-to-pdf',
+  '/extract-images',
+  '/pdf-to-text',
+  '/grayscale',
+  '/repair'
+]);
+
+function renderParagraphWithLinksHtml(text: string): string {
+  const parts = text.split(/(\[[^\]]+\]\(\/?[-a-zA-Z0-9_]+\))/g);
+  return parts
+    .map((part) => {
+      const match = part.match(/^\[([^\]]+)\]\((\/[-a-zA-Z0-9_]+)\)$/);
+      if (match && VALID_CANONICAL_PATHS.has(match[2])) {
+        const [, label, href] = match;
+        return `<a href="${escapeHtml(href)}" class="text-rose-500 hover:text-rose-600 dark:hover:text-rose-400 underline decoration-rose-500/30 hover:decoration-rose-500 font-semibold transition-colors">${escapeHtml(label)}</a>`;
+      }
+      return escapeHtml(part);
+    })
+    .join('');
+}
+
 function generateToolBodyHtml(guide: ToolGuideData, desc: string): string {
   const whatItDoesHtml = guide.whatItDoes
-    .map((p) => `<p>${escapeHtml(p)}</p>`)
+    .map((p) => `<p>${renderParagraphWithLinksHtml(p)}</p>`)
     .join('');
 
   const howToHtml = guide.howTo
@@ -420,7 +454,7 @@ function generateToolBodyHtml(guide: ToolGuideData, desc: string): string {
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400 group-open:rotate-180 transition-transform duration-200 shrink-0 ml-2"><path d="m6 9 6 6 6-6"/></svg>
         </summary>
         <p class="mt-3 text-xs md:text-sm text-gray-600 dark:text-zinc-400 leading-relaxed font-normal pt-2 border-t border-gray-50 dark:border-white/5">
-          ${escapeHtml(faq.a)}
+          ${renderParagraphWithLinksHtml(faq.a)}
         </p>
       </details>
     `

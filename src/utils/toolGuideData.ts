@@ -2,7 +2,7 @@
  * LS PDF — Tool Guide & Architectural Documentation Data
  * 
  * Provides verified, implementation-accurate technical specifications,
- * step-by-step instructions, transparent limitations, FAQs, and related tools
+ * step-by-step instructions, transparent limitations, FAQs, and contextual links
  * for all 17 PDF utilities.
  */
 
@@ -39,10 +39,11 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     slug: 'merge',
     title: 'Merge PDF',
     h1: 'Merge PDF Files Online Free',
-    summary: 'Combine multiple PDF documents into a single organized file in seconds. Drag and drop to reorder pages and files with zero quality degradation.',
+    summary: 'Combine multiple PDF documents into a single organized file in seconds. Drag and drop to reorder uploaded files before merging with zero quality degradation.',
     whatItDoes: [
       'LS PDF Merge reads multiple PDF documents directly into your browser memory and combines them into a single coherent document using pdf-lib.',
-      'You can freely rearrange documents or individual pages with interactive drag-and-drop reordering, apply per-file rotations, and preserve existing vector text, form fields, and embedded annotations without re-compressing contents.',
+      'You can freely rearrange uploaded documents with interactive drag-and-drop file reordering, apply per-file rotations, and combine pages into a unified document without re-compressing contents.',
+      'After assembling your combined document, you can reduce its file size for email attachments using [Compress PDF](/compress), or add consistent page numbering across every section using [Page Numbers](/page-numbers).',
       'All processing runs entirely on your local machine using client-side JavaScript. No document bytes, file names, or metadata ever leave your computer or mobile device.'
     ],
     howTo: [
@@ -56,12 +57,12 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       { label: 'Output Format', value: 'Clean, consolidated PDF (.pdf)' },
       { label: 'Processing Location', value: '100% In-Browser Memory (pdf-lib)' },
       { label: 'Privacy & Telemetry', value: 'Zero file uploads, zero server processing' },
-      { label: 'File Limits', value: 'Bounded only by your device RAM (tested with 100+ MB)' }
+      { label: 'File Limits', value: 'Bounded by available device and browser memory' }
     ],
     faqs: [
       {
         q: 'How do I merge PDF files online for free?',
-        a: 'Upload your PDF files to LS PDF Merge tool, drag to reorder if needed, then click Merge. Your combined PDF downloads instantly — no account or payment required.'
+        a: 'Upload your PDF files to LS PDF Merge tool, drag file cards to reorder them if needed, then click Merge. Your combined PDF downloads instantly — no account or payment required.'
       },
       {
         q: 'Are my files uploaded to a server when I merge PDFs?',
@@ -78,7 +79,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     ],
     related: [
       { slug: 'split', title: 'Split PDF', desc: 'Extract specific page ranges into separate files.' },
-      { slug: 'rearrange-pdf', title: 'Rearrange PDF', desc: 'Visually reorder or delete individual pages.' },
+      { slug: 'rearrange-pdf', title: 'Rearrange PDF', desc: 'Visually reorder pages within your document.' },
       { slug: 'compress', title: 'Compress PDF', desc: 'Reduce the final merged file size for email sharing.' }
     ]
   },
@@ -90,8 +91,9 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     summary: 'Extract specific pages or page ranges into standalone PDF documents or export all pages as individual files in an organized ZIP archive.',
     whatItDoes: [
       'LS PDF Split analyzes your document structure and lets you extract any subset of pages with precision.',
-      'You can select individual pages visually from rendered thumbnails, specify page ranges (such as 1-5, 8, 11-14), or split an entire book into separate single-page documents packed into a ZIP archive.',
-      'Extraction extracts pristine original PDF objects without re-encoding, preserving sharp typography, vector graphics, and embedded metadata.'
+      'You can select individual pages visually from rendered thumbnails, specify custom page ranges (such as 1-5, 8, 11-14), or burst an entire document into separate single-page files packed in a ZIP archive.',
+      'If you need to change page order within a single document rather than extract separate files, use [Rearrange PDF](/rearrange-pdf). To isolate embedded photos rather than full document pages, see [Extract Images](/extract-images).',
+      'Extraction isolates native PDF objects without re-encoding, preserving sharp vector typography, form elements, and original page geometry.'
     ],
     howTo: [
       'Select or drop your PDF document into the tool.',
@@ -132,9 +134,9 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     h1: 'Compress PDF Online Free',
     summary: 'Reduce PDF file size for seamless email attachments and fast web uploads with an interactive quality slider.',
     whatItDoes: [
-      'LS PDF Compress optimizes documents by re-sampling embedded graphics and reconstructing pages with configurable JPEG image compression.',
-      'The interactive slider gives you immediate control over the balance between file size savings and visual clarity.',
-      'Notice: Because this compression implementation rasterizes document pages onto canvases to compress embedded imagery, selectable vector text layers are converted into visual images. Actual file size savings and visual clarity depend on original document contents and selected quality settings.'
+      'LS PDF Compress reduces file size by re-sampling embedded graphic elements and reconstructing document pages using configurable JPEG compression.',
+      'The interactive slider provides immediate control over the balance between byte savings and visual clarity across Low, Medium, and Maximum reduction modes.',
+      'Important Consideration: Because compression rasterizes pages onto canvases to compress visual content, selectable vector text layers are converted into images. If you need to convert documents to black and white for uniform printing rather than size reduction, use [Grayscale](/grayscale). To export pages as standalone image files, use [PDF to Image](/pdf-to-image).'
     ],
     howTo: [
       'Choose or drag your large PDF file into the upload zone.',
@@ -168,7 +170,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       }
     ],
     related: [
-      { slug: 'grayscale', title: 'Convert to Grayscale', desc: 'Remove colors to further reduce printer ink and file size.' },
+      { slug: 'grayscale', title: 'Grayscale', desc: 'Convert pages to monochrome black and white for uniform printing.' },
       { slug: 'merge', title: 'Merge PDF', desc: 'Combine documents after compressing.' },
       { slug: 'pdf-to-image', title: 'PDF to Image', desc: 'Export pages directly as JPG or PNG images.' }
     ]
@@ -178,42 +180,42 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     slug: 'protect',
     title: 'Protect PDF',
     h1: 'Protect PDF with Password Free',
-    summary: 'Secure confidential PDF documents with strong cryptographic encryption and granular permission restrictions.',
+    summary: 'Secure confidential PDF documents with client-side password protection and cryptographic encryption.',
     whatItDoes: [
-      'LS PDF Protect encrypts your documents directly in your browser using standard cryptographic algorithms via @pdfsmaller/pdf-encrypt-lite.',
-      'You can configure an Owner Password (required to modify document settings) and a User Password (required to open and view the document).',
-      'The tool also enforces permissions such as disabling unauthorized printing, copying of text, or modifying document annotations.'
+      'LS PDF Protect secures your PDF files directly in your browser using standard password-based encryption via @pdfsmaller/pdf-encrypt-lite.',
+      'Set a strong password that must be entered whenever the document is opened in any compliant PDF reader. The entire document content is encrypted, preventing unauthorized viewing.',
+      'Before encrypting sensitive documents, you can remove author names and tracking tags with [Edit Metadata](/metadata). If you need to remove protection later using your valid password, use [Unlock PDF](/unlock).'
     ],
     howTo: [
       'Select your PDF file to be encrypted.',
       'Enter a strong password of your choice in the password field.',
-      'Optionally toggle permissions for document printing, copying, and annotating.',
-      'Click Encrypt PDF to produce an encrypted document that requires a password to open.'
+      'Re-enter your password in the confirm field to verify.',
+      'Click Encrypt & Save to produce an encrypted document that requires a password to open.'
     ],
     specs: [
-      { label: 'Encryption Algorithm', value: 'Standard AES Encryption' },
+      { label: 'Encryption Standard', value: 'Standard 128-bit PDF Encryption' },
       { label: 'Password Security', value: 'Passwords never leave your device memory' },
-      { label: 'Permission Controls', value: 'Printing, Content Copying, Form Filling, Annotations' },
+      { label: 'Access Control', value: 'Document-open password protection' },
       { label: 'Output Compatibility', value: 'Adobe Acrobat, Apple Preview, Chrome, Edge, Mobile' }
     ],
     faqs: [
       {
         q: 'How do I add a password to a PDF for free?',
-        a: 'Upload your PDF to LS PDF Protect, enter your desired password, and click Encrypt. The password-protected PDF downloads instantly — no account required.'
+        a: 'Upload your PDF to LS PDF Protect, enter and confirm your password, and click Encrypt & Save. The password-protected PDF downloads instantly — no account required.'
       },
       {
         q: 'What encryption standard does LS PDF use?',
-        a: 'LS PDF uses AES encryption, the same standard used by banks and governments to protect sensitive data.'
+        a: 'LS PDF uses standard 128-bit encryption to protect your PDF so that compliant PDF readers require your password to view the document.'
       },
       {
-        q: 'Can I restrict printing or copying from the PDF?',
-        a: 'Yes. LS PDF allows you to set permissions, restricting printing, copying, and editing of the protected PDF.'
+        q: 'Can I restrict printing or copying without a password?',
+        a: 'LS PDF applies standard document-open encryption. Anyone without the password cannot open, view, print, or copy content from the document.'
       }
     ],
     related: [
       { slug: 'unlock', title: 'Unlock PDF', desc: 'Remove passwords from protected documents.' },
-      { slug: 'metadata', title: 'Edit Metadata', desc: 'Sanitize hidden author and tracking metadata.' },
-      { slug: 'watermark', title: 'Watermark PDF', desc: 'Add confidential branding or security stamps.' }
+      { slug: 'metadata', title: 'Metadata', desc: 'Sanitize hidden author and tracking metadata.' },
+      { slug: 'watermark', title: 'Watermark', desc: 'Add confidential branding or security stamps.' }
     ]
   },
 
@@ -224,8 +226,9 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     summary: 'Remove known passwords and security restrictions from PDF documents you own for easy archiving and sharing.',
     whatItDoes: [
       'LS PDF Unlock accepts your valid document password and decrypts the underlying PDF data streams locally in your browser.',
-      'Once decrypted, it generates a clean, unrestricted PDF copy that opens instantly without prompting for credentials in any PDF viewer.',
-      'Important Distinction: This tool decrypts PDFs using the legitimate password provided by you. It does not perform illegal brute-force attacks or crack unknown passwords.'
+      'Once decrypted, it generates a clean, unrestricted PDF copy that opens instantly without prompting for credentials in any standard PDF reader.',
+      'After unlocking a document, you can apply new access controls with [Protect PDF](/protect), or extract specific sections using [Split PDF](/split).',
+      'Important Limitation: This tool requires a valid user or owner password. It performs legitimate cryptographic decryption and does not attempt password cracking or brute-force recovery.'
     ],
     howTo: [
       'Upload your password-protected PDF document.',
@@ -255,7 +258,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     ],
     related: [
       { slug: 'protect', title: 'Protect PDF', desc: 'Encrypt files with new secure passwords.' },
-      { slug: 'metadata', title: 'Edit Metadata', desc: 'Inspect document properties and tags.' },
+      { slug: 'metadata', title: 'Metadata', desc: 'Inspect document properties and tags.' },
       { slug: 'split', title: 'Split PDF', desc: 'Extract pages from unlocked documents.' }
     ]
   },
@@ -266,9 +269,10 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     h1: 'Rotate PDF Pages Online Free',
     summary: 'Permanently fix orientation on upside-down or sideways PDF pages with live visual previews.',
     whatItDoes: [
-      'LS PDF Rotate updates the internal rotation flags (`/Rotate`) in your document\'s page dictionary.',
-      'You can rotate all pages simultaneously by 90°, 180°, or 270°, or selectively click individual pages to orient them independently.',
-      'Because only the rotation metadata is updated, the operation is instantaneous and maintains 100% original quality without re-compressing text or images.'
+      'LS PDF Rotate updates the internal rotation flags in your document page dictionaries (90°, 180°, or 270°).',
+      'You can rotate all pages at once or selectively adjust individual page orientations with instant thumbnail previews.',
+      'If pages are both sideways and out of order, combine orientation adjustments with [Rearrange PDF](/rearrange-pdf). Once pages are correctly oriented, you can combine them with other documents using [Merge PDF](/merge).',
+      'Because only dictionary orientation values are modified, processing is instantaneous and preserves 100% original text and image fidelity without re-compression.'
     ],
     howTo: [
       'Load your PDF file into the visual rotation workspace.',
@@ -305,19 +309,20 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     h1: 'Rearrange PDF Pages Online Free',
     summary: 'Organize document page order with fluid drag-and-drop thumbnails powered by accessible touch and mouse controls.',
     whatItDoes: [
-      'LS PDF Rearrange renders small, fast thumbnail representations of every page in your document.',
-      'You can drag pages into any position, delete unwanted or blank pages, and duplicate pages where necessary.',
-      'When saved, a new PDF structure is generated using pdf-lib that references the original content streams in your new custom page order.'
+      'LS PDF Rearrange renders thumbnail previews of every page in your document for intuitive visual organization.',
+      'You can drag pages into any sequence using intuitive drag-and-drop controls.',
+      'If any pages appear rotated, orient them correctly using [Rotate PDF](/rotate-pdf). After establishing your desired page sequence, add sequential pagination with [Page Numbers](/page-numbers).',
+      'When saved, a new PDF structure references existing content streams in your chosen sequence with zero loss in visual fidelity.'
     ],
     howTo: [
       'Upload the PDF document you wish to reorganize.',
-      'Drag and drop the page tiles into your intended order.',
-      'Click the trash icon on any unwanted pages to remove them.',
-      'Click Apply & Save to download your reorganized document.'
+      'Drag and drop page thumbnails to arrange them in your preferred order.',
+      'Review the updated page sequence in the visual grid.',
+      'Click Save to download your reorganized document.'
     ],
     specs: [
       { label: 'Interaction Engine', value: '@dnd-kit accessible drag-and-drop' },
-      { label: 'Operations', value: 'Reorder, Delete page, Duplicate page' },
+      { label: 'Supported Operations', value: 'Visual page reordering' },
       { label: 'Performance', value: 'Lightweight thumbnail rendering with canvas caching' },
       { label: 'Privacy', value: 'Executed 100% in client memory' }
     ],
@@ -327,8 +332,8 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
         a: 'Upload your PDF to LS PDF Rearrange, then drag and drop the page thumbnails to reorder them. Click Save when done to download the reorganized PDF.'
       },
       {
-        q: 'Can I delete pages while rearranging?',
-        a: 'Yes. While in the rearrange view, you can remove individual pages you do not want in the final document.'
+        q: 'Can I delete or extract pages while rearranging?',
+        a: 'This tool focuses specifically on visual page reordering. To delete unwanted pages or extract a custom range, use the [Split PDF](/split) tool.'
       }
     ],
     related: [
@@ -345,8 +350,8 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     summary: 'Number document pages automatically with customizable typography, positions, offsets, and numbering formats.',
     whatItDoes: [
       'LS PDF Page Numbers stamps dynamic pagination numbers directly onto the content stream of every page in your document.',
-      'You have complete control over position (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right), margins, font size, and format (e.g., "1", "Page 1", "Page 1 of 10").',
-      'You can also specify a page offset to skip cover pages or start numbering from a specific index.'
+      'You have complete control over placement (header or footer, left, center, or right), margins, font size, and format templates (such as "Page 1 of 10").',
+      'To mark documents with confidentiality notices alongside page numbers, use [Watermark](/watermark). If you are preparing a multi-document bundle, combine files first with [Merge PDF](/merge) before numbering.'
     ],
     howTo: [
       'Upload your PDF document.',
@@ -368,12 +373,16 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       {
         q: 'Can I skip page numbering on the first page?',
         a: 'Yes. LS PDF allows you to set a page offset so your cover page or title page remains unnumbered.'
+      },
+      {
+        q: 'Can I choose where page numbers appear (header or footer)?',
+        a: 'Yes. LS PDF lets you place page numbers in the header or footer, and position them left, center, or right.'
       }
     ],
     related: [
-      { slug: 'watermark', title: 'Watermark PDF', desc: 'Add text branding or confidential labels.' },
+      { slug: 'watermark', title: 'Watermark', desc: 'Add text branding or confidential labels.' },
       { slug: 'merge', title: 'Merge PDF', desc: 'Number your documents after combining them.' },
-      { slug: 'metadata', title: 'Edit Metadata', desc: 'Add document title and author info.' }
+      { slug: 'metadata', title: 'Metadata', desc: 'Add document title and author info.' }
     ]
   },
 
@@ -383,9 +392,9 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     h1: 'Add Watermark to PDF Online Free',
     summary: 'Protect your intellectual property by overlaying customized text watermarks with control over opacity, angle, and size.',
     whatItDoes: [
-      'LS PDF Watermark draws customizable text stamps over or behind the content of every page in your document.',
-      'Common uses include stamping "CONFIDENTIAL", "DRAFT", company names, or copyright notices.',
-      'You can fine-tune font size, color, opacity (transparency), and rotation angle to ensure clear visibility without obscuring important document text.'
+      'LS PDF Watermark draws customizable text stamps across the pages of your document to signal draft status, copyright, or confidentiality.',
+      'You can customize text strings, opacity (transparency), rotation angle, color, and font scale to ensure high visibility without obscuring underlying document text.',
+      'For formal agreements, you can also place a visual signature using [Signature](/signature), or restrict file editing by encrypting with [Protect PDF](/protect).'
     ],
     howTo: [
       'Select your PDF file to be watermarked.',
@@ -407,12 +416,16 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       {
         q: 'Can I customize the watermark text and appearance?',
         a: 'Yes. You can customize the font size, rotation angle, opacity (transparency), and text content of the watermark.'
+      },
+      {
+        q: 'Can I add a "CONFIDENTIAL" or "DRAFT" watermark?',
+        a: 'Yes. You can enter any custom text including "CONFIDENTIAL", "DRAFT", or your company name, and adjust its opacity and rotation.'
       }
     ],
     related: [
       { slug: 'page-numbers', title: 'Page Numbers', desc: 'Stamp page numbers alongside your watermark.' },
       { slug: 'protect', title: 'Protect PDF', desc: 'Lock watermarked documents with passwords.' },
-      { slug: 'signature', title: 'Add Signature', desc: 'Place visual electronic signatures on documents.' }
+      { slug: 'signature', title: 'Signature', desc: 'Place visual electronic signatures on documents.' }
     ]
   },
 
@@ -422,9 +435,10 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     h1: 'Edit PDF Metadata Online Free',
     summary: 'View, edit, or deep-clean hidden document properties including title, author, subject, keywords, and creator stamps.',
     whatItDoes: [
-      'PDF files frequently carry hidden tracking metadata such as computer usernames, author names, software versions, and creation timestamps.',
-      'LS PDF Metadata lets you inspect all standard document properties and modify them to reflect accurate, professional information.',
-      'The Deep Clean feature strips all identifying tags and creator stamps from the document dictionary for maximum personal and corporate privacy.'
+      'PDF files frequently contain embedded metadata such as author names, software versions, creation timestamps, and computer identifiers.',
+      'LS PDF Metadata allows you to inspect and modify standard Document Information Dictionary fields and common XMP properties.',
+      'The Deep Clean option clears standard author and software stamps. After cleaning document metadata, you can secure your file with [Protect PDF](/protect). For damaged files where metadata cannot be read, attempt recovery using [Repair PDF](/repair).',
+      'Scope Limitation: Metadata editing updates standard PDF info keys and common metadata packets. It does not perform forensic sanitization of proprietary third-party application streams or hidden revision data.'
     ],
     howTo: [
       'Upload your PDF document to inspect its current metadata.',
@@ -454,8 +468,8 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     ],
     related: [
       { slug: 'protect', title: 'Protect PDF', desc: 'Secure sanitized documents with encryption.' },
-      { slug: 'grayscale', title: 'Convert to Grayscale', desc: 'Remove color tracking tags and print cleanly.' },
-      { slug: 'repair', title: 'Repair PDF', desc: 'Fix damaged structural xref tables in PDFs.' }
+      { slug: 'grayscale', title: 'Grayscale', desc: 'Convert document pages to monochrome black and white.' },
+      { slug: 'repair', title: 'Repair PDF', desc: 'Attempt to recover readable pages from damaged documents.' }
     ]
   },
 
@@ -465,9 +479,10 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     h1: 'Add Signature Stamp to PDF Online Free',
     summary: 'Sign contracts and agreements directly in your browser by placing and resizing an uploaded signature image stamp.',
     whatItDoes: [
-      'LS PDF Signature enables you to place and position an uploaded signature image (PNG, JPG, or WebP) directly onto document pages.',
-      'You can drag your signature stamp onto any page, resize it to fit signature lines, and position it with precision.',
-      'Important Distinction: This tool stamps a visual electronic signature onto document pages. It is not a cryptographic digital certificate (PKI/eIDAS hardware token), but satisfies standard electronic signing requirements for most agreements and forms.'
+      'LS PDF Signature enables you to place and position an uploaded signature image (transparent PNG recommended) directly onto document pages.',
+      'You can navigate through pages, position your signature stamp over designated signature lines, and resize it with live interactive preview.',
+      'After signing, consider locking the agreement against unauthorized modifications with [Protect PDF](/protect), or combine your signed form with required annexures using [Merge PDF](/merge).',
+      'Legal & Technical Distinction: This tool applies a visual electronic signature stamp. It does not provide cryptographic digital certificates (PKI/eIDAS), biometric timestamping, or identity verification.'
     ],
     howTo: [
       'Upload the PDF document requiring a signature.',
@@ -497,7 +512,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     ],
     related: [
       { slug: 'protect', title: 'Protect PDF', desc: 'Password-protect documents after signing.' },
-      { slug: 'watermark', title: 'Watermark PDF', desc: 'Add status or date stamps to agreements.' },
+      { slug: 'watermark', title: 'Watermark', desc: 'Add status or date stamps to agreements.' },
       { slug: 'merge', title: 'Merge PDF', desc: 'Combine signed forms with supporting attachments.' }
     ]
   },
@@ -506,11 +521,12 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     slug: 'grayscale',
     title: 'Grayscale',
     h1: 'Convert PDF to Grayscale Online Free',
-    summary: 'Transform full-color PDF documents into black-and-white to help reduce color toner usage and create clean monochrome archives.',
+    summary: 'Convert PDF pages to grayscale for monochrome printing and a consistent black-and-white appearance.',
     whatItDoes: [
       'LS PDF Grayscale renders document pages through client-side color-matrix filters, converting color images and graphics to monochrome grayscale values.',
-      'This helps reduce color toner usage on office printers and produces clean monochrome contrast across pages.',
-      'The conversion runs directly in your browser using canvas filters and Web Workers to process multi-page documents without server bottlenecks.'
+      'Monochrome conversion produces uniform black-and-white contrast for document printing and archiving without sending your files to external servers.',
+      'If your converted monochrome PDF needs smaller file size for email sharing, optimize it using [Compress PDF](/compress). To export individual monochrome pages as image files, see [PDF to Image](/pdf-to-image).',
+      'Technical Scope: Pages are re-rendered to canvas to achieve uniform monochrome appearance. This process does not guarantee reduced file size or ink savings; use Compress PDF if file size reduction is your primary goal.'
     ],
     howTo: [
       'Select the color PDF document you wish to convert.',
@@ -535,9 +551,9 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       }
     ],
     related: [
-      { slug: 'compress', title: 'Compress PDF', desc: 'Further optimize file size after converting.' },
+      { slug: 'compress', title: 'Compress PDF', desc: 'Reduce file size if your monochrome PDF is too large for sharing.' },
       { slug: 'pdf-to-image', title: 'PDF to Image', desc: 'Export monochrome pages as images.' },
-      { slug: 'metadata', title: 'Edit Metadata', desc: 'Clean author tags from monochrome documents.' }
+      { slug: 'metadata', title: 'Metadata', desc: 'Clean author tags from monochrome documents.' }
     ]
   },
 
@@ -548,8 +564,8 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     summary: 'Convert PDF document pages into high-resolution JPG or PNG images with individual page downloads or organized ZIP archives.',
     whatItDoes: [
       'LS PDF PDF to Image renders high-definition raster images of each document page using Mozilla\'s PDF.js rendering engine.',
-      'You can select between JPG (ideal for smaller sizes) and PNG (ideal for sharp vector text and transparent backgrounds).',
-      'Download individual pages as standalone images or grab the entire document packaged into a single ZIP archive.'
+      'You can select between JPG (efficient for photography and smaller files) and PNG (ideal for crisp line art and text), with selectable DPI scaling.',
+      'Search Intent Distinction: This tool renders entire page layouts (text, headers, graphics, and backgrounds) as single images. If you only want to extract embedded photos without the page canvas, use [Extract Images](/extract-images). To convert images back into a PDF, see [Image to PDF](/image-to-pdf).'
     ],
     howTo: [
       'Upload your PDF document into the converter.',
@@ -590,14 +606,14 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     h1: 'Convert Image to PDF Online Free',
     summary: 'Convert photos and images (JPG, PNG, WebP) into professional, standardized PDF documents with drag-and-drop page ordering.',
     whatItDoes: [
-      'LS PDF Image to PDF transforms your photo collections, receipts, scanned documents, and graphics into clean, standard PDF pages.',
-      'Supports JPG, PNG, and modern WebP image formats with automatic page dimension fitting.',
-      'You can drag to rearrange images, adjust margins, and export a consolidated PDF ready for official submission or archiving.'
+      'LS PDF Image to PDF transforms photo collections, receipts, scanned documents, and graphics into standardized PDF documents.',
+      'Supports JPG, PNG, and WebP image formats with automatic page dimension fitting and drag-and-drop page reordering.',
+      'After creating your PDF, you can combine it with existing documents using [Merge PDF](/merge), or reduce its file size using [Compress PDF](/compress). To convert pages back into image files later, use [PDF to Image](/pdf-to-image).'
     ],
     howTo: [
       'Select or drop one or more images (JPG, PNG, WebP) into the upload area.',
       'Drag and drop image cards to arrange the page sequence.',
-      'Optionally delete or rotate individual photos.',
+      'Optionally remove individual photos or adjust file order.',
       'Click Convert to PDF to generate and download your new document.'
     ],
     specs: [
@@ -617,7 +633,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       },
       {
         q: 'What image formats are supported?',
-        a: 'LS PDF Image to PDF supports JPG/JPEG, PNG, and WebP image formats.'
+        a: 'LS PDF Image-to-PDF supports JPG, JPEG, PNG, and modern WebP image formats.'
       }
     ],
     related: [
@@ -634,8 +650,9 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     summary: 'Find compatible embedded images in PDF pages and export detected images as PNG files in a downloadable ZIP archive.',
     whatItDoes: [
       'LS PDF Extract Images scans PDF pages for embedded raster images using PDF.js operator lists and decodes them to PNG format.',
-      'Most standard photos and embedded bitmap graphics can be detected, but vector artwork, non-standard color spaces, and flattened scans cannot be separated into individual image files.',
-      'All detected images are converted in browser memory and bundled into a single downloadable ZIP archive.'
+      'Search Intent Distinction: This tool extracts isolated raster photo objects embedded inside the document. If you need to render full page layouts including text and backgrounds, use [PDF to Image](/pdf-to-image). To combine extracted graphics into a new PDF document, use [Image to PDF](/image-to-pdf).',
+      'Format Limitations: Most standard embedded photos and bitmap graphics can be detected, but vector artwork, unsupported color spaces, inline masks, and pre-flattened scanned pages cannot be isolated into separate files.',
+      'All detected images are converted in browser memory and packaged into a single downloadable ZIP archive.'
     ],
     howTo: [
       'Select or drop your PDF document into the extraction tool.',
@@ -677,8 +694,9 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     summary: 'Extract readable plain text from PDF documents using fast native stream extraction or client-side Tesseract.js OCR for scanned pages.',
     whatItDoes: [
       'LS PDF PDF to Text provides two distinct text extraction pipelines depending on your document type.',
-      'For standard digital PDFs: Fast native extraction parses embedded font maps and character streams directly via PDF.js, downloading instant plain text (.txt).',
-      'For scanned documents and paper photos: In-browser Optical Character Recognition (OCR) powered by Tesseract.js WebAssembly analyzes the page images and extracts text without sending data to third-party cloud APIs.'
+      'For standard digital PDFs, fast native extraction parses embedded character streams directly via PDF.js. For scanned documents, in-browser OCR powered by Tesseract.js analyzes page images locally without cloud APIs.',
+      'If you need to extract photos rather than text from your document, use [Extract Images](/extract-images). If you only need to extract text from a specific section of a large file, isolate those pages first using [Split PDF](/split).',
+      'OCR Limitation: English is supported by default. OCR accuracy depends on scan resolution, lighting contrast, and font clarity.'
     ],
     howTo: [
       'Upload your PDF document into the text extractor.',
@@ -709,7 +727,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     ],
     related: [
       { slug: 'extract-images', title: 'Extract Images', desc: 'Extract graphics and photos from documents.' },
-      { slug: 'metadata', title: 'Edit Metadata', desc: 'Inspect document properties and author info.' },
+      { slug: 'metadata', title: 'Metadata', desc: 'Inspect document properties and author info.' },
       { slug: 'split', title: 'Split PDF', desc: 'Extract specific page ranges before converting.' }
     ]
   },
@@ -720,9 +738,10 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     h1: 'Attempt Damaged PDF Repair Online Free',
     summary: 'Attempt to recover readable pages and elements from unreadable or damaged PDF files using fault-tolerant in-browser parsing.',
     whatItDoes: [
-      'LS PDF Repair attempts to open damaged, incomplete, or unreadable PDF files using fault-tolerant parser settings that ignore invalid objects.',
-      'If readable document elements can be accessed, the engine exports them into a clean, newly generated PDF file.',
-      'Important Limitation: Recovery is strictly best-effort. If core structural data or underlying file bytes are permanently destroyed or missing, complete recovery is not possible.'
+      'LS PDF Repair attempts to open damaged, truncated, or unreadable PDF files using fault-tolerant parser settings that bypass invalid or corrupt objects.',
+      'If readable document elements can be accessed, the engine salvages them and exports a clean, newly assembled PDF document.',
+      'Once accessible pages are recovered, you can inspect their document tags with [Edit Metadata](/metadata), or optimize the salvaged file using [Compress PDF](/compress).',
+      'Important Limitation: Recovery is strictly best-effort. If core structural data or underlying file bytes are permanently destroyed, zero-byte, or unreadable, complete recovery is not possible.'
     ],
     howTo: [
       'Upload your damaged or unreadable PDF document.',
@@ -748,8 +767,8 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     ],
     related: [
       { slug: 'compress', title: 'Compress PDF', desc: 'Optimize recovered documents.' },
-      { slug: 'metadata', title: 'Edit Metadata', desc: 'Fix or rebuild missing document properties.' },
+      { slug: 'metadata', title: 'Metadata', desc: 'Inspect or update document properties on recovered files.' },
       { slug: 'split', title: 'Split PDF', desc: 'Extract undamaged pages from recovered files.' }
     ]
   }
-}
+};
