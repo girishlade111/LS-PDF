@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Lock, ShieldCheck, Loader2, ArrowRight, X } from 'lucide-react'
-import { PDFDocument } from 'pdf-lib'
-import { encryptPDF } from '@pdfsmaller/pdf-encrypt-lite'
+import { encryptPDF, saslPrep } from '@pdfsmaller/pdf-encrypt'
+import { decryptPDF } from '@pdfsmaller/pdf-decrypt'
 import { toast } from 'sonner'
 import { Capacitor } from '@capacitor/core'
 
@@ -75,14 +75,25 @@ export default function ProtectTool() {
     
     try {
       const arrayBuffer = await pdfData.file.arrayBuffer()
-      const sourcePdf = await PDFDocument.load(arrayBuffer, { password: pdfData.sourcePassword || undefined, ignoreEncryption: true } as any)
-      const newPdf = await PDFDocument.create()
-      const pages = await newPdf.copyPages(sourcePdf, sourcePdf.getPageIndices())
-      pages.forEach(page => newPdf.addPage(page))
-      const pdfBytes = await newPdf.save()
-      
-      // Heavy task: encryption
-      const encryptedBytes = await encryptPDF(pdfBytes, password)
+      let sourceBytes: Uint8Array = new Uint8Array(arrayBuffer)
+      if (pdfData.sourcePassword) {
+        try {
+          sourceBytes = (await decryptPDF(sourceBytes as any, pdfData.sourcePassword)) as Uint8Array
+        } catch (decErr: any) {
+          if (decErr.message?.includes('Incorrect password')) {
+            const prepped = saslPrep(pdfData.sourcePassword)
+            if (prepped !== pdfData.sourcePassword) {
+              sourceBytes = (await decryptPDF(sourceBytes as any, prepped)) as Uint8Array
+            } else {
+              throw decErr
+            }
+          } else {
+            throw decErr
+          }
+        }
+      }
+      // Encrypt the original PDF bytes directly to preserve AcroForms, outlines, metadata, and document structure
+      const encryptedBytes = await encryptPDF(sourceBytes, password)
       
       const blob = new Blob([encryptedBytes as any], { type: 'application/pdf' })
       const url = createUrl(blob)
