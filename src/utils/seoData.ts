@@ -331,7 +331,7 @@ export const rotateSEO: ToolSEOData = {
 
 // ─── REARRANGE PDF ───────────────────────────────────────────────────────────
 export const rearrangeSEO: ToolSEOData = {
-  title: 'Rearrange PDF Pages Online Free — Reorder PDF | LS PDF',
+  title: 'Rearrange PDF Pages Online Free — Reorder PDF Document | LS PDF',
   description:
     'Drag and drop to reorder PDF pages visually. Delete unwanted pages and rearrange your document layout. Free, no upload, runs 100% in your browser.',
   keywords:
@@ -387,7 +387,7 @@ export const pageNumbersSEO: ToolSEOData = {
 
 // ─── WATERMARK ───────────────────────────────────────────────────────────────
 export const watermarkSEO: ToolSEOData = {
-  title: 'Add Watermark to PDF Online Free — Text Watermark | LS PDF',
+  title: 'Add Watermark to PDF Online Free — Custom Text Watermark | LS PDF',
   description:
     'Add custom text watermarks to your PDF for branding, security, or confidentiality marking. Adjust opacity, angle, font, and position. Free, no upload.',
   keywords:
@@ -415,7 +415,7 @@ export const watermarkSEO: ToolSEOData = {
 
 // ─── METADATA ────────────────────────────────────────────────────────────────
 export const metadataSEO: ToolSEOData = {
-  title: 'Edit PDF Metadata Online Free — Remove PDF Info | LS PDF',
+  title: 'Edit PDF Metadata Online Free — Remove or Clean PDF Info | LS PDF',
   description:
     'Edit or remove PDF metadata including title, author, subject, keywords, creator, and producer. Clean metadata for privacy. Free, no upload, 100% client-side.',
   keywords:
@@ -447,7 +447,7 @@ export const metadataSEO: ToolSEOData = {
 
 // ─── SIGNATURE ───────────────────────────────────────────────────────────────
 export const signatureSEO: ToolSEOData = {
-  title: 'Add Electronic Signature to PDF Free — Sign PDF Online | LS PDF',
+  title: 'Sign PDF Online Free — Add Signature Stamp to PDF | LS PDF',
   description:
     'Upload your signature image (PNG, JPG, or WebP) and stamp it onto any PDF page. Place and resize visually online for free with zero file uploads.',
   keywords:
@@ -481,7 +481,7 @@ export const signatureSEO: ToolSEOData = {
 export const grayscaleSEO: ToolSEOData = {
   title: 'Convert PDF to Grayscale Online Free — Black & White PDF | LS PDF',
   description:
-    'Convert all pages of a PDF to black and white (grayscale) to reduce color ink usage or meet specific document requirements. Free, no upload, instant in browser.',
+    'Convert PDF pages to grayscale for monochrome printing and a consistent black-and-white appearance. Free browser-based processing with no document uploads.',
   keywords:
     'convert pdf to grayscale, black and white pdf, pdf grayscale converter free, remove color from pdf, pdf to black white, grayscale pdf online',
   canonical: SITE_URL + '/grayscale',
@@ -507,7 +507,7 @@ export const grayscaleSEO: ToolSEOData = {
 
 // ─── PDF TO IMAGE ─────────────────────────────────────────────────────────────
 export const pdfToImageSEO: ToolSEOData = {
-  title: 'PDF to Image Online Free — Convert PDF Pages to JPG/PNG | LS PDF',
+  title: 'PDF to Image Online Free — Convert PDF Pages to JPG or PNG | LS PDF',
   description:
     'Convert PDF pages to high-quality JPG or PNG images. Choose resolution (DPI), select specific pages. Free, no upload, processes entirely in your browser.',
   keywords:
@@ -539,7 +539,7 @@ export const pdfToImageSEO: ToolSEOData = {
 
 // ─── IMAGE TO PDF ─────────────────────────────────────────────────────────────
 export const imageToPdfSEO: ToolSEOData = {
-  title: 'Image to PDF Online Free — Convert JPG, PNG to PDF | LS PDF',
+  title: 'Image to PDF Online Free — Convert JPG and PNG to PDF | LS PDF',
   description:
     'Convert JPG, PNG, and WebP images to a professional PDF document. Add multiple images, reorder them, and control page size. Free, no upload, runs in your browser.',
   keywords:
@@ -571,9 +571,9 @@ export const imageToPdfSEO: ToolSEOData = {
 
 // ─── EXTRACT IMAGES ───────────────────────────────────────────────────────────
 export const extractImagesSEO: ToolSEOData = {
-  title: 'Extract Images from PDF Online Free | LS PDF',
+  title: 'Extract Images from PDF Online Free — Export Images to ZIP | LS PDF',
   description:
-    'Extract and download all embedded images from a PDF document. Get original-quality images without any server upload. Free, private, runs in your browser.',
+    'Find compatible embedded images in PDF pages and export detected graphics as PNG files in a downloadable ZIP archive. Free, private, client-side processing.',
   keywords:
     'extract images from pdf, pdf image extractor, pull images from pdf, save images from pdf, pdf to images, get images from pdf free, pdf image download',
   canonical: SITE_URL + '/extract-images',
@@ -581,17 +581,21 @@ export const extractImagesSEO: ToolSEOData = {
     makeWebApp(
       'Extract Images from PDF — LS PDF',
       SITE_URL + '/extract-images',
-      'Pull out all original embedded images from a PDF document. Download them individually or as a ZIP archive. 100% client-side, no uploads.',
-      ['Extracts all embedded images', 'Original image quality preserved', 'Download as ZIP archive', 'Supports PNG, JPEG, and other embedded formats']
+      'Find compatible embedded images in PDF documents and export detected graphics as PNG files in a consolidated ZIP archive. 100% client-side processing.',
+      ['Detects embedded raster image objects', 'Canvas-based PNG rendering', 'Download all detected images as ZIP archive', 'Client-side processing with zero file uploads']
     ),
     makeFAQ([
       {
         q: 'How do I extract images from a PDF for free?',
-        a: 'Upload your PDF to LS PDF Extract Images, and all embedded images will be detected and listed. Download them individually or all at once as a ZIP file.',
+        a: 'Upload your PDF to LS PDF Extract Images. The tool scans each page for compatible embedded raster images, renders them to PNG, and bundles them into a downloadable ZIP archive.',
       },
       {
-        q: 'Are the extracted images in their original quality?',
-        a: 'Yes. LS PDF extracts images as they are embedded in the PDF, preserving their original resolution and quality.',
+        q: 'Can all images in a PDF be extracted?',
+        a: 'Most standard raster photos and illustrations can be detected. However, vector graphics, non-standard color spaces, inline masks, and pages where text and images were pre-flattened into a single page scan cannot be separated into individual image files.',
+      },
+      {
+        q: 'What format are the extracted images saved in?',
+        a: 'Detected images are decoded in the browser and exported as PNG files inside a consolidated ZIP archive.',
       },
     ]),
   ],
@@ -599,7 +603,7 @@ export const extractImagesSEO: ToolSEOData = {
 
 // ─── PDF TO TEXT ──────────────────────────────────────────────────────────────
 export const pdfToTextSEO: ToolSEOData = {
-  title: 'PDF to Text Online Free — Extract Text from PDF (OCR) | LS PDF',
+  title: 'PDF to Text Online Free — Extract Text & English OCR | LS PDF',
   description:
     'Extract plain text from PDF documents, including scanned PDFs using English OCR (Optical Character Recognition). Copy or download the extracted text. Free, no upload.',
   keywords:
@@ -631,7 +635,7 @@ export const pdfToTextSEO: ToolSEOData = {
 
 // ─── REPAIR PDF ───────────────────────────────────────────────────────────────
 export const repairSEO: ToolSEOData = {
-  title: 'Repair Corrupted PDF Online Free — Fix PDF File | LS PDF',
+  title: 'Repair PDF Online Free — Attempt Damaged File Recovery | LS PDF',
   description:
     'Attempt to salvage and recover data from unreadable or damaged PDF files using fault-tolerant in-browser parsing. 100% private, no file uploads.',
   keywords:

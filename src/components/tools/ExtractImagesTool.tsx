@@ -142,7 +142,7 @@ export default function ExtractImagesTool() {
   return (
     <>
       <SEOHead {...extractImagesSEO} />
-      <NativeToolLayout title="Extract Images" description="Find and save all original images embedded inside the PDF." actions={pdfData && !pdfData.isLocked && !downloadUrl && <ActionButton />}>
+      <NativeToolLayout title="Extract Images" description="Find compatible embedded images in PDF pages and export detected images as PNG files in a downloadable ZIP archive." actions={pdfData && !pdfData.isLocked && !downloadUrl && <ActionButton />}>
       <input type="file" accept=".pdf" className="hidden" ref={fileInputRef} onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])} />
       {!pdfData ? (
         <div onClick={() => !isProcessing && fileInputRef.current?.click()} className="border-4 border-dashed border-gray-100 dark:border-zinc-900 rounded-[2.5rem] p-12 text-center hover:bg-rose-50 dark:hover:bg-rose-900/10 transition-all cursor-pointer group">
@@ -172,12 +172,12 @@ export default function ExtractImagesTool() {
                 <div className="space-y-4">
                   <div className="text-center py-2 px-4 bg-gray-50 dark:bg-black rounded-2xl border border-gray-100 dark:border-white/5">
                     <p className="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed font-medium">
-                      This tool scans every page and recovers high-quality source images. Perfect for saving photos from documents.
+                      Finds and exports compatible raster image objects from PDF pages into a ZIP archive.
                     </p>
                   </div>
                   <div className="p-4 bg-amber-50 dark:bg-amber-900/10 rounded-xl border border-amber-100 dark:border-amber-900/20 text-center">
                     <p className="text-[10px] text-amber-700 dark:text-amber-400 font-bold uppercase tracking-widest">
-                      Note: If no images are detected, the file may have been compressed using rasterization (printing to PDF).
+                      Note: Vector artwork, unsupported color spaces, or pre-flattened scanned pages may not yield extractable image files.
                     </p>
                   </div>
                 </div>
@@ -187,7 +187,7 @@ export default function ExtractImagesTool() {
                     <div className="w-full bg-gray-100 dark:bg-zinc-800 h-2 rounded-full overflow-hidden shadow-inner">
                        <div className="bg-rose-500 h-full transition-all" style={{ width: `${progress}%` }} />
                     </div>
-                    <p className="text-[10px] text-center font-black text-gray-400 uppercase tracking-widest animate-pulse">Extracting High-Res Assets...</p>
+                    <p className="text-[10px] text-center font-black text-gray-400 uppercase tracking-widest animate-pulse">Extracting Embedded Images...</p>
                   </div>
                 )}
               </>

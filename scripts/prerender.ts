@@ -71,23 +71,23 @@ interface RouteConfig {
 }
 
 const routes: RouteConfig[] = [
-  { path: 'merge', slug: 'merge', desc: 'Combine multiple PDF files into one document. Processed entirely on your device.', seo: mergeSEO },
-  { path: 'split', slug: 'split', desc: 'Visually extract specific pages or ranges. Processed entirely on your device.', seo: splitSEO },
-  { path: 'compress', slug: 'compress', desc: 'Reduce file size by converting pages into optimized images. Processed entirely on your device.', seo: compressSEO },
-  { path: 'protect', slug: 'protect', desc: 'Secure your documents with strong password encryption. Processed entirely on your device.', seo: protectSEO },
-  { path: 'unlock', slug: 'unlock', desc: 'Remove password protection from your PDF files. Processed entirely on your device.', seo: unlockSEO },
-  { path: 'rotate-pdf', slug: 'rotate-pdf', desc: 'Fix page orientation permanently. Processed entirely on your device.', seo: rotateSEO },
-  { path: 'rearrange-pdf', slug: 'rearrange-pdf', desc: 'Drag and drop pages to reorder them. Processed entirely on your device.', seo: rearrangeSEO },
-  { path: 'page-numbers', slug: 'page-numbers', desc: 'Add numbering to your documents automatically. Processed entirely on your device.', seo: pageNumbersSEO },
-  { path: 'watermark', slug: 'watermark', desc: 'Overlay custom text for branding or security. Processed entirely on your device.', seo: watermarkSEO },
-  { path: 'metadata', slug: 'metadata', desc: 'Edit document properties for better privacy. Processed entirely on your device.', seo: metadataSEO },
-  { path: 'signature', slug: 'signature', desc: 'Add your electronic signature to any document. Processed entirely on your device.', seo: signatureSEO },
-  { path: 'grayscale', slug: 'grayscale', desc: 'Convert all document pages to black and white. Processed entirely on your device.', seo: grayscaleSEO },
-  { path: 'pdf-to-image', slug: 'pdf-to-image', desc: 'Convert document pages into high-quality images. Processed entirely on your device.', seo: pdfToImageSEO },
-  { path: 'image-to-pdf', slug: 'image-to-pdf', desc: 'Convert JPG, PNG, and WebP into a professional PDF. Processed entirely on your device.', seo: imageToPdfSEO },
-  { path: 'extract-images', slug: 'extract-images', desc: 'Pull out all original images embedded in a PDF. Processed entirely on your device.', seo: extractImagesSEO },
-  { path: 'pdf-to-text', slug: 'pdf-to-text', desc: 'Extract plain text from your PDF documents. Processed entirely on your device.', seo: pdfToTextSEO },
-  { path: 'repair', slug: 'repair', desc: 'Attempt to recover damaged PDF files using error-tolerant parsing. Processed entirely on your device.', seo: repairSEO },
+  { path: 'merge', slug: 'merge', desc: 'Combine multiple PDF files into one document in seconds. 100% private.', seo: mergeSEO },
+  { path: 'split', slug: 'split', desc: 'Visually select and extract pages from your PDF.', seo: splitSEO },
+  { path: 'compress', slug: 'compress', desc: 'Reduce file size by converting pages into optimized images. Everything stays on your device.', seo: compressSEO },
+  { path: 'protect', slug: 'protect', desc: 'Add strong encryption to your documents. Processed locally.', seo: protectSEO },
+  { path: 'unlock', slug: 'unlock', desc: 'Remove passwords and restrictions permanently. Processed locally.', seo: unlockSEO },
+  { path: 'rotate-pdf', slug: 'rotate-pdf', desc: 'Tap individual pages to rotate 90 degrees.', seo: rotateSEO },
+  { path: 'rearrange-pdf', slug: 'rearrange-pdf', desc: 'Drag and drop to reorder pages visually.', seo: rearrangeSEO },
+  { path: 'page-numbers', slug: 'page-numbers', desc: 'Add custom numbering to your PDF automatically.', seo: pageNumbersSEO },
+  { path: 'watermark', slug: 'watermark', desc: 'Add secure text overlays to your documents locally.', seo: watermarkSEO },
+  { path: 'metadata', slug: 'metadata', desc: 'Edit or wipe document properties for better privacy.', seo: metadataSEO },
+  { path: 'signature', slug: 'signature', desc: 'Sign any PDF by dragging your signature image.', seo: signatureSEO },
+  { path: 'grayscale', slug: 'grayscale', desc: 'Convert PDF pages to grayscale for monochrome printing and a consistent black-and-white appearance.', seo: grayscaleSEO },
+  { path: 'pdf-to-image', slug: 'pdf-to-image', desc: 'Convert document pages into high-quality images.', seo: pdfToImageSEO },
+  { path: 'image-to-pdf', slug: 'image-to-pdf', desc: 'Convert photos and images into a professional PDF.', seo: imageToPdfSEO },
+  { path: 'extract-images', slug: 'extract-images', desc: 'Find compatible embedded images in PDF pages and export detected images as PNG files in a downloadable ZIP archive.', seo: extractImagesSEO },
+  { path: 'pdf-to-text', slug: 'pdf-to-text', desc: 'Extract text using fast scan or deep local OCR.', seo: pdfToTextSEO },
+  { path: 'repair', slug: 'repair', desc: 'Attempt to recover damaged PDF files using error-tolerant parsing. Some corrupted documents may not be recoverable.', seo: repairSEO },
   { path: 'about', seo: aboutSEO },
   { path: 'privacy', seo: privacySEO },
   { path: 'settings', seo: settingsSEO },
@@ -452,7 +452,7 @@ function generateToolBodyHtml(guide: ToolGuideData, desc: string): string {
           <div class="mb-8">
             <div class="relative text-center mb-8 md:mb-12">
               <h1 class="text-3xl md:text-5xl font-black mb-3 md:mb-4 dark:text-white px-10 text-gray-900 dark:text-white">
-                ${escapeHtml(guide.title)} <span class="text-rose-500">.</span>
+                ${escapeHtml(guide.h1 || guide.title)} <span class="text-rose-500" aria-hidden="true">.</span>
               </h1>
               <p class="text-sm md:text-base text-gray-500 dark:text-zinc-400 max-w-lg mx-auto leading-relaxed">
                 ${escapeHtml(desc)}
@@ -649,7 +649,7 @@ function generateSettingsBodyHtml(): string {
           <div class="mb-8">
             <div class="relative text-center mb-8 md:mb-12">
               <h1 class="text-3xl md:text-5xl font-black mb-3 md:mb-4 dark:text-white px-10 text-gray-900 dark:text-white">
-                System <span class="text-rose-500">.</span>
+                System <span class="text-rose-500" aria-hidden="true">.</span>
               </h1>
               <p class="text-sm md:text-base text-gray-500 dark:text-zinc-400 max-w-lg mx-auto leading-relaxed">
                 Core Configuration
@@ -680,7 +680,7 @@ function generateNotFoundBodyHtml(): string {
       <main class="min-h-screen py-16 px-4 sm:px-6 max-w-4xl mx-auto text-center">
         <div class="w-16 h-16 bg-rose-500/10 text-rose-500 rounded-3xl flex items-center justify-center mx-auto mb-6 font-black text-2xl">404</div>
         <h1 class="text-4xl md:text-6xl font-black text-gray-900 dark:text-white tracking-tight mb-4">
-          404 &mdash; Page Not Found <span class="text-rose-500">.</span>
+          404 &mdash; Page Not Found <span class="text-rose-500" aria-hidden="true">.</span>
         </h1>
         <p class="text-base text-gray-600 dark:text-zinc-400 max-w-md mx-auto leading-relaxed mb-8">
           The PDF tool or page you requested does not exist or may have been moved. Return to the homepage or explore our popular tools below.
