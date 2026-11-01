@@ -386,12 +386,32 @@ function generateHomeBodyHtml(): string {
   `;
 }
 
+const VALID_CANONICAL_PATHS = new Set([
+  '/merge',
+  '/split',
+  '/compress',
+  '/protect',
+  '/unlock',
+  '/rotate-pdf',
+  '/rearrange-pdf',
+  '/page-numbers',
+  '/watermark',
+  '/signature',
+  '/metadata',
+  '/pdf-to-image',
+  '/image-to-pdf',
+  '/extract-images',
+  '/pdf-to-text',
+  '/grayscale',
+  '/repair'
+]);
+
 function renderParagraphWithLinksHtml(text: string): string {
   const parts = text.split(/(\[[^\]]+\]\(\/?[-a-zA-Z0-9_]+\))/g);
   return parts
     .map((part) => {
       const match = part.match(/^\[([^\]]+)\]\((\/[-a-zA-Z0-9_]+)\)$/);
-      if (match) {
+      if (match && VALID_CANONICAL_PATHS.has(match[2])) {
         const [, label, href] = match;
         return `<a href="${escapeHtml(href)}" class="text-rose-500 hover:text-rose-600 dark:hover:text-rose-400 underline decoration-rose-500/30 hover:decoration-rose-500 font-semibold transition-colors">${escapeHtml(label)}</a>`;
       }

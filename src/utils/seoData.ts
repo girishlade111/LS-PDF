@@ -137,7 +137,7 @@ export const homeSEO: ToolSEOData = {
 export const mergeSEO: ToolSEOData = {
   title: 'Merge PDF Online Free — Combine Multiple PDFs into One | LS PDF',
   description:
-    'Combine multiple PDF files into a single document in seconds. Drag to reorder pages, merge without quality loss. 100% free, no upload, no account — runs entirely in your browser.',
+    'Combine multiple PDF files into a single document in seconds. Drag to reorder uploaded files before merging, with zero quality loss. 100% free, no upload, no account — runs entirely in your browser.',
   keywords:
     'merge pdf online, combine pdf files, join pdf, pdf merger free, merge multiple pdfs, pdf combiner, merge pdf without upload',
   canonical: SITE_URL + '/merge',
@@ -145,13 +145,13 @@ export const mergeSEO: ToolSEOData = {
     makeWebApp(
       'Merge PDF Online — LS PDF',
       SITE_URL + '/merge',
-      'Combine multiple PDF files into a single document. Drag and drop to reorder pages before merging. Runs entirely in your browser with zero file uploads.',
-      ['Drag-and-drop reordering', 'Merge unlimited PDF files', 'Preview thumbnails', 'Handles password-protected PDFs']
+      'Combine multiple PDF files into a single document. Drag and drop to reorder uploaded files before merging. Runs entirely in your browser with zero file uploads.',
+      ['Drag-and-drop file reordering', 'Merge multiple PDF files', 'Preview thumbnails', 'Handles password-protected PDFs']
     ),
     makeFAQ([
       {
         q: 'How do I merge PDF files online for free?',
-        a: 'Upload your PDF files to LS PDF Merge tool, drag to reorder if needed, then click Merge. Your combined PDF downloads instantly — no account or payment required.',
+        a: 'Upload your PDF files to LS PDF Merge tool, drag file cards to reorder them if needed, then click Merge. Your combined PDF downloads instantly — no account or payment required.',
       },
       {
         q: 'Are my files uploaded to a server when I merge PDFs?',
@@ -241,7 +241,7 @@ export const compressSEO: ToolSEOData = {
 export const protectSEO: ToolSEOData = {
   title: 'Protect PDF with Password Free — Encrypt PDF Online | LS PDF',
   description:
-    'Add a strong password to your PDF to prevent unauthorized access. AES encryption, no file upload required. Free, private, runs 100% in your browser.',
+    'Add a strong password to your PDF to prevent unauthorized access. Client-side encryption, no file upload required. Free, private, runs 100% in your browser.',
   keywords:
     'protect pdf with password, encrypt pdf online free, pdf password protection, secure pdf, add password to pdf, pdf encryption, lock pdf file',
   canonical: SITE_URL + '/protect',
@@ -249,21 +249,21 @@ export const protectSEO: ToolSEOData = {
     makeWebApp(
       'Protect PDF with Password — LS PDF',
       SITE_URL + '/protect',
-      'Encrypt your PDF with a strong password using AES encryption. Prevent unauthorized access to sensitive documents. No file uploads — fully client-side.',
-      ['AES 256-bit encryption', 'Set user and owner passwords', 'Control print/copy permissions', 'Instant local encryption']
+      'Encrypt your PDF with a strong password. Prevent unauthorized access to sensitive documents. No file uploads — fully client-side.',
+      ['Standard 128-bit PDF encryption', 'Document-open password protection', 'Instant local encryption', 'Zero file uploads']
     ),
     makeFAQ([
       {
         q: 'How do I add a password to a PDF for free?',
-        a: 'Upload your PDF to LS PDF Protect, enter your desired password, and click Encrypt. The password-protected PDF downloads instantly — no account required.',
+        a: 'Upload your PDF to LS PDF Protect, enter and confirm your password, and click Encrypt & Save. The password-protected PDF downloads instantly — no account required.',
       },
       {
         q: 'What encryption standard does LS PDF use?',
-        a: 'LS PDF uses AES encryption, the same standard used by banks and governments to protect sensitive data.',
+        a: 'LS PDF uses standard 128-bit encryption to protect your PDF so that compliant PDF readers require your password to view the document.',
       },
       {
-        q: 'Can I restrict printing or copying from the PDF?',
-        a: 'Yes. LS PDF allows you to set permissions, restricting printing, copying, and editing of the protected PDF.',
+        q: 'Can I restrict printing or copying without a password?',
+        a: 'LS PDF applies standard document-open encryption. Anyone without the password cannot open, view, print, or copy content from the document.',
       },
     ]),
   ],
@@ -333,7 +333,7 @@ export const rotateSEO: ToolSEOData = {
 export const rearrangeSEO: ToolSEOData = {
   title: 'Rearrange PDF Pages Online Free — Reorder PDF Document | LS PDF',
   description:
-    'Drag and drop to reorder PDF pages visually. Delete unwanted pages and rearrange your document layout. Free, no upload, runs 100% in your browser.',
+    'Drag and drop to reorder PDF pages visually. Rearrange page order in your document layout. Free, no upload, runs 100% in your browser.',
   keywords:
     'rearrange pdf pages, reorder pdf pages online, drag and drop pdf pages, pdf page organizer, reorganize pdf, sort pdf pages, reorder pdf free',
   canonical: SITE_URL + '/rearrange-pdf',
@@ -341,8 +341,8 @@ export const rearrangeSEO: ToolSEOData = {
     makeWebApp(
       'Rearrange PDF Pages — LS PDF',
       SITE_URL + '/rearrange-pdf',
-      'Drag and drop to visually reorder PDF pages. Delete pages, change the page order, and save the reorganized PDF. 100% client-side.',
-      ['Drag-and-drop page reordering', 'Visual thumbnail preview', 'Delete individual pages', 'Multi-page selection']
+      'Drag and drop to visually reorder PDF pages. Change the page order and save the reorganized PDF. 100% client-side.',
+      ['Drag-and-drop page reordering', 'Visual thumbnail preview', 'Instant local processing', 'Preserves document quality']
     ),
     makeFAQ([
       {
@@ -350,8 +350,8 @@ export const rearrangeSEO: ToolSEOData = {
         a: 'Upload your PDF to LS PDF Rearrange, then drag and drop the page thumbnails to reorder them. Click Save when done to download the reorganized PDF.',
       },
       {
-        q: 'Can I delete pages while rearranging?',
-        a: 'Yes. While in the rearrange view, you can remove individual pages you do not want in the final document.',
+        q: 'Can I delete or extract pages while rearranging?',
+        a: 'This tool focuses specifically on visual page reordering. To delete unwanted pages or extract a custom range, use the Split PDF tool.',
       },
     ]),
   ],

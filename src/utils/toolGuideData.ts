@@ -39,10 +39,10 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     slug: 'merge',
     title: 'Merge PDF',
     h1: 'Merge PDF Files Online Free',
-    summary: 'Combine multiple PDF documents into a single organized file in seconds. Drag and drop to reorder pages and files with zero quality degradation.',
+    summary: 'Combine multiple PDF documents into a single organized file in seconds. Drag and drop to reorder uploaded files before merging with zero quality degradation.',
     whatItDoes: [
       'LS PDF Merge reads multiple PDF documents directly into your browser memory and combines them into a single coherent document using pdf-lib.',
-      'You can freely rearrange documents or individual pages with interactive drag-and-drop reordering, apply per-file rotations, and preserve existing vector text, form fields, and embedded annotations without re-compressing contents.',
+      'You can freely rearrange uploaded documents with interactive drag-and-drop file reordering, apply per-file rotations, and combine pages into a unified document without re-compressing contents.',
       'After assembling your combined document, you can reduce its file size for email attachments using [Compress PDF](/compress), or add consistent page numbering across every section using [Page Numbers](/page-numbers).',
       'All processing runs entirely on your local machine using client-side JavaScript. No document bytes, file names, or metadata ever leave your computer or mobile device.'
     ],
@@ -57,12 +57,12 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       { label: 'Output Format', value: 'Clean, consolidated PDF (.pdf)' },
       { label: 'Processing Location', value: '100% In-Browser Memory (pdf-lib)' },
       { label: 'Privacy & Telemetry', value: 'Zero file uploads, zero server processing' },
-      { label: 'File Limits', value: 'Bounded only by your device RAM (tested with 100+ MB)' }
+      { label: 'File Limits', value: 'Bounded by available device and browser memory' }
     ],
     faqs: [
       {
         q: 'How do I merge PDF files online for free?',
-        a: 'Upload your PDF files to LS PDF Merge tool, drag to reorder if needed, then click Merge. Your combined PDF downloads instantly — no account or payment required.'
+        a: 'Upload your PDF files to LS PDF Merge tool, drag file cards to reorder them if needed, then click Merge. Your combined PDF downloads instantly — no account or payment required.'
       },
       {
         q: 'Are my files uploaded to a server when I merge PDFs?',
@@ -79,7 +79,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     ],
     related: [
       { slug: 'split', title: 'Split PDF', desc: 'Extract specific page ranges into separate files.' },
-      { slug: 'rearrange-pdf', title: 'Rearrange PDF', desc: 'Visually reorder or delete individual pages.' },
+      { slug: 'rearrange-pdf', title: 'Rearrange PDF', desc: 'Visually reorder pages within your document.' },
       { slug: 'compress', title: 'Compress PDF', desc: 'Reduce the final merged file size for email sharing.' }
     ]
   },
@@ -180,36 +180,36 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     slug: 'protect',
     title: 'Protect PDF',
     h1: 'Protect PDF with Password Free',
-    summary: 'Secure confidential PDF documents with strong cryptographic encryption and granular permission restrictions.',
+    summary: 'Secure confidential PDF documents with client-side password protection and cryptographic encryption.',
     whatItDoes: [
-      'LS PDF Protect encrypts your documents directly in your browser using standard cryptographic algorithms via @pdfsmaller/pdf-encrypt-lite.',
-      'You can configure an Owner Password (required to modify document settings) and a User Password (required to open and view the document), with options to restrict printing and content copying.',
+      'LS PDF Protect secures your PDF files directly in your browser using standard password-based encryption via @pdfsmaller/pdf-encrypt-lite.',
+      'Set a strong password that must be entered whenever the document is opened in any compliant PDF reader. The entire document content is encrypted, preventing unauthorized viewing.',
       'Before encrypting sensitive documents, you can remove author names and tracking tags with [Edit Metadata](/metadata). If you need to remove protection later using your valid password, use [Unlock PDF](/unlock).'
     ],
     howTo: [
       'Select your PDF file to be encrypted.',
       'Enter a strong password of your choice in the password field.',
-      'Optionally toggle permissions for document printing, copying, and annotating.',
-      'Click Encrypt PDF to produce an encrypted document that requires a password to open.'
+      'Re-enter your password in the confirm field to verify.',
+      'Click Encrypt & Save to produce an encrypted document that requires a password to open.'
     ],
     specs: [
-      { label: 'Encryption Algorithm', value: 'Standard AES Encryption' },
+      { label: 'Encryption Standard', value: 'Standard 128-bit PDF Encryption' },
       { label: 'Password Security', value: 'Passwords never leave your device memory' },
-      { label: 'Permission Controls', value: 'Printing, Content Copying, Form Filling, Annotations' },
+      { label: 'Access Control', value: 'Document-open password protection' },
       { label: 'Output Compatibility', value: 'Adobe Acrobat, Apple Preview, Chrome, Edge, Mobile' }
     ],
     faqs: [
       {
         q: 'How do I add a password to a PDF for free?',
-        a: 'Upload your PDF to LS PDF Protect, enter your desired password, and click Encrypt. The password-protected PDF downloads instantly — no account required.'
+        a: 'Upload your PDF to LS PDF Protect, enter and confirm your password, and click Encrypt & Save. The password-protected PDF downloads instantly — no account required.'
       },
       {
         q: 'What encryption standard does LS PDF use?',
-        a: 'LS PDF uses AES encryption, the same standard used by banks and governments to protect sensitive data.'
+        a: 'LS PDF uses standard 128-bit encryption to protect your PDF so that compliant PDF readers require your password to view the document.'
       },
       {
-        q: 'Can I restrict printing or copying from the PDF?',
-        a: 'Yes. LS PDF allows you to set permissions, restricting printing, copying, and editing of the protected PDF.'
+        q: 'Can I restrict printing or copying without a password?',
+        a: 'LS PDF applies standard document-open encryption. Anyone without the password cannot open, view, print, or copy content from the document.'
       }
     ],
     related: [
@@ -310,19 +310,19 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     summary: 'Organize document page order with fluid drag-and-drop thumbnails powered by accessible touch and mouse controls.',
     whatItDoes: [
       'LS PDF Rearrange renders thumbnail previews of every page in your document for intuitive visual organization.',
-      'You can drag pages into any sequence, remove unwanted pages, and duplicate specific pages using accessible controls.',
+      'You can drag pages into any sequence using intuitive drag-and-drop controls.',
       'If any pages appear rotated, orient them correctly using [Rotate PDF](/rotate-pdf). After establishing your desired page sequence, add sequential pagination with [Page Numbers](/page-numbers).',
       'When saved, a new PDF structure references existing content streams in your chosen sequence with zero loss in visual fidelity.'
     ],
     howTo: [
       'Upload the PDF document you wish to reorganize.',
-      'Drag and drop the page tiles into your intended order.',
-      'Click the trash icon on any unwanted pages to remove them.',
-      'Click Apply & Save to download your reorganized document.'
+      'Drag and drop page thumbnails to arrange them in your preferred order.',
+      'Review the updated page sequence in the visual grid.',
+      'Click Save to download your reorganized document.'
     ],
     specs: [
       { label: 'Interaction Engine', value: '@dnd-kit accessible drag-and-drop' },
-      { label: 'Operations', value: 'Reorder, Delete page, Duplicate page' },
+      { label: 'Supported Operations', value: 'Visual page reordering' },
       { label: 'Performance', value: 'Lightweight thumbnail rendering with canvas caching' },
       { label: 'Privacy', value: 'Executed 100% in client memory' }
     ],
@@ -332,8 +332,8 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
         a: 'Upload your PDF to LS PDF Rearrange, then drag and drop the page thumbnails to reorder them. Click Save when done to download the reorganized PDF.'
       },
       {
-        q: 'Can I delete pages while rearranging?',
-        a: 'Yes. While in the rearrange view, you can remove individual pages you do not want in the final document.'
+        q: 'Can I delete or extract pages while rearranging?',
+        a: 'This tool focuses specifically on visual page reordering. To delete unwanted pages or extract a custom range, use the [Split PDF](/split) tool.'
       }
     ],
     related: [
@@ -613,7 +613,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     howTo: [
       'Select or drop one or more images (JPG, PNG, WebP) into the upload area.',
       'Drag and drop image cards to arrange the page sequence.',
-      'Optionally delete or rotate individual photos.',
+      'Optionally remove individual photos or adjust file order.',
       'Click Convert to PDF to generate and download your new document.'
     ],
     specs: [

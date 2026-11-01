@@ -6,11 +6,31 @@ interface ToolDocumentationProps {
   toolSlug: string
 }
 
+const VALID_CANONICAL_PATHS = new Set([
+  '/merge',
+  '/split',
+  '/compress',
+  '/protect',
+  '/unlock',
+  '/rotate-pdf',
+  '/rearrange-pdf',
+  '/page-numbers',
+  '/watermark',
+  '/signature',
+  '/metadata',
+  '/pdf-to-image',
+  '/image-to-pdf',
+  '/extract-images',
+  '/pdf-to-text',
+  '/grayscale',
+  '/repair'
+]);
+
 function renderParagraphWithLinks(text: string) {
   const parts = text.split(/(\[[^\]]+\]\(\/?[-a-zA-Z0-9_]+\))/g);
   return parts.map((part, i) => {
     const match = part.match(/^\[([^\]]+)\]\((\/[-a-zA-Z0-9_]+)\)$/);
-    if (match) {
+    if (match && VALID_CANONICAL_PATHS.has(match[2])) {
       return (
         <Link
           key={i}
