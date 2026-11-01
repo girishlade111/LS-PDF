@@ -571,9 +571,9 @@ export const imageToPdfSEO: ToolSEOData = {
 
 // ─── EXTRACT IMAGES ───────────────────────────────────────────────────────────
 export const extractImagesSEO: ToolSEOData = {
-  title: 'Extract Images from PDF Online Free — Save Embedded Photos | LS PDF',
+  title: 'Extract Images from PDF Online Free — Export Images to ZIP | LS PDF',
   description:
-    'Extract and download all embedded images from a PDF document. Get original-quality images without any server upload. Free, private, runs in your browser.',
+    'Find compatible embedded images in PDF pages and export detected graphics as PNG files in a downloadable ZIP archive. Free, private, client-side processing.',
   keywords:
     'extract images from pdf, pdf image extractor, pull images from pdf, save images from pdf, pdf to images, get images from pdf free, pdf image download',
   canonical: SITE_URL + '/extract-images',
@@ -581,17 +581,21 @@ export const extractImagesSEO: ToolSEOData = {
     makeWebApp(
       'Extract Images from PDF — LS PDF',
       SITE_URL + '/extract-images',
-      'Pull out all original embedded images from a PDF document. Download them individually or as a ZIP archive. 100% client-side, no uploads.',
-      ['Extracts all embedded images', 'Original image quality preserved', 'Download as ZIP archive', 'Supports PNG, JPEG, and other embedded formats']
+      'Find compatible embedded images in PDF documents and export detected graphics as PNG files in a consolidated ZIP archive. 100% client-side processing.',
+      ['Detects embedded raster image objects', 'Canvas-based PNG rendering', 'Download all detected images as ZIP archive', 'Client-side processing with zero file uploads']
     ),
     makeFAQ([
       {
         q: 'How do I extract images from a PDF for free?',
-        a: 'Upload your PDF to LS PDF Extract Images, and all embedded images will be detected and listed. Download them individually or all at once as a ZIP file.',
+        a: 'Upload your PDF to LS PDF Extract Images. The tool scans each page for compatible embedded raster images, renders them to PNG, and bundles them into a downloadable ZIP archive.',
       },
       {
-        q: 'Are the extracted images in their original quality?',
-        a: 'Yes. LS PDF extracts images as they are embedded in the PDF, preserving their original resolution and quality.',
+        q: 'Can all images in a PDF be extracted?',
+        a: 'Most standard raster photos and illustrations can be detected. However, vector graphics, non-standard color spaces, inline masks, and pages where text and images were pre-flattened into a single page scan cannot be separated into individual image files.',
+      },
+      {
+        q: 'What format are the extracted images saved in?',
+        a: 'Detected images are decoded in the browser and exported as PNG files inside a consolidated ZIP archive.',
       },
     ]),
   ],

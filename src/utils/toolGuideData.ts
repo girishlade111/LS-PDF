@@ -631,31 +631,36 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     slug: 'extract-images',
     title: 'Extract Images',
     h1: 'Extract Images from PDF Online Free',
-    summary: 'Pull out all original photos and embedded graphics from any PDF document in their native format and quality.',
+    summary: 'Find compatible embedded images in PDF pages and export detected images as PNG files in a downloadable ZIP archive.',
     whatItDoes: [
-      'Unlike taking screenshots, LS PDF Extract Images inspects internal PDF XObject streams to isolate original embedded image files.',
-      'Extracted images retain their original resolution, color profile, and encoding without added artifacts or compression loss.',
-      'Download discovered photos individually or save every extracted graphic in a convenient ZIP archive.'
+      'LS PDF Extract Images scans PDF pages for embedded raster images using PDF.js operator lists and decodes them to PNG format.',
+      'Most standard photos and embedded bitmap graphics can be detected, but vector artwork, non-standard color spaces, and flattened scans cannot be separated into individual image files.',
+      'All detected images are converted in browser memory and bundled into a single downloadable ZIP archive.'
     ],
     howTo: [
-      'Upload your PDF document containing embedded images.',
-      'Inspect the gallery of detected graphics and photos.',
-      'Click individual images to save them one by one, or click Download All (ZIP) to export the full collection.'
+      'Select or drop your PDF document into the extraction tool.',
+      'Wait while the tool scans document pages for compatible embedded images.',
+      'Preview the number of detected image objects.',
+      'Download the consolidated ZIP archive containing all extracted PNG images.'
     ],
     specs: [
-      { label: 'Extraction Method', value: 'Direct PDF XObject stream extraction' },
-      { label: 'Quality Retention', value: '100% native quality (no re-compression)' },
-      { label: 'Output Package', value: 'Individual image files or consolidated ZIP archive' },
-      { label: 'Privacy', value: 'Operates entirely within client browser memory' }
+      { label: 'Detection Method', value: 'PDF.js operator list raster object scanning' },
+      { label: 'Export Format', value: 'PNG files packaged in a ZIP archive' },
+      { label: 'Processing Location', value: '100% In-Browser Memory (Canvas / WebAssembly)' },
+      { label: 'Privacy', value: 'Documents are never uploaded to any remote server' }
     ],
     faqs: [
       {
         q: 'How do I extract images from a PDF for free?',
-        a: 'Upload your PDF to LS PDF Extract Images, and all embedded images will be detected and listed. Download them individually or all at once as a ZIP file.'
+        a: 'Upload your PDF to LS PDF Extract Images. The tool scans each page for compatible embedded raster images, renders them to PNG, and bundles them into a downloadable ZIP archive.'
       },
       {
-        q: 'Are the extracted images in their original quality?',
-        a: 'Yes. LS PDF extracts images as they are embedded in the PDF, preserving their original resolution and quality.'
+        q: 'Can all images in a PDF be extracted?',
+        a: 'Most standard raster photos and illustrations can be detected. However, vector graphics, non-standard color spaces, inline masks, and pages where text and images were pre-flattened into a single page scan cannot be separated into individual image files.'
+      },
+      {
+        q: 'What format are the extracted images saved in?',
+        a: 'Detected images are decoded in the browser and exported as PNG files inside a consolidated ZIP archive.'
       }
     ],
     related: [
