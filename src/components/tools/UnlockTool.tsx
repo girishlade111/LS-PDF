@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { Lock, Unlock, Loader2, X } from 'lucide-react'
-import { PDFDocument } from 'pdf-lib'
+import { decryptPDF, isEncrypted } from '@pdfsmaller/pdf-decrypt'
 import { toast } from 'sonner'
 
 import { getPdfMetaData, unlockPdf } from '../../utils/pdfHelpers'
@@ -59,9 +59,13 @@ export default function UnlockTool() {
       const result = await unlockPdf(pdfData.file, password)
       if (!result.success) throw new Error('Incorrect password.')
       const arrayBuffer = await pdfData.file.arrayBuffer()
-      const pdfDoc = await PDFDocument.load(arrayBuffer, { password: password || undefined, ignoreEncryption: true } as any)
-      const pdfBytes = await pdfDoc.save()
-      const blob = new Blob([pdfBytes as any], { type: 'application/pdf' })
+      const bytes = new Uint8Array(arrayBuffer)
+      const encInfo = await isEncrypted(bytes).catch(() => ({ encrypted: true }))
+      const unlockedPdfBytes = encInfo.encrypted
+        ? await decryptPDF(bytes, password)
+        : bytes
+
+      const blob = new Blob([unlockedPdfBytes as any], { type: 'application/pdf' })
       const url = createUrl(blob)
       addActivity({ name: `${customFileName || 'unlocked'}.pdf`, tool: 'Unlock', size: blob.size, resultUrl: url })
     } catch (error: any) { toast.error(error.message || 'Error.') } finally { setIsProcessing(false) }

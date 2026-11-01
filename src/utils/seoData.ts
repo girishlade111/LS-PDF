@@ -250,7 +250,7 @@ export const protectSEO: ToolSEOData = {
       'Protect PDF with Password — LS PDF',
       SITE_URL + '/protect',
       'Encrypt your PDF with a strong password. Prevent unauthorized access to sensitive documents. No file uploads — fully client-side.',
-      ['Standard 128-bit PDF encryption', 'Document-open password protection', 'Instant local encryption', 'Zero file uploads']
+      ['Standard AES-256 PDF encryption', 'Document-open password protection', 'Instant local encryption', 'Zero file uploads']
     ),
     makeFAQ([
       {
@@ -259,7 +259,7 @@ export const protectSEO: ToolSEOData = {
       },
       {
         q: 'What encryption standard does LS PDF use?',
-        a: 'LS PDF uses standard 128-bit encryption to protect your PDF so that compliant PDF readers require your password to view the document.',
+        a: 'LS PDF uses standard AES-256 encryption (PDF 2.0 / ISO 32000-2) to protect your PDF so that compliant PDF readers require your password to view the document.',
       },
       {
         q: 'Can I restrict printing or copying without a password?',

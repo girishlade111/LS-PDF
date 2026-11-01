@@ -182,7 +182,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
     h1: 'Protect PDF with Password Free',
     summary: 'Secure confidential PDF documents with client-side password protection and cryptographic encryption.',
     whatItDoes: [
-      'LS PDF Protect secures your PDF files directly in your browser using standard password-based encryption via @pdfsmaller/pdf-encrypt-lite.',
+      'LS PDF Protect secures your PDF files directly in your browser using standard password-based AES-256 encryption via @pdfsmaller/pdf-encrypt.',
       'Set a strong password that must be entered whenever the document is opened in any compliant PDF reader. The entire document content is encrypted, preventing unauthorized viewing.',
       'Before encrypting sensitive documents, you can remove author names and tracking tags with [Edit Metadata](/metadata). If you need to remove protection later using your valid password, use [Unlock PDF](/unlock).'
     ],
@@ -193,7 +193,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       'Click Encrypt & Save to produce an encrypted document that requires a password to open.'
     ],
     specs: [
-      { label: 'Encryption Standard', value: 'Standard 128-bit PDF Encryption' },
+      { label: 'Encryption Standard', value: 'Standard AES-256 PDF Encryption' },
       { label: 'Password Security', value: 'Passwords never leave your device memory' },
       { label: 'Access Control', value: 'Document-open password protection' },
       { label: 'Output Compatibility', value: 'Adobe Acrobat, Apple Preview, Chrome, Edge, Mobile' }
@@ -205,7 +205,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       },
       {
         q: 'What encryption standard does LS PDF use?',
-        a: 'LS PDF uses standard 128-bit encryption to protect your PDF so that compliant PDF readers require your password to view the document.'
+        a: 'LS PDF uses standard AES-256 encryption (PDF 2.0 / ISO 32000-2) to protect your PDF so that compliant PDF readers require your password to view the document.'
       },
       {
         q: 'Can I restrict printing or copying without a password?',
@@ -237,7 +237,7 @@ export const TOOL_GUIDES: Record<string, ToolGuideData> = {
       'Download your unlocked, permanent copy of the PDF.'
     ],
     specs: [
-      { label: 'Supported Cryptography', value: 'Standard PDF Security Handlers (AES/RC4)' },
+      { label: 'Supported Cryptography', value: 'Standard PDF Security Handlers (AES-256 & RC4)' },
       { label: 'Requirement', value: 'Valid user or owner password is required' },
       { label: 'Cracking Limitation', value: 'Does not crack or guess unknown passwords' },
       { label: 'Privacy', value: 'Passwords and files remain strictly inside your browser' }
